@@ -102,7 +102,7 @@ namespace Unity.Specification.Registration
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(null, null, instance, new ExternallyControlledLifetimeManager());
+            _container.RegisterInstance(instance.GetType(), null, instance, new ExternallyControlledLifetimeManager());
             Assert.AreEqual(_container.Resolve<string>(), instance);
         }
 
