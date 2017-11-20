@@ -1,1 +1,1 @@
-# Golden Standard of Unity specification
+# Golden Standard of Unity
