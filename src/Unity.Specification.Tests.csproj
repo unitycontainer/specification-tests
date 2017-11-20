@@ -22,7 +22,11 @@
     <TargetFramework>netstandard1.0</TargetFramework>
   </PropertyGroup>
 
-
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+  </ItemGroup>
+   
   <PropertyGroup>
     <UnityAbstractions>..\..\Abstractions\src\Unity.Abstractions.csproj</UnityAbstractions>
     <RootNamespace>Unity.Specification</RootNamespace>
