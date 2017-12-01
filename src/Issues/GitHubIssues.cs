@@ -98,7 +98,7 @@ namespace Unity.Specification.Issues
         {
             using (IUnityContainer container = GetContainer())
             {
-                container.RegisterType(typeof(ITestClass), typeof(TestClass));
+                container.RegisterType(typeof(ITestClass), typeof(TestClass), null, null, null);
                 container.RegisterInstance(new TestClass());
                 var instance = container.Resolve<ITestClass>(); //0
                 Assert.IsNotNull(instance);
