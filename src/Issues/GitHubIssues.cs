@@ -11,6 +11,31 @@ namespace Unity.Specification.Issues
     public abstract partial class ReportedIssuesTests
     {
         [TestMethod]
+        public void unitycontainer_unity_165()
+        {
+            var container = new UnityContainer();
+            container.RegisterType<ILogger>( new HierarchicalLifetimeManager(),
+                                             new InjectionFactory( c => new MockLogger()));
+
+            Assert.AreSame(container.Resolve<ILogger>(), container.Resolve<ILogger>());
+            Assert.AreNotSame(container.Resolve<ILogger>(), container.CreateChildContainer().Resolve<ILogger>());
+        }
+
+        [TestMethod]
+        public void unitycontainer_unity_164()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<ILogger, MockLogger>();
+            var foo2 = new MockLogger();
+
+            container.RegisterType<ILogger>(new InjectionFactory(x => foo2));
+            var result = container.Resolve<ILogger>();
+
+            Assert.AreSame(result, foo2);
+        }
+        
+        [TestMethod]
         public void unitycontainer_unity_156()
         {
             using (var container = GetContainer())
