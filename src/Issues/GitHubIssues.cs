@@ -13,7 +13,7 @@ namespace Unity.Specification.Issues
         [TestMethod]
         public void unitycontainer_unity_165()
         {
-            var container = new UnityContainer();
+            var container = GetContainer();
             container.RegisterType<ILogger>( new HierarchicalLifetimeManager(),
                                              new InjectionFactory( c => new MockLogger()));
 
@@ -24,7 +24,7 @@ namespace Unity.Specification.Issues
         [TestMethod]
         public void unitycontainer_unity_164()
         {
-            var container = new UnityContainer();
+            var container = GetContainer();
 
             container.RegisterType<ILogger, MockLogger>();
             var foo2 = new MockLogger();
