@@ -6,7 +6,7 @@ using Unity.Specification.TestData;
 
 namespace Unity.Specification.Registration
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
         public void RegisterInstance_IUC_SimpleObject()
