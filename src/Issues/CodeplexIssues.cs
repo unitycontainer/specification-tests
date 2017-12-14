@@ -77,8 +77,7 @@ namespace Unity.Specification.Issues
         public void CanConfigureGenericDictionaryForInjectionUsingRegisterType()
         {
             IUnityContainer container = GetContainer()
-                .RegisterType(typeof(IDictionary<,>), typeof(Dictionary<,>),
-                    new InjectionConstructor());
+                .RegisterType(typeof(IDictionary<,>), typeof(Dictionary<,>), new InjectionConstructor());
 
             IDictionary<string, string> result = container.Resolve<IDictionary<string, string>>();
         }
@@ -140,9 +139,9 @@ namespace Unity.Specification.Issues
         [TestMethod]
         public void ResolveAllResolvesOpenGeneric()
         {
-            IUnityContainer container = GetContainer()
-                .RegisterType(typeof(ISomeInterface<>), typeof(MyTypeImplementingSomeInterface<>), "open")
-                .RegisterType<ISomeInterface<string>, MyTypeImplementingSomeInterfaceOfString>("string");
+            IUnityContainer container = GetContainer();
+            container.RegisterType(typeof(ISomeInterface<>), typeof(MyTypeImplementingSomeInterface<>), "open");
+            container.RegisterType<ISomeInterface<string>, MyTypeImplementingSomeInterfaceOfString>("string");
 
             var results = container.ResolveAll<ISomeInterface<string>>().ToList();
 

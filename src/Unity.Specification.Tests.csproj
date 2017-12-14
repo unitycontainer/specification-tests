@@ -34,10 +34,10 @@
 
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" >
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0">
         <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" >
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0">
         <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
@@ -48,13 +48,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(UnityAbstractions)')">
-    <ProjectReference Include="$(UnityAbstractions)" >
+    <ProjectReference Include="$(UnityAbstractions)">
         <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 
   <ItemGroup Condition="!Exists('$(UnityAbstractions)')">
-    <PackageReference Include="Unity.Abstractions" Version="$(UnityAbstractionsVersion)" >
+    <PackageReference Include="Unity.Abstractions" Version="$(UnityAbstractionsVersion)">
         <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>

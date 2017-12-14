@@ -1,6 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification.TestData;
@@ -9,14 +7,6 @@ namespace Unity.Specification.Registration
 {
     public abstract partial class SpecificationTests 
     {
-        private IUnityContainer _container;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            _container = GetContainer();
-        }
-
         [TestMethod]
         public void ContainerListsItselfAsRegistered()
         {
@@ -134,8 +124,8 @@ namespace Unity.Specification.Registration
         {
             _container.RegisterType<IService, Service>("one");
 
-            var child = _container.CreateChildContainer()
-                .RegisterType<IService, OtherService>("one");
+            var child = _container.CreateChildContainer();
+            child.RegisterType<IService, OtherService>("one");
 
             var registrations = from r in child.Registrations
                                 where r.RegisteredType == typeof(IService)

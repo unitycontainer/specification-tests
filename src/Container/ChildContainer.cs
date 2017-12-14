@@ -122,7 +122,7 @@ namespace Unity.Specification.Container
             var parent = GetContainer();
 
             parent.RegisterInstance(numbers[0], "1")
-                .RegisterInstance(numbers[1], "2");
+                  .RegisterInstance(numbers[1], "2");
             var child = parent.CreateChildContainer();
 
             List<string> childnums = new List<string>(child.ResolveAll<string>());
@@ -200,17 +200,22 @@ namespace Unity.Specification.Container
 
             parent.RegisterType<ITemporary, Temp>("First");
             parent.RegisterType<ITemporary, Temp>("First");
+
             var child1 = parent.CreateChildContainer();
             child1.RegisterType<ITemporary, Temp>("First");
             child1.RegisterType<ITemporary, Temp>("First");
+
             var child2 = child1.CreateChildContainer();
             child2.RegisterType<ITemporary, Temp>("First");
             child2.RegisterType<ITemporary, Temp>("First");
+
             var child3 = child2.CreateChildContainer();
             child3.RegisterType<ITemporary, Temp>("First");
             child3.RegisterType<ITemporary, Temp>("First");
+
             var child4 = child3.CreateChildContainer();
             child4.RegisterType<ITemporary, Temp>("First");
+
             ITemporary first = child4.Resolve<ITemporary>("First");
 
             child4.RegisterType<ITemporary, Temp>("First", new ContainerControlledLifetimeManager());
