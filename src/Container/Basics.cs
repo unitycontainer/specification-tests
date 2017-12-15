@@ -244,23 +244,6 @@ namespace Unity.Specification.Container
         }
 
         [TestMethod]
-        [Ignore]
-
-        public void CanBuildUpExistingObjectWithNonGenericObject()
-        {
-            //IUnityContainer container = GetContainer()
-            //    .RegisterType<IService, Service>();
-
-            //ObjectUsingLogger o = new ObjectUsingLogger();
-            //object result = container.BuildUp(o);
-
-            //AssertExtensions.IsInstanceOfType(result, typeof(ObjectUsingLogger));
-            //Assert.AreSame(o, result);
-            //Assert.IsNotNull(o.Logger);
-            //AssertExtensions.IsInstanceOfType(o.Logger, typeof(Service));
-        }
-
-        [TestMethod]
         public void CanBuildupObjectWithExplicitInterface()
         {
             IUnityContainer container = GetContainer()
