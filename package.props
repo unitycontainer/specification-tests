@@ -7,7 +7,7 @@
 
 
   <PropertyGroup>
-    <UnityAbstractionsVersion>2.*</UnityAbstractionsVersion>
+    <UnityAbstractionsVersion>3.*</UnityAbstractionsVersion>
   </PropertyGroup>
 
 </Project>

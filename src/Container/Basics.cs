@@ -598,9 +598,10 @@ namespace Unity.Specification.Container
 
             public class GarbageCollectingStrategy : BuilderStrategy
             {
-                public override void PreBuildUp(IBuilderContext context)
+                public override object PreBuildUp(IBuilderContext context)
                 {
                     GC.Collect();
+                    return null;
                 }
             }
         }
