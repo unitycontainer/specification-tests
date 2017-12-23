@@ -1,18 +1,18 @@
 ﻿using System;
+using System.CodeDom;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Injection;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Injection
 {
-    public abstract class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests 
     {
-        private IUnityContainer _container;
-
-        [TestInitialize]
-        public void Setup()
+        [TestMethod]
+        public void InjectionConstructor_DefaultConstructor()
         {
-            _container = GetContainer();
+            _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor());
+            Assert.AreEqual(ObjectWithAmbiguousConstructors.One, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
         }
 
         [TestMethod]
@@ -29,13 +29,6 @@ namespace Unity.Specification.Injection
             Assert.ThrowsException<InvalidOperationException>(() =>
                 _container.RegisterType<ObjectWithAmbiguousConstructors>(
                     new InjectionConstructor(0)));
-        }
-
-        [TestMethod]
-        public void InjectionConstructor_DefaultConstructor()
-        {
-            _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor());
-            Assert.AreEqual(ObjectWithAmbiguousConstructors.One, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
         }
 
         [TestMethod]
@@ -77,5 +70,17 @@ namespace Unity.Specification.Injection
                                                                                               typeof(IUnityContainer)));
             Assert.AreEqual(ObjectWithAmbiguousConstructors.Five, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
         }
+
+        [TestMethod]
+        public void InjectionConstructor_Generic_DefaultConstructor()
+        {
+            _container.RegisterType(null, typeof(InjectionTestCollection<>), null, null, new InjectionConstructor());
+
+            var instance = _container.Resolve<InjectionTestCollection<object>>();
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
+        }
+
+
     }
 }

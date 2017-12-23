@@ -5,4 +5,10 @@ namespace Unity.Specification.TestData
     public interface IService
     {
     }
+
+
+    public interface IGenericService<T>
+    {
+    }
+
 }
