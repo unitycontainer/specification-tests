@@ -11,6 +11,19 @@ namespace Unity.Specification.Issues
     public abstract partial class ReportedIssuesTests
     {
         [TestMethod]
+        public void unitycontainer_unity_177()
+        {
+            var container = GetContainer();
+
+            container.RegisterType<OtherService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IService, OtherService>();
+            container.RegisterType<IOtherService, OtherService>();
+
+
+            Assert.AreSame(container.Resolve<IService>(), container.Resolve<IOtherService>());
+        }
+
+        [TestMethod]
         public void unitycontainer_unity_165()
         {
             var container = GetContainer();
