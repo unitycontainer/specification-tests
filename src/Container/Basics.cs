@@ -531,17 +531,6 @@ namespace Unity.Specification.Container
         }
 
         [TestMethod]
-        public void RegisteringTheSameLifetimeManagerTwiceThrows()
-        {
-            LifetimeManager singleton = new ContainerControlledLifetimeManager();
-            
-            // It is no longer throws in Unity v6.*
-            GetContainer()
-                .RegisterType<IService, Service>(singleton)
-                .RegisterType<IService, OtherService>("special", singleton);
-        }
-
-        [TestMethod]
         public void CanRegisterGenericTypesAndResolveThem()
         {
             Dictionary<string, string> myDict = new Dictionary<string, string>();
