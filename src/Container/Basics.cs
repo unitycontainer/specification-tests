@@ -534,13 +534,11 @@ namespace Unity.Specification.Container
         public void RegisteringTheSameLifetimeManagerTwiceThrows()
         {
             LifetimeManager singleton = new ContainerControlledLifetimeManager();
-
-            AssertExtensions.AssertException<InvalidOperationException>(() =>
-                {
-                    GetContainer()
-                        .RegisterType<IService, Service>(singleton)
-                        .RegisterType<IService, OtherService>("special", singleton);
-                });
+            
+            // It is no longer throws in Unity v6.*
+            GetContainer()
+                .RegisterType<IService, Service>(singleton)
+                .RegisterType<IService, OtherService>("special", singleton);
         }
 
         [TestMethod]
