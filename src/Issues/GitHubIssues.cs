@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Attributes;
@@ -10,6 +11,16 @@ namespace Unity.Specification.Issues
 {
     public abstract partial class ReportedIssuesTests
     {
+        [TestMethod]
+        public void unitycontainer_unity_201()
+        {
+            var container = GetContainer();
+
+            Assert.ThrowsException<InvalidOperationException>(() =>
+                container.RegisterType<IService, OtherService>(
+                    new InjectionFactory((c, t, n) => new OtherService())));
+        }
+
         [TestMethod]
         public void unitycontainer_unity_177()
         {

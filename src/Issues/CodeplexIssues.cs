@@ -271,6 +271,22 @@ namespace Unity.Specification.Issues
             }
         }
 
+        [TestMethod]
+        public void PerResolveLifetimeIsHonoredWhenResolvingEnumerables()
+        {
+            using (var container = GetContainer())
+            {
+                container.RegisterType<ClassWithDependency>("instance1");
+                container.RegisterType<ClassWithDependency>("instance2");
+                container.RegisterType<ClassWithPerResolveLifetime>(new PerResolveLifetimeManager());
+
+                var instances = container.Resolve<IEnumerable<ClassWithDependency>>();
+
+                Assert.AreEqual(2, instances.Count());
+                Assert.AreSame(instances.ElementAt(0).Dependency, instances.ElementAt(1).Dependency);
+            }
+        }
+
         // https://unity.codeplex.com/workitem/8777
         [TestMethod]
         public void ResolverOverridesAreUsedWhenResolvingArrayElements()

@@ -9,16 +9,6 @@ namespace Unity.Specification.Registration
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
-        public void unitycontainer_unity_201()
-        {
-            IUnityContainer container = new UnityContainer();
-
-            Assert.ThrowsException<InvalidOperationException>(() => 
-                container.RegisterType<IService, EmailService>(
-                    new InjectionFactory((c, t, n) => new EmailService())));
-        }
-
-        [TestMethod]
         public void ContainerListsItselfAsRegistered()
         {
             Assert.IsTrue(_container.IsRegistered(typeof(IUnityContainer)));
