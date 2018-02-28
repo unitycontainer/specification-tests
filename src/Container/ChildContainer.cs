@@ -10,6 +10,18 @@ namespace Unity.Specification.Container
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
+        public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
+        {
+            var parent = new UnityContainer();
+            var child = parent.CreateChildContainer();
+            var wr = new WeakReference(child);
+            child.Dispose();
+            child = null;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+            Assert.IsFalse(wr.IsAlive);
+        }
+
+        [TestMethod]
         public void CanResolveItselfInScopes()
         {
             IUnityContainer container = GetContainer(); 
