@@ -12,8 +12,8 @@ namespace Unity.Specification.Container
         [TestMethod]
         public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
         {
-            var parent = new UnityContainer();
-            var child = parent.CreateChildContainer();
+            var container = GetContainer();
+            var child = container.CreateChildContainer();
             var wr = new WeakReference(child);
             child.Dispose();
             child = null;
@@ -24,9 +24,9 @@ namespace Unity.Specification.Container
         [TestMethod]
         public void CanResolveItselfInScopes()
         {
-            IUnityContainer container = GetContainer(); 
-            IUnityContainer child0 = container.CreateChildContainer();
-            IUnityContainer child1 = child0.CreateChildContainer();
+            var container = GetContainer(); 
+            var child0 = container.CreateChildContainer();
+            var child1 = child0.CreateChildContainer();
 
             Assert.AreSame(container, container.Resolve<IUnityContainer>());
             Assert.AreSame(child0, child0.Resolve<IUnityContainer>());
