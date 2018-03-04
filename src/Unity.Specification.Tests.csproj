@@ -19,7 +19,7 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>package.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
-    <TargetFramework>net47</TargetFramework>
+    <TargetFramework>net46</TargetFramework>
   </PropertyGroup>
 
   
