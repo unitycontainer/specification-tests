@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Injection;
 using Unity.Specification.TestData;
