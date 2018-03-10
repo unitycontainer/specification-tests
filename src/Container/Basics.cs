@@ -16,16 +16,6 @@ namespace Unity.Specification.Container
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
-        public void CanCreateObjectFromUnconfiguredContainer()
-        {
-            IUnityContainer container = GetContainer();
-
-            object o = container.Resolve<object>();
-
-            Assert.IsNotNull(o);
-        }
-
-        [TestMethod]
         public void ContainerResolvesRecursiveConstructorDependencies()
         {
             IUnityContainer container = GetContainer();
