@@ -8,14 +8,14 @@ namespace Unity.Specification.Injection
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
-        public void InjectionConstructor_DefaultConstructor()
+        public void Specification_Injection_Constructor_DefaultConstructor()
         {
             _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor());
             Assert.AreEqual(ObjectWithAmbiguousConstructors.One, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
         }
 
         [TestMethod]
-        public void InjectionConstructor_IncorrectType()
+        public void Specification_Injection_Constructor_IncorrectType()
         {
             Assert.ThrowsException<InvalidOperationException>(() =>
                 _container.RegisterType<ObjectWithAmbiguousConstructors>(
@@ -23,7 +23,7 @@ namespace Unity.Specification.Injection
         }
 
         [TestMethod]
-        public void InjectionConstructor_IncorrectValue()
+        public void Specification_Injection_Constructor_IncorrectValue()
         {
             Assert.ThrowsException<InvalidOperationException>(() =>
                 _container.RegisterType<ObjectWithAmbiguousConstructors>(
@@ -31,14 +31,14 @@ namespace Unity.Specification.Injection
         }
 
         [TestMethod]
-        public void InjectionConstructor_SelectByValues()
+        public void Specification_Injection_Constructor_SelectByValues()
         {
             _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor(0, string.Empty, 0.0f));
             Assert.AreEqual(ObjectWithAmbiguousConstructors.Two, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
         }
 
         [TestMethod]
-        public void InjectionConstructor_SelectByValueTypes()
+        public void Specification_Injection_Constructor_SelectByValueTypes()
         {
             _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor(new InjectionParameter(typeof(string)), 
                                                                                               new InjectionParameter(typeof(string)), 
@@ -48,7 +48,7 @@ namespace Unity.Specification.Injection
 
 
         [TestMethod]
-        public void InjectionConstructor_SelectAndResolveByValue()
+        public void Specification_Injection_Constructor_SelectAndResolveByValue()
         {
             _container.RegisterInstance(ObjectWithAmbiguousConstructors.Four);
             _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor(new ResolvedParameter(typeof(string)), 
@@ -59,7 +59,7 @@ namespace Unity.Specification.Injection
 
 
         [TestMethod]
-        public void InjectionConstructor_ResolveNamedTypeArgument()
+        public void Specification_Injection_Constructor_ResolveNamedTypeArgument()
         {
             _container.RegisterInstance(ObjectWithAmbiguousConstructors.Four);
             _container.RegisterInstance(ObjectWithAmbiguousConstructors.Five, ObjectWithAmbiguousConstructors.Five);
@@ -71,7 +71,7 @@ namespace Unity.Specification.Injection
         }
 
         [TestMethod]
-        public void InjectionConstructor_Generic_DefaultConstructor()
+        public void Specification_Injection_Constructor_Generic_DefaultConstructor()
         {
             _container.RegisterType(null, typeof(InjectionTestCollection<>), null, null, new InjectionConstructor());
 
