@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Attributes;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Injection
@@ -22,6 +23,23 @@ namespace Unity.Specification.Injection
             Assert.IsNotNull(service);
             Assert.IsInstanceOfType(service, typeof(ObjectWithOneDependency));
             Assert.IsNotNull(service.InnerObject);
+        }
+
+        [TestMethod]
+        public void Specification_Injection_Parameter_ObjectWithNamedDependency()
+        {
+            var service = _container.Resolve< ObjectWithNamedDependency>();
+
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(ObjectWithNamedDependency));
+        }
+    }
+
+    public class ObjectWithNamedDependency
+    {
+        public ObjectWithNamedDependency([Dependency("Test")] object dependency)
+        {
+
         }
     }
 }
