@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Attributes;
 using Unity.Exceptions;
-using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Registration;
 using Unity.Resolution;
 using Unity.Specification.Utility;
 
