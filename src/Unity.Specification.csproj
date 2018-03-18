@@ -5,7 +5,6 @@
   <PropertyGroup>
     <FileVersion>$(Version).0</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
-    <PackageId>Unity.Specification.Tests</PackageId>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © Microsoft.Practices.Unity 2017</Copyright>
     <PackageProjectUrl>https://github.com/unitycontainer/specification-tests</PackageProjectUrl>
@@ -20,6 +19,7 @@
     <AssemblyOriginatorKeyFile>package.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <TargetFramework>net46</TargetFramework>
+    <PackageId>Unity.Specification</PackageId>
   </PropertyGroup>
 
   
@@ -44,7 +44,6 @@
    
   <PropertyGroup>
     <UnityAbstractions>..\..\Abstractions\src\Unity.Abstractions.csproj</UnityAbstractions>
-    <RootNamespace>Unity.Specification</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(UnityAbstractions)')">
