@@ -16,6 +16,11 @@ namespace Unity.Specification.Container
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
+        public void Specification_Container_IUnityContainer()
+        {
+        }
+
+        [TestMethod]
         public void ContainerResolvesRecursiveConstructorDependencies()
         {
             IUnityContainer container = GetContainer();

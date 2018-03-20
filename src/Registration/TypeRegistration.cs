@@ -8,31 +8,31 @@ namespace Unity.Specification.Registration
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
-        public void ContainerListsItselfAsRegistered()
+        public void Specification_Registration_ListsItselfAsRegistered()
         {
             Assert.IsTrue(_container.IsRegistered(typeof(IUnityContainer)));
         }
 
         [TestMethod]
-        public void ContainerDoesNotListItselfUnderNonDefaultName()
+        public void Specification_Registration_ContainerDoesNotListItselfUnderNonDefaultName()
         {
             Assert.IsFalse(_container.IsRegistered(typeof(IUnityContainer), "other"));
         }
 
         [TestMethod]
-        public void ContainerListsItselfAsRegisteredUsingGenericOverload()
+        public void Specification_Registration_ContainerListsItselfAsRegisteredUsingGenericOverload()
         {
             Assert.IsTrue(_container.IsRegistered<IUnityContainer>());
         }
 
         [TestMethod]
-        public void ContainerDoesNotListItselfUnderNonDefaultNameUsingGenericOverload()
+        public void Specification_Registration_ContainerDoesNotListItselfUnderNonDefaultNameUsingGenericOverload()
         {
             Assert.IsFalse(_container.IsRegistered<IUnityContainer>("other"));
         }
 
         [TestMethod]
-        public void IsRegisteredWorksForRegisteredType()
+        public void Specification_Registration_IsRegisteredWorksForRegisteredType()
         {
             _container.RegisterType<ILogger, MockLogger>();
 
@@ -40,13 +40,13 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void ContainerIncludesItselfUnderRegistrations()
+        public void Specification_Registration_ContainerIncludesItselfUnderRegistrations()
         {
             Assert.IsNotNull(_container.Registrations.Where(r => r.RegisteredType == typeof(IUnityContainer)).FirstOrDefault());
         }
 
         [TestMethod]
-        public void NewRegistrationsShowUpInRegistrationsSequence()
+        public void Specification_Registration_NewRegistrationsShowUpInRegistrationsSequence()
         {
             _container.RegisterType<ILogger, MockLogger>()
                 .RegisterType<ILogger, MockLogger>("second");
@@ -62,7 +62,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void TypeMappingShowsUpInRegistrationsCorrectly()
+        public void Specification_Registration_TypeMappingShowsUpInRegistrationsCorrectly()
         {
             _container.RegisterType<ILogger, MockLogger>();
 
@@ -72,7 +72,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void NonMappingRegistrationShowsUpInRegistrationsSequence()
+        public void Specification_Registration_NonMappingRegistrationShowsUpInRegistrationsSequence()
         {
             _container.RegisterType<MockLogger>();
             var registration = (from r in _container.Registrations
@@ -84,7 +84,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void RegistrationOfOpenGenericTypeShowsUpInRegistrationsSequence()
+        public void Specification_Registration_RegistrationOfOpenGenericTypeShowsUpInRegistrationsSequence()
         {
             _container.RegisterType(typeof(IDictionary<,>), typeof(Dictionary<,>), "test");
             var registration = _container.Registrations.First(r => r.RegisteredType == typeof(IDictionary<,>));
@@ -94,7 +94,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void RegistrationsInParentContainerAppearInChild()
+        public void Specification_Registration_RegistrationsInParentContainerAppearInChild()
         {
             _container.RegisterType<ILogger, MockLogger>();
             var child = _container.CreateChildContainer();
@@ -106,7 +106,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void RegistrationsInChildContainerDoNotAppearInParent()
+        public void Specification_Registration_RegistrationsInChildContainerDoNotAppearInParent()
         {
             var child = _container.CreateChildContainer()
                 .RegisterType<ILogger, MockLogger>("named");
@@ -120,7 +120,7 @@ namespace Unity.Specification.Registration
         }
 
         [TestMethod]
-        public void DuplicateRegistrationsInParentAndChildOnlyShowUpOnceInChild()
+        public void Specification_Registration_DuplicateRegistrationsInParentAndChildOnlyShowUpOnceInChild()
         {
             _container.RegisterType<IService, Service>("one");
 
