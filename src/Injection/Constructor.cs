@@ -73,7 +73,7 @@ namespace Unity.Specification.Injection
         [TestMethod]
         public void Specification_Injection_Constructor_Generic_DefaultConstructor()
         {
-            _container.RegisterType(null, typeof(InjectionTestCollection<>), null, null, new InjectionConstructor());
+            _container.RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor());
 
             var instance = _container.Resolve<InjectionTestCollection<object>>();
             Assert.IsNotNull(instance);
@@ -83,8 +83,7 @@ namespace Unity.Specification.Injection
         [TestMethod]
         public void Specification_Injection_Constructor_Generic_ByType()
         {
-            _container.RegisterType(null, typeof(InjectionTestCollection<>), null, null, new InjectionConstructor(typeof(string),
-                                                                                                                  typeof(IGenericService<>)));
+            _container.RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor(typeof(string), typeof(IGenericService<>)));
             var instance = _container.Resolve<InjectionTestCollection<object>>();
             Assert.IsNotNull(instance);
             Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
@@ -101,7 +100,7 @@ namespace Unity.Specification.Injection
                       .RegisterInstance<IService>("0", new Service())
                       .RegisterInstance<IService>("1", new Service())
                       .RegisterInstance<IService>("2", new Service())
-                      .RegisterType(null, typeof(GenericInjectionTestClass<,,>), null, null,
+                      .RegisterType(typeof(GenericInjectionTestClass<,,>),
                                     new InjectionConstructor(typeof(string),
                                                              typeof(IGenericService<>),
                                                              typeof(Array),
@@ -124,7 +123,7 @@ namespace Unity.Specification.Injection
                       .RegisterInstance<IService>("0", new Service())
                       .RegisterInstance<IService>("1", new Service())
                       .RegisterInstance<IService>("2", new Service())
-                      .RegisterType(null, typeof(GenericInjectionTestClass<,,>), null, null,
+                      .RegisterType(typeof(GenericInjectionTestClass<,,>),
                                     new InjectionConstructor(typeof(GenericDependencyClass<,>)));
 
             var instance = _container.Resolve<GenericInjectionTestClass<IUnityContainer, string, IService>>();
