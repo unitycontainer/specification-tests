@@ -80,6 +80,16 @@ namespace Unity.Specification.Injection
             Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
         }
 
+        [TestMethod]
+        [Ignore]
+        public void Specification_Injection_Constructor_Generic_ByType()
+        {
+            _container.RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor(typeof(string), typeof(IGenericService<>)));
+            var instance = _container.Resolve<InjectionTestCollection<object>>();
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
+        }
+
 
     }
 }
