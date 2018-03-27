@@ -83,7 +83,9 @@ namespace Unity.Specification.Injection
         [TestMethod]
         public void Specification_Injection_Constructor_Generic_ByType()
         {
-            _container.RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor(typeof(string), typeof(IGenericService<>)));
+            _container.RegisterInstance(string.Empty) 
+                      .RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor(typeof(string), typeof(IGenericService<>)));
+
             var instance = _container.Resolve<InjectionTestCollection<object>>();
             Assert.IsNotNull(instance);
             Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
