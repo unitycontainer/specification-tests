@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Unity.Specification.TestData
 {
@@ -6,6 +7,13 @@ namespace Unity.Specification.TestData
     public class Service : IService, IDisposable
     {
         public string ID { get; } = Guid.NewGuid().ToString();
+
+        public static int Instances = 0;
+
+        public Service()
+        {
+            Interlocked.Increment(ref Instances);
+        }
 
         public bool Disposed = false;
         public void Dispose()
