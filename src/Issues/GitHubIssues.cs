@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Attributes;
@@ -11,6 +12,28 @@ namespace Unity.Specification.Issues
 {
     public abstract partial class ReportedIssuesTests
     {
+        [TestMethod]
+        public void unitycontainer_microsoft_dependency_injection_14()
+        {
+            var container = GetContainer();
+
+            var c1 = container.CreateChildContainer();
+            var c2 = container.CreateChildContainer();
+
+            c1.RegisterType(typeof(IList<>), typeof(List<>), new ContainerControlledLifetimeManager(),
+                                                             new InjectionConstructor());
+            var t1 = c1.Resolve<IList<int>>();
+            Assert.IsNotNull(t1);
+
+            c2.RegisterType(typeof(IList<>), typeof(List<>), new ContainerControlledLifetimeManager(),
+                                                             new InjectionConstructor());
+            var t2 = c2.Resolve<IList<int>>();
+            Assert.IsNotNull(t2);
+
+            Assert.AreNotSame(t2, t1);
+
+        }
+
         [TestMethod]
         public void unitycontainer_container_67()
         {
