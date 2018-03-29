@@ -13,6 +13,48 @@ namespace Unity.Specification.Issues
     public abstract partial class ReportedIssuesTests
     {
         [TestMethod]
+        public void unitycontainer_unity_211()
+        {
+            var container = new UnityContainer();
+
+            container.RegisterType<IThing, Thing>();
+            container.RegisterType<IThing, Thing>("SecondConstructor",
+            new InjectionConstructor(typeof(int)));
+
+            container.RegisterType<IGeneric<IThing>, Gen1>(nameof(Gen1));
+            container.RegisterType<IGeneric<IThing>, Gen2>(nameof(Gen2));
+
+            var things = container.ResolveAll(typeof(IGeneric<IThing>)); //Throws exception
+            Assert.AreEqual((int)things.Count(), 2);
+        }
+        public interface IGeneric<T>
+        {
+        }
+
+        public interface IThing
+        {
+        }
+
+        public class Thing : IThing
+        {
+            [InjectionConstructor]
+            public Thing()
+            {
+            }
+
+            public Thing(int i)
+            {
+            }
+        }
+
+        public class Gen1 : IGeneric<IThing>
+        {
+        }
+
+        public class Gen2 : IGeneric<IThing>
+        {
+        }        
+        [TestMethod]
         public void unitycontainer_microsoft_dependency_injection_14()
         {
             var container = GetContainer();
