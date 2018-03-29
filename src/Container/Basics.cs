@@ -575,7 +575,7 @@ namespace Unity.Specification.Container
         {
             protected override void Initialize()
             {
-                Context.Strategies.Add(new GarbageCollectingStrategy(), UnityBuildStage.Setup);
+                // TODO: Context.Strategies.Add(new GarbageCollectingStrategy(), UnityBuildStage.Setup);
             }
 
             public class GarbageCollectingStrategy : BuilderStrategy

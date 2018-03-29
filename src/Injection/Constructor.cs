@@ -32,7 +32,14 @@ namespace Unity.Specification.Injection
         }
 
         [TestMethod]
-        public void Specification_Injection_Constructor_ByValueTypes()
+        public void Specification_Injection_Constructor_SelectByValues()
+        {
+            _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor(0, string.Empty, 0.0f));
+            Assert.AreEqual(ObjectWithAmbiguousConstructors.Two, _container.Resolve<ObjectWithAmbiguousConstructors>().Signature);
+        }
+
+        [TestMethod]
+        public void Specification_Injection_Constructor_SelectByValueTypes()
         {
             _container.RegisterType<ObjectWithAmbiguousConstructors>(new InjectionConstructor(new InjectionParameter(typeof(string)), 
                                                                                               new InjectionParameter(typeof(string)), 
@@ -74,17 +81,6 @@ namespace Unity.Specification.Injection
         public void Specification_Injection_Constructor_Generic_DefaultConstructor()
         {
             _container.RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor());
-
-            var instance = _container.Resolve<InjectionTestCollection<object>>();
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(typeof(InjectionTestCollection<>).Name, instance.CollectionName);
-        }
-
-        [TestMethod]
-        public void Specification_Injection_Constructor_Generic_ByType()
-        {
-            _container.RegisterInstance(string.Empty) 
-                      .RegisterType(typeof(InjectionTestCollection<>), new InjectionConstructor(typeof(string), typeof(IGenericService<>)));
 
             var instance = _container.Resolve<InjectionTestCollection<object>>();
             Assert.IsNotNull(instance);
