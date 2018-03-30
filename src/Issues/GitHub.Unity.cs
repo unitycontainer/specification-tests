@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Attributes;
@@ -12,6 +13,50 @@ namespace Unity.Specification.Issues
 {
     public abstract partial class ReportedIssuesTests
     {
+        [TestMethod]
+        public void unitycontainer_unity_211()
+        {
+            var container = GetContainer();
+
+            container.RegisterType<IThing, Thing>();
+            container.RegisterType<IThing, Thing>("SecondConstructor",
+                new InjectionConstructor(typeof(int)));
+
+            container.RegisterType<IGeneric<IThing>, Gen1>(nameof(Gen1));
+            container.RegisterType<IGeneric<IThing>, Gen2>(nameof(Gen2));
+
+            var things = container.ResolveAll(typeof(IGeneric<IThing>)); //Throws exception
+            Assert.AreEqual(things.Count(), 2);
+        }
+
+        public interface IGeneric<T>
+        {
+        }
+
+        public interface IThing
+        {
+        }
+
+        public class Thing : IThing
+        {
+            [InjectionConstructor]
+            public Thing()
+            {
+            }
+
+            public Thing(int i)
+            {
+            }
+        }
+
+        public class Gen1 : IGeneric<IThing>
+        {
+        }
+
+        public class Gen2 : IGeneric<IThing>
+        {
+        }
+
         [TestMethod]
         public void unitycontainer_microsoft_dependency_injection_14()
         {
@@ -32,31 +77,6 @@ namespace Unity.Specification.Issues
 
             Assert.AreNotSame(t2, t1);
 
-        }
-
-        [TestMethod]
-        public void unitycontainer_container_67()
-        {
-            var container = GetContainer();
-
-            container.RegisterType<ILogger, MockLogger>(new TransientLifetimeManager());
-
-            var child = container.CreateChildContainer();
-
-            child.RegisterType<OtherService>(new TransientLifetimeManager());
-
-            Assert.IsTrue(child.IsRegistered<ILogger>());
-            Assert.IsFalse(child.IsRegistered<MockLogger>());
-            Assert.IsTrue(child.IsRegistered<OtherService>());
-
-            container.RegisterType<IOtherService, OtherService>();
-
-            child = child.CreateChildContainer();
-
-            Assert.IsTrue(child.IsRegistered<ILogger>());
-            Assert.IsFalse(child.IsRegistered<MockLogger>());
-            Assert.IsTrue(child.IsRegistered<IOtherService>());
-            Assert.IsTrue(child.IsRegistered<OtherService>());
         }
 
         [TestMethod]
@@ -245,11 +265,10 @@ namespace Unity.Specification.Issues
             { }
 
             [InjectionConstructor]
+            [SuppressMessage("ReSharper", "UnusedParameter.Local")]
             public TestClass(TestClass _) //1
             {
             }
         }
     }
-
-
 }
