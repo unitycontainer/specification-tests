@@ -5,7 +5,7 @@
   <PropertyGroup>
     <FileVersion>$(Version).0</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
-    <PackageId>Unity.Specification.Tests</PackageId>
+    <PackageId>Unity.Specification</PackageId>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © Microsoft.Practices.Unity 2017</Copyright>
     <PackageProjectUrl>https://github.com/unitycontainer/specification-tests</PackageProjectUrl>
