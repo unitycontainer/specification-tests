@@ -6,6 +6,7 @@ using Unity.Builder;
 using Unity.Builder.Strategy;
 using Unity.Exceptions;
 using Unity.Extension;
+using Unity.Injection;
 using Unity.Lifetime;
 using Unity.Registration;
 using Unity.Specification.TestData;

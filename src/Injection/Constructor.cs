@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Registration;
+using Unity.Injection;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Injection

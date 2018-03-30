@@ -1,11 +1,11 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Attributes;
 using Unity.Exceptions;
+using Unity.Injection;
 using Unity.Lifetime;
-using Unity.Registration;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Issues
@@ -15,7 +15,7 @@ namespace Unity.Specification.Issues
         [TestMethod]
         public void unitycontainer_unity_211()
         {
-            var container = new UnityContainer();
+            var container = GetContainer();
 
             container.RegisterType<IThing, Thing>();
             container.RegisterType<IThing, Thing>("SecondConstructor",
@@ -25,7 +25,7 @@ namespace Unity.Specification.Issues
             container.RegisterType<IGeneric<IThing>, Gen2>(nameof(Gen2));
 
             var things = container.ResolveAll(typeof(IGeneric<IThing>)); //Throws exception
-            Assert.AreEqual((int)things.Count(), 2);
+            Assert.AreEqual(things.Count(), 2);
         }
         public interface IGeneric<T>
         {
