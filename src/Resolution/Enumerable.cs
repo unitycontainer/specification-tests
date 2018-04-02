@@ -231,8 +231,8 @@ namespace Unity.Specification.Resolution
 
                 provider.RegisterType<IService>();
                 provider.RegisterType<IService, Service>();
-                provider.RegisterType(typeof(IFoo<IService>), typeof(Foo<IService>), "Instance", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa", new ContainerControlledLifetimeManager());
+                provider.RegisterType<IFoo<IService>, Foo<IService>>("Instance", new ContainerControlledLifetimeManager());
+                provider.RegisterType(typeof(IFoo<>), "fa", typeof(Foo<>), new ContainerControlledLifetimeManager());
                 provider.RegisterInstance<IFoo<IService>>(instance);
 
                 // Act
@@ -282,9 +282,9 @@ namespace Unity.Specification.Resolution
             {
                 // Arrange
                 provider.RegisterType<IService, Service>();
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "1", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "2", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "3", new ContainerControlledLifetimeManager());
+                provider.RegisterType(typeof(IFoo<>), "1", typeof(Foo<>), new ContainerControlledLifetimeManager());
+                provider.RegisterType(typeof(IFoo<>), "2", typeof(Foo<>), new ContainerControlledLifetimeManager());
+                provider.RegisterType(typeof(IFoo<>), "3", typeof(Foo<>), new ContainerControlledLifetimeManager());
 
                 using (var scope = provider.CreateChildContainer())
                 {

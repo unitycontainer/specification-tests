@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Registration;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Resolution

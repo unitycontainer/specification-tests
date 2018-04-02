@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Attributes;
 using Unity.Exceptions;
-using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Registration;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Issues

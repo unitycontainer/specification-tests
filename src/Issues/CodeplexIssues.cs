@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Unity.Attributes;
 using Unity.Exceptions;
-using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Registration;
 using Unity.Resolution;
 using Unity.Specification.Utility;
 

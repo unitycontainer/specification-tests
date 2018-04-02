@@ -5,7 +5,7 @@ using System;
 namespace Unity.Specification.TestData
 {
     // A class that contains another one which has another
-    // constructor dependency. Used to validate recursive
+    // constructor @delegate. Used to validate recursive
     // buildup of constructor dependencies.
     public class ObjectWithTwoConstructorDependencies
     {

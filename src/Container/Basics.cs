@@ -6,7 +6,6 @@ using Unity.Builder;
 using Unity.Builder.Strategy;
 using Unity.Exceptions;
 using Unity.Extension;
-using Unity.Injection;
 using Unity.Lifetime;
 using Unity.Registration;
 using Unity.Specification.TestData;
@@ -223,44 +222,6 @@ namespace Unity.Specification.Container
                 container.Resolve<ObjectWithTwoConstructorDependencies>();
 
             Assert.AreSame(dep, dep2.OneDep);
-        }
-
-        [TestMethod]
-        public void CanDoInjectionOnExistingObjects()
-        {
-            IUnityContainer container = GetContainer();
-
-            ObjectWithTwoProperties o = new ObjectWithTwoProperties();
-            Assert.IsNull(o.Obj1);
-            Assert.IsNull(o.Obj2);
-
-            container.BuildUp(o);
-
-            o.Validate();
-        }
-
-        [TestMethod]
-        public void CanBuildupObjectWithExplicitInterface()
-        {
-            IUnityContainer container = GetContainer()
-                .RegisterType<ILogger, MockLogger>();
-
-            ObjectWithExplicitInterface o = new ObjectWithExplicitInterface();
-            container.BuildUp<ISomeCommonProperties>(o);
-
-            o.ValidateInterface();
-        }
-
-        [TestMethod]
-        public void CanBuildupObjectWithExplicitInterfaceUsingNongenericMethod()
-        {
-            IUnityContainer container = GetContainer()
-                .RegisterType<ILogger, MockLogger>();
-
-            ObjectWithExplicitInterface o = new ObjectWithExplicitInterface();
-            container.BuildUp(typeof(ISomeCommonProperties), o);
-
-            o.ValidateInterface();
         }
 
         [TestMethod]
