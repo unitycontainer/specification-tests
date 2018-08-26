@@ -9,14 +9,14 @@ namespace Unity.Specification.Resolution
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Specification_Resolution_Lazy()
+        public void Lazy()
         {
             // Setup
-            _container.RegisterType<IService, Service>();
+            Container.RegisterType<IService, Service>();
             Service.Instances = 0;
 
             // Act
-            var lazy = _container.Resolve<Lazy<IService>>();
+            var lazy = Container.Resolve<Lazy<IService>>();
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -26,17 +26,17 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Lazy_Enumerable()
+        public void Lazy_Enumerable()
         {
             // Setup
-            _container.RegisterType<IService, Service>("1");
-            _container.RegisterType<IService, Service>("2");
-            _container.RegisterType<IService, Service>("3");
-            _container.RegisterType<IService, OtherService>();
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, OtherService>();
             Service.Instances = 0;
 
             // Act
-            var lazy = _container.Resolve<Lazy<IEnumerable<IService>>>();
+            var lazy = Container.Resolve<Lazy<IEnumerable<IService>>>();
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -50,17 +50,17 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Lazy_Array()
+        public void Lazy_Array()
         {
             // Setup
-            _container.RegisterType<IService, Service>("1");
-            _container.RegisterType<IService, Service>("2");
-            _container.RegisterType<IService, Service>("3");
-            _container.RegisterType<IService, OtherService>();
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, OtherService>();
             Service.Instances = 0;
 
             // Act
-            var lazy = _container.Resolve<Lazy<IService[]>>();
+            var lazy = Container.Resolve<Lazy<IService[]>>();
 
             // Verify
             Assert.AreEqual(0, Service.Instances);

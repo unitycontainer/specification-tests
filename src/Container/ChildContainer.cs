@@ -6,7 +6,7 @@ using Unity.Lifetime;
 
 namespace Unity.Specification.Container
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
         public void ChildContainersAreAllowedToBeCollectedWhenDisposed()

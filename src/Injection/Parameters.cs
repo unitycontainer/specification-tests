@@ -6,18 +6,18 @@ namespace Unity.Specification.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Specification_Injection_Parameter_None()
+        public void Parameter_None()
         {
-            var service = _container.Resolve(typeof(object), null, null);
+            var service = Container.Resolve(typeof(object), null, null);
 
             Assert.IsNotNull(service);
             Assert.IsInstanceOfType(service, typeof(object));
         }
 
         [TestMethod]
-        public void Specification_Injection_Parameter_ObjectWithOneDependency()
+        public void Parameter_ObjectWithOneDependency()
         {
-            var service = _container.Resolve<ObjectWithOneDependency>();
+            var service = Container.Resolve<ObjectWithOneDependency>();
 
             Assert.IsNotNull(service);
             Assert.IsInstanceOfType(service, typeof(ObjectWithOneDependency));

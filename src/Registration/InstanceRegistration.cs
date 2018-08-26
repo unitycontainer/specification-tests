@@ -9,117 +9,104 @@ namespace Unity.Specification.Registration
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void RegisterInstance_IUC_SimpleObject()
+        public void Instance_IUC_SimpleObject()
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(null, null, instance, null);
-            Assert.AreEqual(_container.Resolve<string>(), instance);
+            Container.RegisterInstance(null, null, instance, null);
+            Assert.AreEqual(Container.Resolve<string>(), instance);
         }
 
         [TestMethod]
-        public void RegisterInstance_IUC_NamedObject()
+        public void Instance_IUC_NamedObject()
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(null, instance, instance, null);
+            Container.RegisterInstance(null, instance, instance, null);
 
-            Assert.AreEqual(_container.Resolve<string>(instance), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => _container.Resolve<string>());
+            Assert.AreEqual(Container.Resolve<string>(instance), instance);
+            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<string>());
         }
 
         [TestMethod]
-        public void RegisterInstance_IUC_InterfacedObject()
+        public void Instance_IUC_InterfacedObject()
         {
             var instance = new Service();
 
-            _container.RegisterInstance(typeof(IService), null, instance, null);
+            Container.RegisterInstance(typeof(IService), null, instance, null);
 
-            Assert.AreEqual(_container.Resolve<IService>(), instance);
-            Assert.AreNotEqual(_container.Resolve<Service>(), instance);
+            Assert.AreEqual(Container.Resolve<IService>(), instance);
+            Assert.AreNotEqual(Container.Resolve<Service>(), instance);
         }
 
         [TestMethod]
-        public void RegisterInstance_IUC_NamedInterfacedObject()
-        {
-            var instance = new Service();
-            var name = Guid.NewGuid().ToString();
-
-            _container.RegisterInstance(typeof(IService), name, instance, null);
-
-            Assert.AreEqual(_container.Resolve<IService>(name), instance);
-            Assert.AreNotEqual(_container.Resolve<Service>(), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => _container.Resolve<IService>());
-        }
-
-        [TestMethod]
-        public void RegisterInstance_SimpleObject()
+        public void Instance_SimpleObject()
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(instance);
+            Container.RegisterInstance(instance);
             
-            Assert.AreEqual(_container.Resolve<string>(), instance);
+            Assert.AreEqual(Container.Resolve<string>(), instance);
         }
 
         [TestMethod]
-        public void RegisterInstance_NamedObject()
+        public void Instance_NamedObject()
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(instance, instance);
+            Container.RegisterInstance(instance, instance);
 
-            Assert.AreEqual(_container.Resolve<string>(instance), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => _container.Resolve<string>());
+            Assert.AreEqual(Container.Resolve<string>(instance), instance);
+            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<string>());
         }
 
         [TestMethod]
-        public void RegisterInstance_InterfacedObject()
+        public void Instance_InterfacedObject()
         {
             var instance = new Service();
 
-            _container.RegisterInstance<IService>(instance);
+            Container.RegisterInstance<IService>(instance);
 
-            Assert.AreEqual(_container.Resolve<IService>(), instance);
-            Assert.AreNotEqual(_container.Resolve<Service>(), instance);
+            Assert.AreEqual(Container.Resolve<IService>(), instance);
+            Assert.AreNotEqual(Container.Resolve<Service>(), instance);
         }
 
         [TestMethod]
-        public void RegisterInstance_NamedInterfacedObject()
+        public void Instance_NamedInterfacedObject()
         {
             var instance = new Service();
-            var name = Guid.NewGuid().ToString();
+            var local = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance<IService>(name, instance);
+            Container.RegisterInstance<IService>(local, instance);
 
-            Assert.AreEqual(_container.Resolve<IService>(name), instance);
-            Assert.AreNotEqual(_container.Resolve<Service>(), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => _container.Resolve<IService>());
+            Assert.AreEqual(Container.Resolve<IService>(local), instance);
+            Assert.AreNotEqual(Container.Resolve<Service>(), instance);
+            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<IService>(Guid.NewGuid().ToString()));
         }
 
         [TestMethod]
-        public void RegisterInstance_ExternallyControlledLifetimeManager()
+        public void Instance_ExternallyControlledLifetimeManager()
         {
             var instance = Guid.NewGuid().ToString();
 
-            _container.RegisterInstance(instance.GetType(), null, instance, new ExternallyControlledLifetimeManager());
-            Assert.AreEqual(_container.Resolve<string>(), instance);
+            Container.RegisterInstance(instance.GetType(), null, instance, new ExternallyControlledLifetimeManager());
+            Assert.AreEqual(Container.Resolve<string>(), instance);
         }
 
 
         [TestMethod]
-        public void RegisterInstance_ChainRegistrations()
+        public void Instance_ChainRegistrations()
         {
             var instance = new Service();
 
-            _container.RegisterInstance(instance);
-            _container.RegisterType<IService, Service>();
+            Container.RegisterInstance(instance);
+            Container.RegisterType<IService, Service>();
 
-            Assert.AreEqual(_container.Resolve<IService>(), instance);
+            Assert.AreEqual(Container.Resolve<IService>(), instance);
         }
 
         [TestMethod]
-        public void RegisterInstance_RegisterWithParentAndChild()
+        public void Instance_RegisterWithParentAndChild()
         {
             //create unity container
             var parent = GetContainer();
@@ -135,7 +122,7 @@ namespace Unity.Specification.Registration
 
 
         [TestMethod]
-        public void RegisterInstance_HierarchicalLifetimeManager()
+        public void Instance_HierarchicalLifetimeManager()
         {
 //            Assert.ThrowsException<Exception>(() => GetContainer().RegisterInstance(null, null, Guid.NewGuid().ToString(), new HierarchicalLifetimeManager()));
         }

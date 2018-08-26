@@ -9,50 +9,50 @@ namespace Unity.Specification.Injection
     {
 
         [TestMethod]
-        public void Specification_Injection_Factory_Hierarchycal()
+        public void Factory_Hierarchycal()
         {
-            _container.RegisterType<IService>(new HierarchicalLifetimeManager(),
+            Container.RegisterType<IService>(new HierarchicalLifetimeManager(),
                                               new InjectionFactory((c, t, n) => new Service()));
 
-            var service = _container.Resolve<IService>();
+            var service = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreSame(service, _container.Resolve<IService>());
+            Assert.AreSame(service, Container.Resolve<IService>());
 
-            using (var child = _container.CreateChildContainer())
+            using (var child = Container.CreateChildContainer())
             {
                 Assert.AreNotSame(service, child.Resolve<IService>());
             }
         }
 
         [TestMethod]
-        public void Specification_Injection_Factory_Singleton()
+        public void Factory_Singleton()
         {
-            _container.RegisterSingleton<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterSingleton<IService>(new InjectionFactory((c, t, n) => new Service()));
 
-            var service = _container.Resolve<IService>();
+            var service = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreSame(service, _container.Resolve<IService>());
+            Assert.AreSame(service, Container.Resolve<IService>());
         }
 
         [TestMethod]
-        public void Specification_Injection_Factory_Transient()
+        public void Factory_Transient()
         {
-            _container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
 
-            var service = _container.Resolve<IService>();
+            var service = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreNotSame(service, _container.Resolve<IService>());
+            Assert.AreNotSame(service, Container.Resolve<IService>());
         }
 
         [TestMethod]
-        public void Specification_Injection_Factory_IsNotNull()
+        public void Factory_IsNotNull()
         {
-            _container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
 
-            Assert.IsNotNull(_container.Resolve<IService>());
+            Assert.IsNotNull(Container.Resolve<IService>());
         }
     }
 }

@@ -13,7 +13,7 @@ using Unity.Specification.Utility;
 
 namespace Unity.Specification.Container
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
         public void ContainerResolvesRecursiveConstructorDependencies()

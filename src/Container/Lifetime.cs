@@ -2,10 +2,10 @@
 
 namespace Unity.Specification.Container
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void SpecificationTests_Lifetiem_IUnityContainer()
+        public void Lifetieme_IUnityContainer()
         {
             IUnityContainer container = GetContainer();
             Assert.IsNotNull(container.Resolve<IUnityContainer>());

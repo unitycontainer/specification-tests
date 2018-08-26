@@ -10,10 +10,10 @@ namespace Unity.Specification.Resolution
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Specification_Resolution_Enumerable()
+        public void Enumerable()
         {
             // Act
-            var enumerable = _container.Resolve<IEnumerable<IService>>();
+            var enumerable = Container.Resolve<IEnumerable<IService>>();
 
             // Verify
             Assert.AreEqual(4, Service.Instances);
@@ -24,10 +24,10 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_Lazy()
+        public void Enumerable_Lazy()
         {
             // Act
-            var enumerable = _container.Resolve<IEnumerable<Lazy<IService>>>();
+            var enumerable = Container.Resolve<IEnumerable<Lazy<IService>>>();
 
             // Verify
             var array = enumerable.ToArray();
@@ -42,10 +42,10 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_Func()
+        public void Enumerable_Func()
         {
             // Act
-            var enumerable = _container.Resolve<IEnumerable<Func<IService>>>();
+            var enumerable = Container.Resolve<IEnumerable<Func<IService>>>();
 
             // Verify
             var array = enumerable.ToArray();
@@ -54,10 +54,10 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_Lazy_Func()
+        public void Enumerable_Lazy_Func()
         {
             // Act
-            var enumerable = _container.Resolve<IEnumerable<Lazy<Func<IService>>>>();
+            var enumerable = Container.Resolve<IEnumerable<Lazy<Func<IService>>>>();
 
             // Verify
             var array = enumerable.ToArray();
@@ -77,10 +77,10 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_Func_Lazy()
+        public void Enumerable_Func_Lazy()
         {
             // Act
-            var enumerable = _container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
+            var enumerable = Container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
 
             // Verify
             var array = enumerable.ToArray();
@@ -100,13 +100,13 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_Func_Lazy_Instance()
+        public void Enumerable_Func_Lazy_Instance()
         {
             // Setup
-            _container.RegisterInstance(new Lazy<IService>(() => new Service()));
+            Container.RegisterInstance(new Lazy<IService>(() => new Service()));
 
             // Act
-            var enumerable = _container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
+            var enumerable = Container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
 
             // Verify
             var array = enumerable.ToArray();
@@ -120,7 +120,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_SingleService()
+        public void Enumerable_SingleService()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -138,7 +138,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_MixedServices()
+        public void Enumerable_MixedServices()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -164,7 +164,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_MultipleServices()
+        public void Enumerable_MultipleServices()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -187,7 +187,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_RegistrationOrderIsPreserved()
+        public void Enumerable_RegistrationOrderIsPreserved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -210,7 +210,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_NonexistentService()
+        public void Enumerable_NonexistentService()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -222,7 +222,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_ResolvesMixedOpenClosedGenericsAsEnumerable()
+        public void Enumerable_ResolvesMixedOpenClosedGenericsAsEnumerable()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -248,7 +248,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_ResolvesDifferentInstances()
+        public void Enumerable_ResolvesDifferentInstances()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -276,7 +276,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_ResolvesDifferentInstancesForOpenGenerics()
+        public void Enumerable_ResolvesDifferentInstancesForOpenGenerics()
         {
             using (IUnityContainer provider = GetContainer())
             {

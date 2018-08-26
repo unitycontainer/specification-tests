@@ -7,7 +7,7 @@ namespace Unity.Specification.Resolution
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Specification_Resolution_Mapping()
+        public void Mapping()
         {
             using (IUnityContainer container = GetContainer())
             {
@@ -29,7 +29,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Mapping_Generic_Closed()
+        public void Mapping_Generic_Closed()
         {
             using (IUnityContainer container = GetContainer())
             {
@@ -51,7 +51,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Mapping_Generic_Open()
+        public void Mapping_Generic_Open()
         {
             using (IUnityContainer container = GetContainer())
             {
@@ -73,7 +73,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_LastReplacesPrevious()
+        public void Enumerable_LastReplacesPrevious()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -91,7 +91,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_ScopedServiceCanBeResolved()
+        public void Enumerable_ScopedServiceCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -113,7 +113,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_NestedScopedServiceCanBeResolved()
+        public void Enumerable_NestedScopedServiceCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -136,7 +136,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_SingletonServicesComeFromRootProvider()
+        public void Enumerable_SingletonServicesComeFromRootProvider()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -169,7 +169,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_NestedScopedServiceCanBeResolvedWithNoFallbackProvider()
+        public void Enumerable_NestedScopedServiceCanBeResolvedWithNoFallbackProvider()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -189,7 +189,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_OpenGenericServicesCanBeResolved()
+        public void Enumerable_OpenGenericServicesCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -207,7 +207,7 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
-        public void Specification_Resolution_Enumerable_ClosedServicesPreferredOverOpenGenericServices()
+        public void Enumerable_ClosedServicesPreferredOverOpenGenericServices()
         {
             using (IUnityContainer provider = GetContainer())
             {
