@@ -24,6 +24,18 @@ namespace Unity.Specification.Resolution
         }
 
         [TestMethod]
+        public void Enumerable_Empty()
+        {
+            // Act
+            var enumerable = Container.Resolve<IEnumerable<IDictionary<IService, Service>>>();
+
+            // Verify
+            var array = enumerable.ToArray();
+            Assert.IsNotNull(array);
+            Assert.AreEqual(0, array.Length);
+        }
+
+        [TestMethod]
         public void Enumerable_Lazy()
         {
             // Act
