@@ -1,13 +1,13 @@
 <Project>
 
   <PropertyGroup>
-    <Version>2.0.1</Version>
+    <Version>4.0.0</Version>
     <PackageReleaseNotes>This package is compatible with  .NET Standard 1.0 as well as .NET 4.0, 4.5, and 4.7 frameworks.</PackageReleaseNotes>
   </PropertyGroup>
 
 
   <PropertyGroup>
-    <UnityAbstractionsVersion>3.*</UnityAbstractionsVersion>
+    <UnityAbstractionsVersion>4.*</UnityAbstractionsVersion>
   </PropertyGroup>
 
 </Project>
