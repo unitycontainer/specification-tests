@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Injection;
-using Unity.Lifetime;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Injection
+namespace Unity.Specification.Injection.Factory
 {
     public abstract partial class SpecificationTests
     {

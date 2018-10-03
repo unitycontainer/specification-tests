@@ -14,36 +14,19 @@ namespace Unity.Specification.Resolution.Override
                     new InjectionConstructor(),
                     new InjectionProperty("MySomething"))
                 .RegisterType<ISomething, Something1>()
-                .RegisterType<ISomething, Something2>("other");
+                .RegisterType<ISomething, Something2>("other")
+                .RegisterInstance(Name);
         }
 
-
-
-        public class ObjectWithTwoProperties
+        public class ObjectWithThreeProperties
         {
-            private object obj1;
-            private object obj2;
+            [Dependency]
+            public string Name { get; set; }
+
+            public object Property { get; set; }
 
             [Dependency]
-            public object Obj1
-            {
-                get { return obj1; }
-                set { obj1 = value; }
-            }
-
-            [Dependency]
-            public object Obj2
-            {
-                get { return obj2; }
-                set { obj2 = value; }
-            }
-
-            public void Validate()
-            {
-                Assert.IsNotNull(obj1);
-                Assert.IsNotNull(obj2);
-                Assert.AreNotSame(obj1, obj2);
-            }
+            public IUnityContainer Container { get; set; }
         }
 
         public class SimpleTestObject
