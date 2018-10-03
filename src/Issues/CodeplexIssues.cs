@@ -8,7 +8,6 @@ using Unity.Attributes;
 using Unity.Exceptions;
 using Unity.Injection;
 using Unity.Lifetime;
-using Unity.Resolution;
 using Unity.Specification.Utility;
 
 namespace Unity.Specification.Issues
