@@ -1,7 +1,4 @@
 ﻿
-
-using Unity.Attributes;
-
 namespace Unity.Specification.TestData
 {
     public class ObjectWithIndexer

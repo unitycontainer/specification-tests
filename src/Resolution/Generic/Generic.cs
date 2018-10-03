@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Injection;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Resolution
+namespace Unity.Specification.Resolution.Generic
 {
     public abstract partial class SpecificationTests
     {

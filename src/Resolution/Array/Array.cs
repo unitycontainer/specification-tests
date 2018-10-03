@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Resolution
+namespace Unity.Specification.Resolution.Array
 {
     public abstract partial class SpecificationTests
     {
@@ -11,7 +11,7 @@ namespace Unity.Specification.Resolution
         public void Array()
         {
             // Act
-            var array = Container.Resolve<IService[]>();
+            var array = UnityContainerExtensions.Resolve<IService[]>(Container);
 
             // Verify
             Assert.AreEqual(3, Service.Instances);
@@ -24,17 +24,17 @@ namespace Unity.Specification.Resolution
         public void Array_OfSimpleClass()
         {
             // Act
-            Container.RegisterType<SimpleClass[]>("Array");
+            UnityContainerExtensions.RegisterType<SimpleClass[]>(Container, "Array");
 
             // Verify
-            Assert.IsNotNull(Container.Resolve<SimpleClass[]>("Array"));
+            Assert.IsNotNull(UnityContainerExtensions.Resolve<SimpleClass[]>(Container, "Array"));
         }
 
         [TestMethod]
         public void Array_Lazy()
         {
             // Act
-            var array = Container.Resolve<Lazy<IService>[]>();
+            var array = UnityContainerExtensions.Resolve<Lazy<IService>[]>(Container);
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -50,7 +50,7 @@ namespace Unity.Specification.Resolution
         public void Array_Func()
         {
             // Act
-            var array = Container.Resolve<Func<IService>[]>();
+            var array = UnityContainerExtensions.Resolve<Func<IService>[]>(Container);
 
             // Verify
             Assert.IsNotNull(array);
@@ -61,7 +61,7 @@ namespace Unity.Specification.Resolution
         public void Array_LazyFunc()
         {
             // Act
-            var array = Container.Resolve<Lazy<Func<IService>>[]>();
+            var array = UnityContainerExtensions.Resolve<Lazy<Func<IService>>[]>(Container);
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -81,7 +81,7 @@ namespace Unity.Specification.Resolution
         public void Array_FuncLazy()
         {
             // Act
-            var array = Container.Resolve<Func<Lazy<IService>>[]>();
+            var array = UnityContainerExtensions.Resolve<Func<Lazy<IService>>[]>(Container);
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -102,10 +102,10 @@ namespace Unity.Specification.Resolution
         public void Array_FuncLazyInstance()
         {
             // Setup
-            Container.RegisterInstance(null, "Instance", new Lazy<IService>(() => new Service()));
+            UnityContainerExtensions.RegisterInstance(Container, null, "Instance", new Lazy<IService>(() => new Service()));
 
             // Act
-            var array = Container.Resolve<Func<Lazy<IService>>[]>();
+            var array = UnityContainerExtensions.Resolve<Func<Lazy<IService>>[]>(Container);
 
             // Verify
             Assert.AreEqual(0, Service.Instances);
@@ -120,7 +120,7 @@ namespace Unity.Specification.Resolution
         [TestMethod]
         public void Array_EmptyIfNoObjectsRegistered()
         {
-            var results = new List<object>(Container.ResolveAll<object>());
+            var results = new List<object>(UnityContainerExtensions.ResolveAll<object>(Container));
 
             Assert.IsNotNull(results);
             Assert.AreEqual(0, results.Count);

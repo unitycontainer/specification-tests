@@ -1,12 +1,9 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Attributes;
 using Unity.Exceptions;
-using Unity.Injection;
-using Unity.Lifetime;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Issues

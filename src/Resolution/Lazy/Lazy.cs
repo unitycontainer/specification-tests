@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Resolution
+namespace Unity.Specification.Resolution.Lazy
 {
     public abstract partial class SpecificationTests
     {

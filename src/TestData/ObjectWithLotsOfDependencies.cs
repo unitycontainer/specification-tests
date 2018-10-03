@@ -1,7 +1,4 @@
-﻿
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Attributes;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unity.Specification.TestData
 {

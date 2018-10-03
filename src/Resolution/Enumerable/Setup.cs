@@ -5,7 +5,7 @@ using Unity.Injection;
 using Unity.Lifetime;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Resolution
+namespace Unity.Specification.Resolution.Enumerable
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
