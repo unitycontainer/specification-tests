@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity;
+using Unity.Injection;
 
 namespace Unity.Specification.Resolution.Override
 {
@@ -8,7 +8,7 @@ namespace Unity.Specification.Resolution.Override
         [TestInitialize]
         public override void Setup()
         {
-            Container = GetContainer();
+            base.Setup();
 
             Container.RegisterType<ObjectTakingASomething>(
                     new InjectionConstructor(),

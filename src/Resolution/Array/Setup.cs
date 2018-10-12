@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 using Unity.Injection;
-using Unity.Lifetime;
-using Unity.Specification.TestData;
 
 namespace Unity.Specification.Resolution.Array
 {
@@ -12,7 +11,7 @@ namespace Unity.Specification.Resolution.Array
         [TestInitialize]
         public override void Setup()
         {
-            Container = GetContainer();
+            base.Setup();
 
             Container.RegisterType(typeof(IList<>), typeof(List<>), new InjectionConstructor());
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
@@ -24,6 +23,59 @@ namespace Unity.Specification.Resolution.Array
             Service.Instances = 0;
         }
 
+        public interface IFoo<TEntity>
+        {
+            TEntity Value { get; }
+        }
+
+        public interface IFoo { }
+        public interface IFoo1 { }
+        public interface IFoo2 { }
+
+        public class Foo<TEntity> : IFoo<TEntity>
+        {
+            public Foo()
+            {
+            }
+
+            public Foo(TEntity value)
+            {
+                Value = value;
+            }
+
+            public TEntity Value { get; }
+        }
+
+        public class Foo : IFoo, IFoo1, IFoo2
+        {
+        }
+
+        public interface IService
+        {
+        }
+
+        public interface IGenericService<T>
+        {
+        }
+
+        public class Service : IService, IDisposable
+        {
+            public string ID { get; } = Guid.NewGuid().ToString();
+
+            public static int Instances = 0;
+
+            public Service()
+            {
+                Interlocked.Increment(ref Instances);
+            }
+
+            public bool Disposed = false;
+            public void Dispose()
+            {
+                Disposed = true;
+            }
+        }
+
         public interface ITest1<T> { }
 
         public interface ITest2<T> { }
@@ -32,5 +84,6 @@ namespace Unity.Specification.Resolution.Array
         {
             public string Id { get; } = Guid.NewGuid().ToString();
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Injection;
 
 namespace Unity.Specification.Injection.Property
 {
@@ -25,5 +26,24 @@ namespace Unity.Specification.Injection.Property
             Assert.IsNotNull(service);
             Assert.IsInstanceOfType(service, typeof(object));
         }
+
+
+        [TestMethod]
+        public void Property_CanInjectPropOnAttributed()
+        {
+            // Arrange
+            Container.RegisterType<ObjectWithThreeProperties>(
+                new InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
+
+            // Act
+            var result = Container.Resolve<ObjectWithThreeProperties>();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Name);
+            Assert.IsNotNull(result.Container);
+            Assert.IsNotNull(result.Property);
+        }
+
     }
 }

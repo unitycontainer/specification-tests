@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Lifetime;
-using Unity.Specification.TestData;
 
 namespace Unity.Specification.Issues
 {
-    public abstract partial class ReportedIssuesTests
+    public abstract partial class SpecificationTests : TestFixtureBase
     {
 
         [TestMethod]

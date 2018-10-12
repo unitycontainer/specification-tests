@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Injection;
 
 namespace Unity.Specification.Resolution.Override
 {
@@ -49,7 +50,6 @@ namespace Unity.Specification.Resolution.Override
         }
 
         [TestMethod]
-        [Ignore]
         public void Property_CanOverridePropOnAttributed()
         {
             // Arrange

@@ -1,14 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Unity.Exceptions;
-using Unity.Specification.TestData;
+using Unity.Injection;
 
 namespace Unity.Specification.Issues
 {
-    public abstract partial class ReportedIssuesTests
+
+    public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
         public void unitycontainer_unity_211()
@@ -262,7 +262,6 @@ namespace Unity.Specification.Issues
             { }
 
             [InjectionConstructor]
-            [SuppressMessage("ReSharper", "UnusedParameter.Local")]
             public TestClass(TestClass _) //1
             {
             }

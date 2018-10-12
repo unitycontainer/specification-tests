@@ -25,7 +25,7 @@ namespace Unity.Specification.Registration
             Container.RegisterInstance(null, instance, instance, null);
 
             Assert.AreEqual(Container.Resolve<string>(instance), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<string>());
+            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<int>());
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace Unity.Specification.Registration
             Container.RegisterInstance(instance, instance);
 
             Assert.AreEqual(Container.Resolve<string>(instance), instance);
-            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<string>());
+            Assert.ThrowsException<ResolutionFailedException>(() => Container.Resolve<int>());
         }
 
         [TestMethod]

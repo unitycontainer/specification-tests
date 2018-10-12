@@ -8,6 +8,7 @@
 
   <PropertyGroup>
     <UnityAbstractionsVersion>4.*</UnityAbstractionsVersion>
+    <TargetFrameworks>net47;net46;net45;netcoreapp1.0;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
 </Project>

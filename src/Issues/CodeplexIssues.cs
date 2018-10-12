@@ -1,15 +1,16 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Exceptions;
+using Unity.Injection;
 using Unity.Specification.Utility;
 
 namespace Unity.Specification.Issues
 {
-    public abstract partial class ReportedIssuesTests : TestFixtureBase
+    public abstract partial class SpecificationTests : TestFixtureBase
     {
         // http://www.codeplex.com/unity/WorkItem/View.aspx?WorkItemId=1307
         [TestMethod]

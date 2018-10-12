@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Specification.TestData;
+using Unity.Injection;
 
 namespace Unity.Specification.Injection.Factory
 {
