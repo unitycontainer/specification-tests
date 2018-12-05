@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Lifetime;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Resolution.Enumerable

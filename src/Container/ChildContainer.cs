@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Exceptions;
-using Unity.Lifetime;
 
 namespace Unity.Specification.Container
 {
