@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Injection;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Injection.Constructor

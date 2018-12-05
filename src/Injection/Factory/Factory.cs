@@ -1,56 +1,46 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Injection;
+using Unity.Exceptions;
 
 namespace Unity.Specification.Injection.Factory
 {
     public abstract partial class SpecificationTests
     {
-
         [TestMethod]
-        public void Factory_Hierarchycal()
+        public void ShortSignature()
         {
-            Container.RegisterType<IService>(new HierarchicalLifetimeManager(),
-                                              new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Unity.Injection.Factory((c, t, n) => new Service()));
 
             var service = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreSame(service, Container.Resolve<IService>());
-
-            using (var child = Container.CreateChildContainer())
-            {
-                Assert.AreNotSame(service, child.Resolve<IService>());
-            }
         }
 
         [TestMethod]
-        public void Factory_Singleton()
+        public void LongSignature()
         {
-            Container.RegisterSingleton<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Unity.Injection.Factory(c => new Service()));
 
             var service = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreSame(service, Container.Resolve<IService>());
         }
 
         [TestMethod]
-        public void Factory_Transient()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void ShortSignatureThrowsOnNull()
         {
-            Container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Unity.Injection.Factory(c => null));
 
-            var service = Container.Resolve<IService>();
-
-            Assert.IsNotNull(service);
-            Assert.AreNotSame(service, Container.Resolve<IService>());
+            Container.Resolve<IService>();
         }
 
         [TestMethod]
-        public void Factory_IsNotNull()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void LongSignatureThrowsOnNull()
         {
-            Container.RegisterType<IService>(new InjectionFactory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Unity.Injection.Factory((c, t, n) => null));
 
-            Assert.IsNotNull(Container.Resolve<IService>());
+            Container.Resolve<IService>();
         }
     }
 }

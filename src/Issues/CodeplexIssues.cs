@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Exceptions;
-using Unity.Injection;
 using Unity.Specification.Utility;
 
 namespace Unity.Specification.Issues
