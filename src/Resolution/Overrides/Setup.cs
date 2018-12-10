@@ -1,19 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Resolution.Override
+namespace Unity.Specification.Resolution.Overrides
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
+
         [TestInitialize]
         public override void Setup()
         {
             base.Setup();
 
-            Container.RegisterType<ObjectTakingASomething>(
-                    new InjectionConstructor(),
-                    new InjectionProperty("MySomething"))
+            Container.RegisterType<ObjectWithProperty>(
+                    Execute.Constructor(),
+                    Resolve.Property(nameof(ObjectWithProperty.MyProperty)))
                 .RegisterType<ISomething, Something1>()
-                .RegisterType<ISomething, Something2>("other")
+                .RegisterType<ISomething, Something2>(Name)
                 .RegisterInstance(Name);
         }
 
@@ -58,16 +59,17 @@ namespace Unity.Specification.Resolution.Override
         public class Something1 : ISomething { }
         public class Something2 : ISomething { }
 
-        public class ObjectTakingASomething
+        public class ObjectWithProperty
         {
-            public ISomething MySomething { get; set; }
-            public ObjectTakingASomething()
+            public ISomething MyProperty { get; set; }
+
+            public ObjectWithProperty()
             {
             }
 
-            public ObjectTakingASomething(ISomething something)
+            public ObjectWithProperty(ISomething property)
             {
-                MySomething = something;
+                MyProperty = property;
             }
         }
 

@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Resolution.Override
+namespace Unity.Specification.Resolution.Overrides
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Dependency()
+        public void Overrides_Collection()
         {
         }
     }

@@ -1,9 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Unity.Injection;
 
-namespace Unity.Specification.Resolution.Lazy
+namespace Unity.Specification.Resolution.Deferred
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -22,6 +25,44 @@ namespace Unity.Specification.Resolution.Lazy
             Service.Instances = 0;
         }
 
+        public static void AreEquivalent(ICollection expected, string[] actual)
+        {
+            if (expected == actual)
+            {
+                return;
+            }
+
+            if (expected.Count != actual.Length)
+            {
+                throw new AssertFailedException("collections differ in size");
+            }
+
+            var expectedCounts = expected.Cast<object>().GroupBy(e => e).ToDictionary(g => g.Key, g => g.Count());
+            var actualCounts = actual.Cast<object>().GroupBy(e => e).ToDictionary(g => g.Key, g => g.Count());
+
+            foreach (var kvp in expectedCounts)
+            {
+                int actualCount = 0;
+                if (actualCounts.TryGetValue(kvp.Key, out actualCount))
+                {
+                    if (actualCount != kvp.Value)
+                    {
+                        throw new AssertFailedException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "collections have different count for element {0}", kvp.Key));
+                    }
+                }
+                else
+                {
+                    throw new AssertFailedException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "actual does not contain element {0}", kvp.Key));
+                }
+            }
+        }
+
+
+        public class ObjectThatGetsAResolver
+        {
+            [Dependency]
+            public Func<IService> LoggerResolver { get; set; }
+        }
 
         public interface IFoo<TEntity>
         {

@@ -2,7 +2,7 @@
 
 namespace Unity.Specification.TestData
 {
-    public class ObjectWithAmbiguousConstructors
+    public class TypeWithAmbiguousCtors
     {
         public const string One =   "1";
         public const string Two =   "2";
@@ -12,27 +12,27 @@ namespace Unity.Specification.TestData
 
         public string Signature { get; }
 
-        public ObjectWithAmbiguousConstructors()
+        public TypeWithAmbiguousCtors()
         {
             Signature = One;
         }
 
-        public ObjectWithAmbiguousConstructors(int first, string second, float third)
+        public TypeWithAmbiguousCtors(int first, string second, float third)
         {
             Signature = Two;
         }
 
-        public ObjectWithAmbiguousConstructors(Type first, Type second, Type third)
+        public TypeWithAmbiguousCtors(Type first, Type second, Type third)
         {
             Signature = Three;
         }
 
-        public ObjectWithAmbiguousConstructors(string first, string second, string third)
+        public TypeWithAmbiguousCtors(string first, string second, string third)
         {
             Signature = first;
         }
 
-        public ObjectWithAmbiguousConstructors(string first, [Dependency(Five)]string second, IUnityContainer third)
+        public TypeWithAmbiguousCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
         {
             Signature = second;
         }

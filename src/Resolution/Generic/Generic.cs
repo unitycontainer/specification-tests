@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Unity.Injection;
 using Unity.Specification.TestData;
 
 namespace Unity.Specification.Resolution.Generic

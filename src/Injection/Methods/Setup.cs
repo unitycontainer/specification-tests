@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Injection.Method
+namespace Unity.Specification.Injection.Methods
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
