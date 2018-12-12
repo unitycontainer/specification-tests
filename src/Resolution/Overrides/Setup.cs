@@ -11,7 +11,7 @@ namespace Unity.Specification.Resolution.Overrides
             base.Setup();
 
             Container.RegisterType<ObjectWithProperty>(
-                    Execute.Constructor(),
+                    Invoke.Constructor(),
                     Resolve.Property(nameof(ObjectWithProperty.MyProperty)))
                 .RegisterType<ISomething, Something1>()
                 .RegisterType<ISomething, Something2>(Name)

@@ -19,7 +19,7 @@ namespace Unity.Specification.Injection.Constructor
         public void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, Execute.Constructor(parameters));
+            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));
 
             // Act
             var result = Container.Resolve(typeToResolve, name);
@@ -36,7 +36,7 @@ namespace Unity.Specification.Injection.Constructor
         public void Validation(Type typeFrom, Type typeTo, string name, object[] parameters)
         {
             // Act
-            Container.RegisterType(typeFrom, typeTo, name, null, Execute.Constructor(parameters));
+            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));
         }
 
 
@@ -45,7 +45,7 @@ namespace Unity.Specification.Injection.Constructor
         public void Default(Type typeFrom, Type typeTo, string name, Type typeToResolve)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, Execute.Constructor());
+            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor());
 
             // Act
             var result = Container.Resolve(typeToResolve, name);
@@ -62,7 +62,7 @@ namespace Unity.Specification.Injection.Constructor
         public void DefaultCtorValidation(Type type, string name)
         {
             // Setup
-            Container.RegisterType(null, type, name, null, Execute.Constructor());
+            Container.RegisterType(null, type, name, null, Invoke.Constructor());
 
             // Act
             var result = Container.Resolve(type, name);

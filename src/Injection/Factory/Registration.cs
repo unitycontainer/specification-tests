@@ -11,7 +11,7 @@ namespace Unity.Specification.Injection.Factory
         [TestMethod]
         public void Factory_IsNotNull()
         {
-            Container.RegisterType<IService>(Execute.Factory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => new Service()));
             Assert.IsNotNull(Container.Resolve<IService>());
         }
 
@@ -21,7 +21,7 @@ namespace Unity.Specification.Injection.Factory
         public void ShortSignatureThrowsOnNull()
         {
             Func<IUnityContainer, object> factoryFunc = null;
-            Container.RegisterType<IService>(Execute.Factory(factoryFunc));
+            Container.RegisterType<IService>(Invoke.Factory(factoryFunc));
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace Unity.Specification.Injection.Factory
         public void LongSignatureThrowsOnNull()
         {
             Func<IUnityContainer, Type, string, object> factoryFunc = null;
-            Container.RegisterType<IService>(Execute.Factory(factoryFunc));
+            Container.RegisterType<IService>(Invoke.Factory(factoryFunc));
         }
     }
 }

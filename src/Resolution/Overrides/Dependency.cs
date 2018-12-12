@@ -11,7 +11,7 @@ namespace Unity.Specification.Resolution.Overrides
             // Setup
             const int configuredValue = 15; // Just need a number, value has no significance.
             const int expectedValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Execute.Constructor(configuredValue));
+            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
 
             // Act
             var result = Container.Resolve<SimpleTestObject>(Override.Parameter("x", expectedValue));
@@ -26,7 +26,7 @@ namespace Unity.Specification.Resolution.Overrides
             // Setup
             const int configuredValue = 15; // Just need a number, value has no significance.
             const int overrideValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Execute.Constructor(configuredValue));
+            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
 
             // Act
             Container.Resolve<SimpleTestObject>(Override.Parameter("x", overrideValue)
@@ -91,7 +91,7 @@ namespace Unity.Specification.Resolution.Overrides
             // Setup
             Container
                 .RegisterType<ObjectThatDependsOnSimpleObject>(Resolve.Property("OtherTestObject"))
-                .RegisterType<SimpleTestObject>(Execute.Constructor());
+                .RegisterType<SimpleTestObject>(Invoke.Constructor());
 
             // Act
             var overrideValue = new SimpleTestObject(15); // arbitrary value
@@ -124,7 +124,7 @@ namespace Unity.Specification.Resolution.Overrides
         {
             // Setup
             Container
-                .RegisterType<ObjectTakingASomething>(Execute.Constructor(),
+                .RegisterType<ObjectTakingASomething>(Invoke.Constructor(),
                                                       Resolve.Property("MySomething"))
                 .RegisterType<ISomething, Something1>()
                 .RegisterType<ISomething, Something2>("other");
@@ -143,8 +143,8 @@ namespace Unity.Specification.Resolution.Overrides
         {
             // Setup
             Container
-                .RegisterType<Outer>(Execute.Constructor(typeof(Inner), 10))
-                .RegisterType<Inner>(Execute.Constructor(20, "ignored"));
+                .RegisterType<Outer>(Invoke.Constructor(typeof(Inner), 10))
+                .RegisterType<Inner>(Invoke.Constructor(20, "ignored"));
 
             // resolves overriding only the parameter for the Bar instance
 

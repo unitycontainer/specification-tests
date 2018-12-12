@@ -10,7 +10,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType<LegalInjectionMethod>(
-                Execute.Method(nameof(LegalInjectionMethod.InjectMe)));
+                Invoke.Method(nameof(LegalInjectionMethod.InjectMe)));
 
             // Act
             LegalInjectionMethod result = Container.Resolve<LegalInjectionMethod>();
@@ -25,7 +25,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Act
             Container.RegisterType<OpenGenericInjectionMethod>(
-                Execute.Method(nameof(OpenGenericInjectionMethod.InjectMe)));
+                Invoke.Method(nameof(OpenGenericInjectionMethod.InjectMe)));
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Unity.Specification.Injection.Methods
         public void CannotConfigureMethodWithOutParams()
         {
             // Act
-            Container.RegisterType<OutParams>(Execute.Method(nameof(OutParams.InjectMe), 12));
+            Container.RegisterType<OutParams>(Invoke.Method(nameof(OutParams.InjectMe), 12));
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Act
             Container.RegisterType<RefParams>(
-                    Execute.Method(nameof(RefParams.InjectMe), 15));
+                    Invoke.Method(nameof(RefParams.InjectMe), 15));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType<InheritedClass>(
-                Execute.Method(nameof(InheritedClass.InjectMe)));
+                Invoke.Method(nameof(InheritedClass.InjectMe)));
 
             // Act
             var result = Container.Resolve<InheritedClass>();
@@ -65,7 +65,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Execute.Method(nameof(GuineaPig.Inject1)));
+                Invoke.Method(nameof(GuineaPig.Inject1)));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -79,7 +79,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Execute.Method(nameof(GuineaPig.Inject2), "Hello"));
+                Invoke.Method(nameof(GuineaPig.Inject2), "Hello"));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -93,7 +93,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Execute.Method(nameof(GuineaPig.Inject3), 17));
+                Invoke.Method(nameof(GuineaPig.Inject3), 17));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -108,8 +108,8 @@ namespace Unity.Specification.Injection.Methods
         {
             // Setup
             Container.RegisterType<GuineaPig>(
-                    Execute.Method(nameof(GuineaPig.Inject3), 37),
-                    Execute.Method(nameof(GuineaPig.Inject2), "Hi there"));
+                    Invoke.Method(nameof(GuineaPig.Inject3), 37),
+                    Invoke.Method(nameof(GuineaPig.Inject2), "Hi there"));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -136,7 +136,7 @@ namespace Unity.Specification.Injection.Methods
         {
             // Verify
             Container.RegisterType<GuineaPig>(
-                Execute.Method(nameof(GuineaPig.ShouldntBeCalled)));
+                Invoke.Method(nameof(GuineaPig.ShouldntBeCalled)));
         }
 
 

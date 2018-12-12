@@ -48,7 +48,7 @@ namespace Unity.Specification.Injection.Constructor
         [TestMethod]
         public void SelectByValueTypes()
         {
-            Container.RegisterType<TypeWithAmbiguousCtors>(Execute.Constructor(Inject.Parameter(typeof(string)),
+            Container.RegisterType<TypeWithAmbiguousCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
                 Inject.Parameter(typeof(string)),
                 Inject.Parameter(typeof(int))));
             Assert.AreEqual(TypeWithAmbiguousCtors.Three, Container.Resolve<TypeWithAmbiguousCtors>().Signature);

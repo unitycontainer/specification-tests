@@ -7,7 +7,7 @@ namespace Unity.Specification.Injection.Factory
         [TestMethod]
         public void Factory_Hierarchical()
         {
-            Container.RegisterType<IService>(Lifetime.Hierarchical, Execute.Factory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Lifetime.Hierarchical, Invoke.Factory((c, t, n) => new Service()));
 
             var service = Container.Resolve<IService>();
 
@@ -23,7 +23,7 @@ namespace Unity.Specification.Injection.Factory
         [TestMethod]
         public void Factory_Singleton()
         {
-            Container.RegisterSingleton<IService>(Execute.Factory((c, t, n) => new Service()));
+            Container.RegisterSingleton<IService>(Invoke.Factory((c, t, n) => new Service()));
 
             var service = Container.Resolve<IService>();
 
@@ -34,7 +34,7 @@ namespace Unity.Specification.Injection.Factory
         [TestMethod]
         public void Factory_Transient()
         {
-            Container.RegisterType<IService>(Execute.Factory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => new Service()));
 
             var service = Container.Resolve<IService>();
 
