@@ -11,24 +11,56 @@ namespace Unity.Specification.Injection.Constructor
             // Format: Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator
             get
             {
-                //
+                // SelectAndResolveByValue
                 yield return new object[]
                 {
+                    "SelectAndResolveByValue",                  //  string name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(object),                             //  Type typeTo, 
-                    "",                                         //  string name, 
-                    typeof(object),                             //  Type typeToResolve, 
-                    new object[] {},                            //  object[] parameters, 
-                    new Func<object, bool>(r => true)           //  Func<object, bool> validator
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    new object[] {
+                        Resolve.Parameter(typeof(string)),      //  object[] parameters, 
+                        string.Empty,
+                        string.Empty },
+                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
+                        TypeWithAmbiguousCtors.Four == ((TypeWithAmbiguousCtors)r).Signature)
+                };
+
+
+                // ResolveNamedTypeArgument
+                yield return new object[]
+                {
+                    "ResolveNamedTypeArgument",                 //  string name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    new object[] {
+                        typeof(string),                         //  object[] parameters, 
+                        typeof(string),
+                        typeof(IUnityContainer)},
+                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
+                        TypeWithAmbiguousCtors.Five == ((TypeWithAmbiguousCtors)r).Signature)
+                };
+
+
+                // SelectByValues
+                yield return new object[]
+                {
+                    "SelectByValues",                           //  string name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
+                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
+                    new Func<object, bool>(r => TypeWithAmbiguousCtors.Two == ((TypeWithAmbiguousCtors)r).Signature)           //  Func<object, bool> validator
                 };
 
 
                 // DefaultConstructorGeneric
                 yield return new object[]
                 {
+                    "DefaultConstructorGeneric",                //  string name, 
                     null,                                       //  Type typeFrom, 
                     typeof(InjectionTestCollection<>),          //  Type typeTo, 
-                    "DefaultConstructorGeneric",                //  string name, 
                     typeof(InjectionTestCollection<object>),    //  Type typeToResolve, 
                     new object[] { },                           //  object[] parameters, 
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
@@ -36,49 +68,16 @@ namespace Unity.Specification.Injection.Constructor
                 };
 
 
-                // SelectAndResolveByValue
+                //
                 yield return new object[]
                 {
+                    "",                                         //  string name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    "SelectAndResolveByValue",                  //  string name, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
-                    new object[] {                              
-                        Resolve.Parameter(typeof(string)),      //  object[] parameters, 
-                        string.Empty,
-                        string.Empty },                            
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithAmbiguousCtors.Four == ((TypeWithAmbiguousCtors)r).Signature)           
+                    typeof(object),                             //  Type typeTo, 
+                    typeof(object),                             //  Type typeToResolve, 
+                    new object[] {},                            //  object[] parameters, 
+                    new Func<object, bool>(r => true)           //  Func<object, bool> validator
                 };
-
-
-                // ResolveNamedTypeArgument
-                yield return new object[]
-                {
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    "ResolveNamedTypeArgument",                 //  string name, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
-                    new object[] {
-                        typeof(string),                         //  object[] parameters, 
-                        typeof(string),
-                        typeof(IUnityContainer)},               
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithAmbiguousCtors.Five == ((TypeWithAmbiguousCtors)r).Signature)           
-                };
-
-
-                // SelectByValues
-                yield return new object[]
-                {
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    "SelectByValues",                           //  string name, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
-                    new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
-                    new Func<object, bool>(r => TypeWithAmbiguousCtors.Two == ((TypeWithAmbiguousCtors)r).Signature)           //  Func<object, bool> validator
-                };
-
             }
         }
 

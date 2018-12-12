@@ -16,7 +16,7 @@ namespace Unity.Specification.Injection.Constructor
 
         [DataTestMethod]
         [DynamicData(nameof(ConstructorSelectionTestData))]
-        public void Selection(Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator)
+        public void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
         {
             // Setup
             Container.RegisterType(typeFrom, typeTo, name, null, Execute.Constructor(parameters));
