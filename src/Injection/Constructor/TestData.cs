@@ -69,6 +69,42 @@ namespace Unity.Specification.Injection.Constructor
             }
         }
 
+        public class TypeWithMultipleCtors
+        {
+            public const string One = "1";
+            public const string Two = "2";
+            public const string Three = "3";
+            public const string Four = "4";
+            public const string Five = "5";
+
+            public string Signature { get; }
+
+            public TypeWithMultipleCtors()
+            {
+                Signature = One;
+            }
+
+            public TypeWithMultipleCtors(int first, string second, float third)
+            {
+                Signature = Two;
+            }
+
+            public TypeWithMultipleCtors(Type first, Type second, Type third)
+            {
+                Signature = Three;
+            }
+
+            public TypeWithMultipleCtors(string first, string second, string third)
+            {
+                Signature = first;
+            }
+
+            public TypeWithMultipleCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
+            {
+                Signature = second;
+            }
+        }
+
         public class TypeWithAmbiguousCtors
         {
             public const string One = "1";
@@ -96,14 +132,16 @@ namespace Unity.Specification.Injection.Constructor
 
             public TypeWithAmbiguousCtors(string first, string second, string third)
             {
-                Signature = first;
+                Signature = Four;
             }
 
-            public TypeWithAmbiguousCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
+            public TypeWithAmbiguousCtors(object first, object second, object third)
             {
-                Signature = second;
+                Signature = Five;
             }
         }
+
+
 
         public class InjectionTestCollection<T>
         {

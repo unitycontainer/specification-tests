@@ -16,14 +16,14 @@ namespace Unity.Specification.Injection.Constructor
                 {
                     "SelectAndResolveByValue",                  //  string name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
                     new object[] {
                         Resolve.Parameter(typeof(string)),      //  object[] parameters, 
                         string.Empty,
                         string.Empty },
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithAmbiguousCtors.Four == ((TypeWithAmbiguousCtors)r).Signature)
+                        TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
                 };
 
 
@@ -32,14 +32,14 @@ namespace Unity.Specification.Injection.Constructor
                 {
                     "ResolveNamedTypeArgument",                 //  string name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
                     new object[] {
                         typeof(string),                         //  object[] parameters, 
                         typeof(string),
                         typeof(IUnityContainer)},
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithAmbiguousCtors.Five == ((TypeWithAmbiguousCtors)r).Signature)
+                        TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
                 };
 
 
@@ -48,10 +48,10 @@ namespace Unity.Specification.Injection.Constructor
                 {
                     "SelectByValues",                           //  string name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
                     new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
-                    new Func<object, bool>(r => TypeWithAmbiguousCtors.Two == ((TypeWithAmbiguousCtors)r).Signature)           //  Func<object, bool> validator
+                    new Func<object, bool>(r => TypeWithMultipleCtors.Two == ((TypeWithMultipleCtors)r).Signature)           //  Func<object, bool> validator
                 };
 
 

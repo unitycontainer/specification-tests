@@ -22,11 +22,25 @@ namespace Unity.Specification.Injection.Constructor
                 //    new object[] {}                             //  object[] parameters, 
                 //};
 
+
+                yield return new object[]
+                {
+                    null,                                       //  Type typeFrom, 
+                    typeof(object),                             //  Type typeTo, 
+                    "Ambiguous Constructors",                   //  string name, 
+                    new object[]                                //  object[] parameters, 
+                    {
+                        string.Empty,
+                        string.Empty,
+                        string.Empty
+                    }               
+                };
+
                 // IncorrectType
                 yield return new object[]
                 {
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
                     "IncorrectType",                            //  string name, 
                     new object[] { typeof(int) }                //  object[] parameters, 
                 };
@@ -35,7 +49,7 @@ namespace Unity.Specification.Injection.Constructor
                 yield return new object[]
                 {
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithAmbiguousCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
                     "IncorrectValue",                           //  string name, 
                     new object[] { 0 }                          //  object[] parameters, 
                 };
@@ -48,10 +62,10 @@ namespace Unity.Specification.Injection.Constructor
         [TestMethod]
         public void SelectByValueTypes()
         {
-            Container.RegisterType<TypeWithAmbiguousCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
+            Container.RegisterType<TypeWithMultipleCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
                 Inject.Parameter(typeof(string)),
                 Inject.Parameter(typeof(int))));
-            Assert.AreEqual(TypeWithAmbiguousCtors.Three, Container.Resolve<TypeWithAmbiguousCtors>().Signature);
+            Assert.AreEqual(TypeWithMultipleCtors.Three, Container.Resolve<TypeWithMultipleCtors>().Signature);
         }
 
     }

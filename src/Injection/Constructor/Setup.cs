@@ -10,8 +10,8 @@ namespace Unity.Specification.Injection.Constructor
         {
             base.Setup();
 
-            Container.RegisterInstance(TypeWithAmbiguousCtors.Four);
-            Container.RegisterInstance(TypeWithAmbiguousCtors.Five, TypeWithAmbiguousCtors.Five);
+            Container.RegisterInstance(TypeWithMultipleCtors.Four);
+            Container.RegisterInstance(TypeWithMultipleCtors.Five, TypeWithMultipleCtors.Five);
         }
 
         [DataTestMethod]
