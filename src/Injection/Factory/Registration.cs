@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Unity.Specification.Injection.Factory
 {
-    [SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
     public abstract partial class SpecificationTests
     {
 
