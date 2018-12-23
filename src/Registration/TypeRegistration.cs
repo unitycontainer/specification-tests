@@ -93,7 +93,7 @@ namespace Unity.Specification.Registration
                                 where r.RegisteredType == typeof(IService) & r.Name == Name
                                 select r;
 
-            var containerRegistrations = registrations as IContainerRegistration[] ?? registrations.ToArray();
+            var containerRegistrations = registrations.ToArray();
 
             Assert.AreEqual(1, containerRegistrations.Count());
 
