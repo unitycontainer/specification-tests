@@ -58,4 +58,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resolution\Method\" />
+    <Folder Include="Resolution\Property\" />
+  </ItemGroup>
+
 </Project>
