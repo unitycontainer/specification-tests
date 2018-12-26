@@ -11,6 +11,8 @@ namespace Unity.Specification.Registration
         {
             base.Setup();
 
+            Container.RegisterInstance(Name);
+
             Container.RegisterType<ILogger, MockLogger>();
             Container.RegisterType<ILogger, MockLogger>(Name);
 

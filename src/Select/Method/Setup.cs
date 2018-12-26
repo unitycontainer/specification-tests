@@ -11,6 +11,7 @@ namespace Unity.Specification.Select.Method
         {
             base.Setup();
 
+            Container.RegisterInstance(Name);
             Container.RegisterType(typeof(IInjectedMethodTest), typeof(InjectedMethodTest));
             Container.RegisterType(typeof(IGenericInjectedMethodTest<>), typeof(GenericInjectedMethodTest<>));
         }
