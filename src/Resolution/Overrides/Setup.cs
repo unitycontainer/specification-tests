@@ -35,6 +35,7 @@ namespace Unity.Specification.Resolution.Overrides
             {
             }
 
+            [InjectionConstructor]
             public SimpleTestObject(int x)
             {
                 X = x;
