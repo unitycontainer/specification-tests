@@ -200,23 +200,6 @@ namespace Unity.Specification.Issues.Codeplex
             Assert.IsFalse(errors);
         }
 
-        // https://unity.codeplex.com/workitem/11899
-        [TestMethod]
-        public void ResolveDelegateThrowsExplicitException()
-        {
-            using (var container = GetContainer())
-            {
-                try
-                {
-                    var func = container.Resolve<Func<string, object>>();
-                }
-                catch (ResolutionFailedException e)
-                {
-                    AssertExtensions.IsInstanceOfType(e.InnerException, typeof(InvalidOperationException));
-                }
-            }
-        }
-
         // https://unity.codeplex.com/workitem/12745
         [TestMethod]
         public void ResolveInterfaceThrowsExplicitException()

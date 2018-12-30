@@ -37,21 +37,12 @@
     </PackageReference>
   </ItemGroup>
   
-  <PropertyGroup>
-    <UnityAbstractions>..\..\Abstractions\src\Unity.Abstractions.csproj</UnityAbstractions>
-    <RootNamespace>Unity.Specification</RootNamespace>
-  </PropertyGroup>
-  
-  <ItemGroup Condition="Exists('$(UnityAbstractions)')">
-    <ProjectReference Include="$(UnityAbstractions)">
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Container\tests\Unity.Specification\Unity.Specification.Tests.v5.csproj" />
   </ItemGroup>
   
-  <ItemGroup Condition="!Exists('$(UnityAbstractions)')">
-    <PackageReference Include="Unity.Abstractions" Version="$(UnityAbstractionsVersion)">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+  <ItemGroup>
+    <Folder Include="BuildUp\" />
   </ItemGroup>
 
 </Project>
