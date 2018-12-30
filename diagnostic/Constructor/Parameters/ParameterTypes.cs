@@ -24,8 +24,7 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
         public void CanBuildUpExistingObjectOnTypeWithCtorWithOutParameter()
         {
             // Setup
-            string ignored = "ignored";
-            TypeWithConstructorWithOutParameter instance = new TypeWithConstructorWithOutParameter(out ignored);
+            TypeWithConstructorWithOutParameter instance = new TypeWithConstructorWithOutParameter(out _);
             Container.RegisterType<TypeWithConstructorWithOutParameter>(new InjectionProperty("Property", 10));
 
             // Act 
@@ -33,6 +32,19 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
 
             // Verify
             Assert.AreEqual(10, instance.Property);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        // https://github.com/unitycontainer/container/issues/122
+        public void GitHub_Container_122()
+        {
+            Container.RegisterType<I1, C1>();
+            Container.RegisterType<I2, C2>();
+
+            //next line returns StackOverflowException
+            Container.Resolve<I2>();
         }
     }
 }
