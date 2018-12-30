@@ -58,4 +58,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Constructor\Selection\" />
+    <Folder Include="Field\Override\" />
+    <Folder Include="Parameter\Override\" />
+  </ItemGroup>
+
 </Project>
