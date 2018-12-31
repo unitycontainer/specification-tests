@@ -26,6 +26,25 @@ namespace Unity.Specification.Field.Injection
         public IUnityContainer Container;
     }
 
+
+    public class ObjectWithFourFields : ObjectWithThreeFields
+    {
+        public object SubField;
+
+        public readonly object ReadOnlyField;
+    }
+
+    public class ObjectWithDependency
+    {
+        public ObjectWithDependency(ObjectWithThreeFields obj)
+        {
+            Dependency = obj;
+        }
+
+        public ObjectWithThreeFields Dependency { get; }
+
+    }
+
     #endregion
 
 }

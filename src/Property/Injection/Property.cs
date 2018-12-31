@@ -1,37 +1,127 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Injection;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unity.Specification.Property.Injection
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        public void BaseLine()
+        {
+            // Act
+            var result = Container.Resolve<ObjectWithThreeProperties>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Property);
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void None()
         {
             // Act
-            var service = Container.Resolve(typeof(object), null, null);
-
-            // Assert
-            Assert.IsNotNull(service);
-            Assert.IsInstanceOfType(service, typeof(object));
+            Container.RegisterType<ObjectWithThreeProperties>(
+                Inject.Property("Bogus Name"));
         }
 
-
         [TestMethod]
-        public void CanInjectOnAttributed()
+        public void ByName()
         {
-            // Arrange
+            // Setup
             Container.RegisterType<ObjectWithThreeProperties>(
-                new InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
+                Inject.Property(nameof(ObjectWithThreeProperties.Property)));
 
             // Act
             var result = Container.Resolve<ObjectWithThreeProperties>();
 
-            // Assert
+            // Verify
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Name);
-            Assert.IsNotNull(result.Container);
             Assert.IsNotNull(result.Property);
+            Assert.IsInstanceOfType(result.Property, typeof(object));
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        public void ByNameValue()
+        {
+            // Setup
+            var test = "test";
+            Container.RegisterType<ObjectWithThreeProperties>(
+                Inject.Property(nameof(ObjectWithThreeProperties.Property), test));
+
+            // Act
+            var result = Container.Resolve<ObjectWithThreeProperties>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Property);
+            Assert.AreSame(result.Property, test);
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        public void ByNameInDerived()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithFourProperties>(
+                Inject.Property(nameof(ObjectWithFourProperties.Property)));
+
+            // Act
+            var result = Container.Resolve<ObjectWithFourProperties>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Property);
+            Assert.IsInstanceOfType(result.Property, typeof(object));
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        public void ByNameValueInDerived()
+        {
+            // Setup
+            var test = "test";
+            Container.RegisterType<ObjectWithFourProperties>(
+                Inject.Property(nameof(ObjectWithFourProperties.Property), test));
+
+            // Act
+            var result = Container.Resolve<ObjectWithFourProperties>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Property);
+            Assert.AreSame(result.Property, test);
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ReadOnlyProperty()
+        {
+            // Act
+            Container.RegisterType<ObjectWithFourProperties>(
+                Inject.Property(nameof(ObjectWithFourProperties.ReadOnlyProperty), "test"));
+        }
+
+        [TestMethod]
+        public void NoneAsDependency()
+        {
+            // Act
+            var result = Container.Resolve<ObjectWithDependency>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Dependency);
+            Assert.IsNull(result.Dependency.Property);
+            Assert.AreEqual(result.Dependency.Name, Name);
+            Assert.IsNotNull(result.Dependency.Container);
         }
 
     }
