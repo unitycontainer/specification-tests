@@ -8,7 +8,7 @@ namespace Unity.Specification.Resolution.Array
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Array()
+        public void OfRegistered()
         {
             // Act
             var array = UnityContainerExtensions.Resolve<IService[]>(Container);
@@ -21,7 +21,7 @@ namespace Unity.Specification.Resolution.Array
 
 
         [TestMethod]
-        public void Array_OfSimpleClass()
+        public void OfSimplePoco()
         {
             // Act
             UnityContainerExtensions.RegisterType<SimpleClass[]>(Container, "Array");
@@ -31,7 +31,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void Array_Lazy()
+        public void OfLazy()
         {
             // Act
             var array = UnityContainerExtensions.Resolve<Lazy<IService>[]>(Container);
@@ -47,7 +47,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void Array_Func()
+        public void OfFunc()
         {
             // Act
             var array = UnityContainerExtensions.Resolve<Func<IService>[]>(Container);
@@ -58,7 +58,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void Array_LazyFunc()
+        public void OfLazyFunc()
         {
             // Act
             var array = UnityContainerExtensions.Resolve<Lazy<Func<IService>>[]>(Container);
@@ -78,7 +78,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void Array_FuncLazy()
+        public void OfFuncLazy()
         {
             // Act
             var array = UnityContainerExtensions.Resolve<Func<Lazy<IService>>[]>(Container);
@@ -99,7 +99,7 @@ namespace Unity.Specification.Resolution.Array
 
 
         [TestMethod]
-        public void Array_FuncLazyInstance()
+        public void OfFuncLazyInstance()
         {
             // Setup
             UnityContainerExtensions.RegisterInstance(Container, null, "Instance", new Lazy<IService>(() => new Service()));
@@ -118,7 +118,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void Array_EmptyIfNoObjectsRegistered()
+        public void EmptyIfNoObjectsRegistered()
         {
             var results = new List<object>(UnityContainerExtensions.ResolveAll<object>(Container));
 

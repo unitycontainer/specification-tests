@@ -28,6 +28,23 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
+        public void NamedMappedInterfaceInstanceRegistrationCanBeResolved()
+        {
+            Container.RegisterInstance<IFoo1>("ATest", new Foo());
+            var iTest = (IFoo1)Container.Resolve(typeof(IFoo1), "ATest");
+
+            Assert.IsNotNull(iTest);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void UnnamedMappingThrowsResolutionFailedException()
+        {
+            Container.RegisterType<IFoo1, IFoo1>();
+            Container.Resolve<IFoo1>("ATest");
+        }
+
+        [TestMethod]
         public void Mapping_Generic_Closed()
         {
             using (IUnityContainer container = GetContainer())

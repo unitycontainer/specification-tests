@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Injection;
 
 namespace Unity.Specification.Resolution.Array
@@ -23,14 +23,62 @@ namespace Unity.Specification.Resolution.Array
             Service.Instances = 0;
         }
 
+        #region Test Data
+
+        public interface ILogger
+        {
+        }
+
+        public class SpecialLogger : ILogger
+        {
+        }
+
+        public class MockLogger : ILogger
+        {
+        }
+
+        public class TypeWithArrayConstructorParameter
+        {
+            public readonly ILogger[] Loggers;
+
+            public TypeWithArrayConstructorParameter(ILogger[] loggers)
+            {
+                Loggers = loggers;
+            }
+        }
+
+        public class GenericTypeWithArrayConstructorParameter<T>
+        {
+            public readonly T[] Values;
+
+            public GenericTypeWithArrayConstructorParameter(T[] values)
+            {
+                Values = values;
+            }
+        }
+
+        public class TypeWithArrayProperty
+        {
+            [Dependency]
+            public ILogger[] Loggers { get; set; }
+        }
+
+        public class TypeWithArrayConstructorParameterOfRankTwo
+        {
+            private readonly ILogger[,] _unknown;
+
+            public TypeWithArrayConstructorParameterOfRankTwo(ILogger[,] array)
+            {
+                _unknown = array;
+            }
+        }
+
+        #endregion
+
         public interface IFoo<TEntity>
         {
             TEntity Value { get; }
         }
-
-        public interface IFoo { }
-        public interface IFoo1 { }
-        public interface IFoo2 { }
 
         public class Foo<TEntity> : IFoo<TEntity>
         {
@@ -46,43 +94,26 @@ namespace Unity.Specification.Resolution.Array
             public TEntity Value { get; }
         }
 
-        public class Foo : IFoo, IFoo1, IFoo2
-        {
-        }
-
         public interface IService
-        {
-        }
-
-        public interface IGenericService<T>
         {
         }
 
         public class Service : IService, IDisposable
         {
-            public string ID { get; } = Guid.NewGuid().ToString();
+            public string Id { get; } = Guid.NewGuid().ToString();
 
-            public static int Instances = 0;
+            public static int Instances;
 
             public Service()
             {
                 Interlocked.Increment(ref Instances);
             }
 
-            public bool Disposed = false;
+            public bool Disposed;
             public void Dispose()
             {
                 Disposed = true;
             }
-        }
-
-        public interface ITest1<T> { }
-
-        public interface ITest2<T> { }
-
-        public class Test<T> : ITest1<T>, ITest2<T>
-        {
-            public string Id { get; } = Guid.NewGuid().ToString();
         }
 
     }

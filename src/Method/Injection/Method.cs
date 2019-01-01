@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unity.Specification.Method.Injection
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests 
     {
         [TestMethod]
-        public void QualifyingInjectionMethodCanBeConfiguredAndIsCalled()
+        public void InjectedMethodIsCalled()
         {
             // Setup
             Container.RegisterType<LegalInjectionMethod>(
@@ -21,7 +21,7 @@ namespace Unity.Specification.Method.Injection
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void CannotConfigureGenericInjectionMethod()
+        public void GenericInjectionMethod()
         {
             // Act
             Container.RegisterType<OpenGenericInjectionMethod>(
@@ -30,7 +30,7 @@ namespace Unity.Specification.Method.Injection
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void CannotConfigureMethodWithOutParams()
+        public void MethodWithOutParameter()
         {
             // Act
             Container.RegisterType<OutParams>(Invoke.Method(nameof(OutParams.InjectMe), 12));
@@ -38,7 +38,7 @@ namespace Unity.Specification.Method.Injection
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void CannotConfigureMethodWithRefParams()
+        public void MethodWithRefParameter()
         {
             // Act
             Container.RegisterType<RefParams>(
@@ -46,7 +46,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void CanInvokeInheritedMethod()
+        public void InheritedMethod()
         {
             // Setup
             Container.RegisterType<InheritedClass>(
@@ -61,7 +61,7 @@ namespace Unity.Specification.Method.Injection
 
 
         [TestMethod]
-        public void CanInjectMethodPassingVoid()
+        public void MethodPassingVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -75,7 +75,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void CanInjectMethodReturningVoid()
+        public void ReturningVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -89,7 +89,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void CanInjectMethodReturningInt()
+        public void ReturningInt()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -104,7 +104,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void CanConfigureMultipleMethods()
+        public void MultipleMethods()
         {
             // Setup
             Container.RegisterType<GuineaPig>(
@@ -121,10 +121,10 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void StaticMethodsShouldNotBeInjected()
+        public void StaticMethod()
         {
             // Act
-            GuineaPig pig = Container.Resolve<GuineaPig>();
+            Container.Resolve<GuineaPig>();
 
             // Verify
             Assert.IsFalse(GuineaPig.StaticMethodWasCalled);
@@ -132,82 +132,11 @@ namespace Unity.Specification.Method.Injection
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ContainerThrowsWhenConfiguringStaticMethodForInjection()
+        public void InjectingStaticMethod()
         {
             // Verify
             Container.RegisterType<GuineaPig>(
                 Invoke.Method(nameof(GuineaPig.ShouldntBeCalled)));
         }
-
-
-        #region Data
-
-        public class GuineaPig
-        {
-            public int IntValue;
-            public string StringValue;
-            public static bool StaticMethodWasCalled = false;
-
-            public void Inject1()
-            {
-                StringValue = "void";
-            }
-
-            public void Inject2(string stringValue)
-            {
-                StringValue = stringValue;
-            }
-
-            public int Inject3(int intValue)
-            {
-                IntValue = intValue;
-                return intValue * 2;
-            }
-
-            [InjectionMethod]
-            public static void ShouldntBeCalled()
-            {
-                StaticMethodWasCalled = true;
-            }
-        }
-
-        public class LegalInjectionMethod
-        {
-            public bool WasInjected = false;
-
-            public void InjectMe()
-            {
-                WasInjected = true;
-            }
-        }
-
-        public class OpenGenericInjectionMethod
-        {
-            public void InjectMe<T>()
-            {
-            }
-        }
-
-        public class OutParams
-        {
-            public void InjectMe(out int x)
-            {
-                x = 2;
-            }
-        }
-
-        public class RefParams
-        {
-            public void InjectMe(ref int x)
-            {
-                x *= 2;
-            }
-        }
-
-        public class InheritedClass : LegalInjectionMethod
-        {
-        }
-
-        #endregion
     }
 }
