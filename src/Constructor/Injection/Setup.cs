@@ -62,7 +62,7 @@ namespace Unity.Specification.Constructor.Injection
         public void DefaultCtorValidation(Type type, string name)
         {
             // Setup
-            Container.RegisterType(null, type, name, null, Invoke.Constructor());
+            Container.RegisterType((Type)null, type, name, null, Invoke.Constructor());
 
             // Act
             var result = Container.Resolve(type, name);
