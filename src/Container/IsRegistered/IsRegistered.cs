@@ -9,7 +9,7 @@ namespace Unity.Specification.Container.IsRegistered
         public void IsRegistered()
         {
             Assert.IsTrue(Container.IsRegistered(typeof(IUnityContainer)));
-            Assert.IsTrue(Container.IsRegistered(typeof(IUnityContainer), string.Empty));
+            Assert.IsFalse(Container.IsRegistered(typeof(IUnityContainer), string.Empty));
             Assert.IsFalse(Container.IsRegistered(typeof(IUnityContainer), Name));
         }
 
@@ -17,7 +17,7 @@ namespace Unity.Specification.Container.IsRegistered
         public void GenericOverload()
         {
             Assert.IsTrue(Container.IsRegistered<IUnityContainer>());
-            Assert.IsTrue(Container.IsRegistered<IUnityContainer>(string.Empty));
+            Assert.IsFalse(Container.IsRegistered<IUnityContainer>(string.Empty));
             Assert.IsFalse(Container.IsRegistered<IUnityContainer>(Name));
         }
 
