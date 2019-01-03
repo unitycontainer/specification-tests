@@ -2,7 +2,7 @@
 
 namespace Unity.Specification.Parameter.Attribute
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests 
     {
         [TestMethod]
         public void NoAttribute()

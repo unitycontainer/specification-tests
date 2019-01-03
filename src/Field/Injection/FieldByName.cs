@@ -24,7 +24,7 @@ namespace Unity.Specification.Field.Injection
         {
             // Act
             Container.RegisterType<ObjectWithThreeFields>(
-                Inject.Property("Bogus Name"));
+                Resolve.Field("Bogus Name"));
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Unity.Specification.Field.Injection
         {
             // Setup
             Container.RegisterType<ObjectWithThreeFields>(
-                Inject.Field(nameof(ObjectWithThreeFields.Field)));
+                Resolve.Field(nameof(ObjectWithThreeFields.Field)));
 
             // Act
             var result = Container.Resolve<ObjectWithThreeFields>();
@@ -50,7 +50,7 @@ namespace Unity.Specification.Field.Injection
         {
             // Setup
             Container.RegisterType<ObjectWithFourFields>(
-                Inject.Field(nameof(ObjectWithFourFields.Field)));
+                Resolve.Field(nameof(ObjectWithFourFields.Field)));
 
             // Act
             var result = Container.Resolve<ObjectWithFourFields>();
@@ -59,6 +59,40 @@ namespace Unity.Specification.Field.Injection
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Field);
             Assert.IsInstanceOfType(result.Field, typeof(object));
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        public void ByNameOptional()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithOptionalFields>(
+                Resolve.OptionalField(nameof(ObjectWithOptionalFields.Field)));
+
+            // Act
+            var result = Container.Resolve<ObjectWithOptionalFields>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Field);
+            Assert.AreEqual(result.Name, Name);
+            Assert.IsNotNull(result.Container);
+        }
+
+        [TestMethod]
+        public void ByNameOptionalInDerived()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithOptionalFields>(
+                Resolve.OptionalField(nameof(ObjectWithOptionalFields.Field)));
+
+            // Act
+            var result = Container.Resolve<ObjectWithOptionalFields>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Field);
             Assert.AreEqual(result.Name, Name);
             Assert.IsNotNull(result.Container);
         }

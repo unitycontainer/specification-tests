@@ -1,0 +1,20 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Unity.Specification.Diagnostic.Method.Parameters
+{
+    public abstract partial class SpecificationTests
+    {
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void ChainedExecuteMethodBaseline()
+        {
+            // Setup
+            Container
+                .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
+                    Invoke.Method("ChainedExecute"));
+
+            // Act
+            var result = Container.Resolve<ICommand<Account>>();
+        }
+    }
+}

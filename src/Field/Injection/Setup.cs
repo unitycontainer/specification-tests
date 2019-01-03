@@ -26,6 +26,19 @@ namespace Unity.Specification.Field.Injection
         public IUnityContainer Container;
     }
 
+    public interface IFoo { }
+    public class Foo : IFoo { }
+
+    public class ObjectWithOptionalFields
+    {
+        [Dependency]
+        public string Name;
+
+        public IFoo Field;
+
+        [Dependency]
+        public IUnityContainer Container;
+    }
 
     public class ObjectWithFourFields : ObjectWithThreeFields
     {

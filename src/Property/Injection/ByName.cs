@@ -24,7 +24,7 @@ namespace Unity.Specification.Property.Injection
         {
             // Act
             Container.RegisterType<ObjectWithThreeProperties>(
-                Inject.Property("Bogus Name"));
+                Resolve.Property("Bogus Name"));
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace Unity.Specification.Property.Injection
         {
             // Setup
             Container.RegisterType<ObjectWithThreeProperties>(
-                Inject.Property(nameof(ObjectWithThreeProperties.Property)));
+                Resolve.Property(nameof(ObjectWithThreeProperties.Property)));
 
             // Act
             var result = Container.Resolve<ObjectWithThreeProperties>();
@@ -50,7 +50,7 @@ namespace Unity.Specification.Property.Injection
         {
             // Setup
             Container.RegisterType<ObjectWithFourProperties>(
-                Inject.Property(nameof(ObjectWithFourProperties.Property)));
+                Resolve.Property(nameof(ObjectWithFourProperties.Property)));
 
             // Act
             var result = Container.Resolve<ObjectWithFourProperties>();
