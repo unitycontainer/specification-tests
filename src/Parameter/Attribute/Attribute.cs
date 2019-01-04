@@ -5,20 +5,6 @@ namespace Unity.Specification.Parameter.Attribute
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
-        public void NoAttribute()
-        {
-            // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeParameter)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 1);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
-        }
-
-        [TestMethod]
         public void DependencyAttribute()
         {
             // Arrange
@@ -48,34 +34,6 @@ namespace Unity.Specification.Parameter.Attribute
         }
 
         [TestMethod]
-        public void NoAttributeWithDefault()
-        {
-            // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeWithDefault)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 8);
-            Assert.AreNotEqual(result.Value, Service.DefaultString);
-        }
-
-        [TestMethod]
-        public void NoAttributeWithDefaultInt()
-        {
-            // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeWithDefaultInt)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 9);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
-        }
-
-        [TestMethod]
         public void DependencyAttributeWithDefaultInt()
         {
             // Arrange
@@ -102,5 +60,20 @@ namespace Unity.Specification.Parameter.Attribute
             Assert.AreEqual(result.Called, 11);
             Assert.AreEqual(result.Value, Service.DefaultInt);
         }
+
+        [TestMethod]
+        public void DependencyAttributeWithDefaultNullUnresolved()
+        {
+            // Arrange
+            Container.RegisterType<Service>(Invoke.Method(nameof(Service.DependencyAttributeWithDefaultNullUnresolved)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 16);
+            Assert.IsNull(result.Value);
+        }
+
     }
 }

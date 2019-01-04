@@ -111,6 +111,24 @@ namespace Unity.Specification.Parameter.Attribute
                 Value = value;
                 Called = 13;
             }
+
+            public void NoAttributeWithDefaultUnresolved(long value = 100)
+            {
+                Value = value;
+                Called = 14;
+            }
+
+            public void WithDefaultDisposableUnresolved(IDisposable value = null)
+            {
+                Value = value;
+                Called = 15;
+            }
+
+            public void DependencyAttributeWithDefaultNullUnresolved([Dependency]IDisposable value = null)
+            {
+                Value = value;
+                Called = 16;
+            }
         }
 
         #endregion
