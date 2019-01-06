@@ -4,12 +4,18 @@ namespace Unity.Specification.Field.Injection
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
+        private const string Name1 = "name1";
+        private const string Name2 = "name2";
+
         [TestInitialize]
         public override void Setup()
         {
             base.Setup();
 
             Container.RegisterInstance(Name);
+            Container.RegisterInstance(Name, Name);
+            Container.RegisterInstance(Name1, Name1);
+            Container.RegisterInstance(Name2, Name2);
         }
     }
 
@@ -38,6 +44,16 @@ namespace Unity.Specification.Field.Injection
 
         [Dependency]
         public IUnityContainer Container;
+    }
+
+
+    public class ObjectWithAttributes
+    {
+        [Dependency("name1")]
+        public string Dependency;
+
+        [OptionalDependency("other")]
+        public string Optional;
     }
 
     public class ObjectWithFourFields : ObjectWithThreeFields

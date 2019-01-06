@@ -6,19 +6,6 @@ namespace Unity.Specification.Field.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void BaseLine()
-        {
-            // Act
-            var result = Container.Resolve<ObjectWithThreeFields>();
-
-            // Verify
-            Assert.IsNotNull(result);
-            Assert.IsNull(result.Field);
-            Assert.AreEqual(result.Name, Name);
-            Assert.IsNotNull(result.Container);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void None()
         {
