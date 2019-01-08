@@ -2,8 +2,29 @@
 
 namespace Unity.Specification.Issues.GitHub
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests 
     {
+        [TestMethod]
+        // https://github.com/unitycontainer/container/issues/129
+        public void Container_129()
+        {
+            var config = "production.sqlite";
+
+            // Setup
+            Container.RegisterType<IProctRepository, ProctRepository>("DEBUG");
+            Container.RegisterType<IProctRepository, ProctRepository>("PROD", Invoke.Constructor(config));
+
+            // Act
+            var ur = Container.Resolve<ProctRepository>();
+            var qa = Container.Resolve<IProctRepository>("DEBUG");
+            var prod = Container.Resolve<IProctRepository>("PROD");
+
+            // Verify
+            Assert.AreEqual(ur.Value, "default.sqlite");
+            Assert.AreEqual(prod.Value, config);
+            Assert.AreNotEqual(qa.Value, config);
+        }
+
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/67
         public void Container_67()

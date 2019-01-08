@@ -43,7 +43,6 @@ namespace Unity.Specification.Issues.GitHub
         {
         }
 
-
         public interface ILogger
         {
         }
@@ -53,10 +52,6 @@ namespace Unity.Specification.Issues.GitHub
         }
 
         public interface IService
-        {
-        }
-
-        public interface IGenericService<T>
         {
         }
 
@@ -101,6 +96,20 @@ namespace Unity.Specification.Issues.GitHub
             public void Dispose()
             {
                 Disposed = true;
+            }
+        }
+
+        public interface IProctRepository
+        {
+            string Value { get; }
+        }
+        public class ProctRepository : IProctRepository
+        {
+            public string Value { get; }
+
+            public ProctRepository(string base_name = "default.sqlite")
+            {
+                Value = base_name;
             }
         }
 
