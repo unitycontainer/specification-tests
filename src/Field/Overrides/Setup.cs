@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Field.Injection
+namespace Unity.Specification.Field.Overrides
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
