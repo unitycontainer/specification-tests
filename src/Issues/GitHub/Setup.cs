@@ -11,6 +11,8 @@ namespace Unity.Specification.Issues.GitHub
         public override void Setup()
         {
             base.Setup();
+
+            Container.RegisterInstance(Name);
         }
 
         #region Test Data
@@ -111,6 +113,17 @@ namespace Unity.Specification.Issues.GitHub
             {
                 Value = base_name;
             }
+        }
+
+        public class ObjectWithThreeProperties
+        {
+            [Dependency]
+            public string Name { get; set; }
+
+            public object Property { get; set; }
+
+            [Dependency]
+            public IUnityContainer Container { get; set; }
         }
 
         #endregion
