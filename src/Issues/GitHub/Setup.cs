@@ -11,8 +11,6 @@ namespace Unity.Specification.Issues.GitHub
         public override void Setup()
         {
             base.Setup();
-
-            Container.RegisterInstance(Name);
         }
 
         #region Test Data

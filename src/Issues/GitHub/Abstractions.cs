@@ -9,6 +9,7 @@ namespace Unity.Specification.Issues.GitHub
         public void Abstractions_83()
         {
             // Arrange
+            Container.RegisterInstance(Name);
             Container.RegisterType<ObjectWithThreeProperties>(
                 Inject.Property(nameof(ObjectWithThreeProperties.Property), Name));
 
