@@ -85,15 +85,6 @@ namespace Unity.Specification.Field.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ReadOnlyProperty()
-        {
-            // Act
-            Container.RegisterType<ObjectWithFourFields>(
-                Inject.Field(nameof(ObjectWithFourFields.ReadOnlyField), "test"));
-        }
-
-        [TestMethod]
         public void NoneAsDependency()
         {
             // Act

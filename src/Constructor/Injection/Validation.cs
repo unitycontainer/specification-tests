@@ -6,55 +6,31 @@ namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
-
-        public static IEnumerable<object[]> RegistrationFailedTestData
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NoDefaultConstructor()
         {
+            // Act
+            Container.RegisterType<ClassWithTreeConstructors>(Invoke.Constructor());
+        }
 
-            // Format: Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator
-            get
-            {
-                //
-                //yield return new object[]
-                //{
-                //    null,                                       //  Type typeFrom, 
-                //    typeof(object),                             //  Type typeTo, 
-                //    "",                                         //  string name, 
-                //    new object[] {}                             //  object[] parameters, 
-                //};
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NoBogusConstructor()
+        {
+            // Act
+            Container.RegisterType<ClassWithTreeConstructors>(
+                Invoke.Constructor(typeof(int), typeof(string)));
+        }
 
 
-                yield return new object[]
-                {
-                    null,                                       //  Type typeFrom, 
-                    typeof(object),                             //  Type typeTo, 
-                    "Ambiguous Constructors",                   //  string name, 
-                    new object[]                                //  object[] parameters, 
-                    {
-                        string.Empty,
-                        string.Empty,
-                        string.Empty
-                    }               
-                };
-
-                // IncorrectType
-                yield return new object[]
-                {
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    "IncorrectType",                            //  string name, 
-                    new object[] { typeof(int) }                //  object[] parameters, 
-                };
-
-                // IncorrectValue
-                yield return new object[]
-                {
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    "IncorrectValue",                           //  string name, 
-                    new object[] { 0 }                          //  object[] parameters, 
-                };
-
-            }
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NoBogusValuesConstructor()
+        {
+            // Act
+            Container.RegisterType<ClassWithTreeConstructors>(
+                Invoke.Constructor( 1, "test"));
         }
 
 
@@ -67,6 +43,35 @@ namespace Unity.Specification.Constructor.Injection
                 Inject.Parameter(typeof(int))));
             Assert.AreEqual(TypeWithMultipleCtors.Three, Container.Resolve<TypeWithMultipleCtors>().Signature);
         }
+
+        #region Test Data
+
+        public class ClassWithTreeConstructors
+        {
+            protected ClassWithTreeConstructors()
+            {
+                
+            }
+
+            public ClassWithTreeConstructors(IUnityContainer container)
+            {
+                Value = container;
+            }
+
+            public ClassWithTreeConstructors(string name)
+            {
+                Value = name;
+            }
+
+            public ClassWithTreeConstructors(object value)
+            {
+                Value = value;
+            }
+
+            public object Value { get; }
+        }
+
+        #endregion
 
     }
 }

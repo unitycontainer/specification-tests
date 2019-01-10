@@ -21,15 +21,6 @@ namespace Unity.Specification.Method.Injection
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void GenericInjectionMethod()
-        {
-            // Act
-            Container.RegisterType<OpenGenericInjectionMethod>(
-                Invoke.Method(nameof(OpenGenericInjectionMethod.InjectMe)));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void MethodWithOutParameter()
         {
             // Act

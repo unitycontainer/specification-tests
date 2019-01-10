@@ -15,15 +15,6 @@ namespace Unity.Specification.Parameter.Resolved
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void AnonymousTypeForGenericFails()
-        {
-            // Act
-            Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Parameter()));
-        }
-
-        [TestMethod]
         public void GenericParameterT1()
         {
             // Setup

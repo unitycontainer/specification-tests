@@ -64,15 +64,6 @@ namespace Unity.Specification.Property.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ReadOnlyProperty()
-        {
-            // Act
-            Container.RegisterType<ObjectWithFourProperties>(
-                Inject.Property(nameof(ObjectWithFourProperties.ReadOnlyProperty), "test"));
-        }
-
-        [TestMethod]
         public void NoneAsDependency()
         {
             // Act

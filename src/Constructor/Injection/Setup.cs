@@ -31,16 +31,6 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         [DataTestMethod]
-        [DynamicData(nameof(RegistrationFailedTestData))]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Validation(Type typeFrom, Type typeTo, string name, object[] parameters)
-        {
-            // Act
-            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));
-        }
-
-
-        [DataTestMethod]
         [DynamicData(nameof(DefaultConstructorTestData))]
         public void Default(Type typeFrom, Type typeTo, string name, Type typeToResolve)
         {
@@ -66,6 +56,7 @@ namespace Unity.Specification.Constructor.Injection
 
             // Act
             var result = Container.Resolve(type, name);
+            Assert.IsNotNull(result);
         }
     }
 }

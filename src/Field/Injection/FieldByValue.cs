@@ -42,15 +42,6 @@ namespace Unity.Specification.Field.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void InvalidValue()
-        {
-            // Act
-            Container.RegisterType<ObjectWithThreeFields>(
-                Inject.Field(nameof(ObjectWithThreeFields.Container), Name));
-        }
-
-        [TestMethod]
         public void ByNameValueInDerived()
         {
             // Setup

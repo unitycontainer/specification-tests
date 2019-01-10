@@ -42,15 +42,6 @@ namespace Unity.Specification.Property.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void InvalidValue()
-        {
-            // Act
-            Container.RegisterType<ObjectWithThreeProperties>(
-                Inject.Property(nameof(ObjectWithThreeProperties.Container), Name));
-        }
-
-        [TestMethod]
         public void ByNameValueInDerived()
         {
             // Setup
