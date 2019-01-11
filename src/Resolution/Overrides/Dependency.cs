@@ -6,83 +6,59 @@ namespace Unity.Specification.Resolution.Overrides
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void CanProvideConstructorParameterViaResolveCall()
+        public void OptionalViaDependency()
         {
             // Setup
-            const int configuredValue = 15; // Just need a number, value has no significance.
-            const int expectedValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
+            IService x = new Service1();
+            IService y = new Service2();
 
             // Act
-            var result = Container.Resolve<SimpleTestObject>(Override.Parameter("x", expectedValue));
+            var result = Container.Resolve<Foo>(
+                    Override.Dependency("Fred",   x),
+                    Override.Dependency("George", y));
 
             // Verify
-            Assert.AreEqual(expectedValue, result.X);
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Fred);
+            Assert.IsNull(result.George);
         }
 
         [TestMethod]
-        public void OverrideDoeNotLastAfterResolveCall()
+        public void OptionalViaDependencyAsType()
         {
             // Setup
-            const int configuredValue = 15; // Just need a number, value has no significance.
-            const int overrideValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
+            IService x = new Service1();
+            IService y = new Service2();
 
             // Act
-            Container.Resolve<SimpleTestObject>(Override.Parameter("x", overrideValue)
-                                                        .OnType<SimpleTestObject>());
-            var result = Container.Resolve<SimpleTestObject>();
+            var result = Container.Resolve<Foo>(
+                    Override.Dependency(typeof(IService), "Fred", x),
+                    Override.Dependency(typeof(IService), "George", y));
 
             // Verify
-            Assert.AreEqual(configuredValue, result.X);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Fred);
+            Assert.IsNotNull(result.George);
         }
 
         [TestMethod]
-        public void OverrideIsUsedInRecursiveBuilds()
+        public void OptionalViaDependencyAsGenericType()
         {
             // Setup
-            const int expectedValue = 42; // Just need a number, value has no significance.
+            IService x = new Service1();
+            IService y = new Service2();
 
             // Act
-            var result = Container.Resolve<ObjectThatDependsOnSimpleObject>(
-                Override.Parameter("x", expectedValue));
+            var result = Container.Resolve<Foo>(
+                    Override.Dependency<IService>("Fred", x),
+                    Override.Dependency<IService>("George", y));
 
             // Verify
-            Assert.AreEqual(expectedValue, result.TestObject.X);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Fred);
+            Assert.IsNotNull(result.George);
         }
 
-        [TestMethod]
-        public void NonMatchingOverridesAreIgnored()
-        {
-            // Setup
-            const int expectedValue = 42; // Just need a number, value has no significance.
-
-            // Act
-            var result = Container.Resolve<SimpleTestObject>(
-                new ParameterOverrides
-                {
-                    { "y", expectedValue * 2 },
-                    { "x", expectedValue }
-                }.OnType<SimpleTestObject>());
-
-            // Verify
-            Assert.AreEqual(expectedValue, result.X);
-        }
-
-        [TestMethod]
-        public void NonMatchingOverridesAreIgnoredAlternative()
-        {
-            // Setup
-            const int expectedValue = 42; // Just need a number, value has no significance.
-
-            // Act
-            var result = Container.Resolve<SimpleTestObject>(
-                Override.Parameter("x", expectedValue),
-                Override.Parameter("y", expectedValue * 2));
-
-            // Verify
-            Assert.AreEqual(expectedValue, result.X);
-        }
 
 
         [TestMethod]
@@ -108,15 +84,15 @@ namespace Unity.Specification.Resolution.Overrides
         public void ParameterOverrideCanResolveOverride()
         {
             // Setup
-            Container.RegisterType<ISomething, Something1>()
-                     .RegisterType<ISomething, Something2>("other");
+            Container.RegisterType<IService, Service1>()
+                     .RegisterType<IService, Service2>("other");
 
             // Act
             var result = Container.Resolve<ObjectTakingASomething>(
-                Override.Parameter("something", Resolve.Dependency<ISomething>("other")));
+                Override.Parameter("something", Resolve.Dependency<IService>("other")));
 
             // Verify
-            Assert.IsInstanceOfType(result.MySomething, typeof(Something2));
+            Assert.IsInstanceOfType(result.MySomething, typeof(Service2));
         }
 
         [TestMethod]
@@ -126,12 +102,12 @@ namespace Unity.Specification.Resolution.Overrides
             Container
                 .RegisterType<ObjectTakingASomething>(Invoke.Constructor(),
                                                       Resolve.Property("MySomething"))
-                .RegisterType<ISomething, Something1>()
-                .RegisterType<ISomething, Something2>("other");
+                .RegisterType<IService, Service1>()
+                .RegisterType<IService, Service2>("other");
 
             // Act
             var result = Container.Resolve<ObjectTakingASomething>(
-                Override.Property(nameof(ObjectTakingASomething.MySomething), Inject.Parameter<ISomething>(null))
+                Override.Property(nameof(ObjectTakingASomething.MySomething), Inject.Parameter<IService>(null))
                         .OnType<ObjectTakingASomething>());
 
             // Verify
@@ -149,24 +125,12 @@ namespace Unity.Specification.Resolution.Overrides
             // resolves overriding only the parameter for the Bar instance
 
             // Act
-            var instance = Container.Resolve<Outer>(new DependencyOverride<int>(Inject.Parameter(50)).OnType<Inner>());
+            var instance = Container.Resolve<Outer>(
+                Override.Parameter<int>(Inject.Parameter(50)).OnType<Inner>());
 
             // Verify
             Assert.AreEqual(10, instance.LogLevel);
             Assert.AreEqual(50, instance.Inner.LogLevel);
-        }
-
-        public class ObjectTakingASomething
-        {
-            public ISomething MySomething { get; set; }
-            public ObjectTakingASomething()
-            {
-            }
-
-            public ObjectTakingASomething(ISomething something)
-            {
-                MySomething = something;
-            }
         }
     }
 }

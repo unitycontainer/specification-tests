@@ -5,68 +5,35 @@ namespace Unity.Specification.Field.Overrides
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void BaseLine()
+        public void FieldOverrideAttribute()
         {
             // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
+            var result = Container.Resolve<ObjectWithAttributes>(
+                Override.Field(nameof(ObjectWithAttributes.Dependency), null),
+                Override.Field(nameof(ObjectWithAttributes.Optional), Name1));
 
             // Verify
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name1);
-            Assert.IsNull(result.Optional);
+            Assert.IsNull(result.Dependency);
+            Assert.IsNotNull(result.Optional);
+            Assert.AreEqual(result.Optional, Name1);
         }
 
         [TestMethod]
-        public void InjectorOverAttribute()
+        public void DependencyOverrideFieldValue()
         {
-            // Setup
-            Container.RegisterType<ObjectWithAttributes>(
-                Resolve.Field(nameof(ObjectWithAttributes.Dependency)));
+            var other = "other";
 
             // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
+            var result = Container.Resolve<ObjectWithAttributes>(
+                Override.Field(nameof(ObjectWithAttributes.Dependency), null),
+                Override.Dependency(other, other));
 
             // Verify
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name);
-            Assert.IsNull(result.Optional);
-        }
-
-        [TestMethod]
-        public void InjectedValueOverAttribute()
-        {
-            // Setup
-            Container.RegisterType<ObjectWithAttributes>(
-                Inject.Field(nameof(ObjectWithAttributes.Dependency), Name2));
-
-            // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
-
-            // Verify
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name2);
-            Assert.IsNull(result.Optional);
-        }
-
-
-        [TestMethod]
-        public void InjectedResolverOverAttribute()
-        {
-            // Setup
-            Container.RegisterType<ObjectWithAttributes>(
-                Inject.Field(nameof(ObjectWithAttributes.Dependency), Resolve.Parameter(Name1)));
-
-            // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
-
-            // Verify
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name1);
-            Assert.IsNull(result.Optional);
+            Assert.IsNull(result.Dependency);
+            Assert.IsNotNull(result.Optional);
+            Assert.AreEqual(result.Optional, other);
         }
     }
 }

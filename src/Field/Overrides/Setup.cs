@@ -32,21 +32,6 @@ namespace Unity.Specification.Field.Overrides
         public IUnityContainer Container;
     }
 
-    public interface IFoo { }
-    public class Foo : IFoo { }
-
-    public class ObjectWithOptionalFields
-    {
-        [Dependency]
-        public string Name;
-
-        public IFoo Field;
-
-        [Dependency]
-        public IUnityContainer Container;
-    }
-
-
     public class ObjectWithAttributes
     {
         [Dependency("name1")]
@@ -54,13 +39,6 @@ namespace Unity.Specification.Field.Overrides
 
         [OptionalDependency("other")]
         public string Optional;
-    }
-
-    public class ObjectWithFourFields : ObjectWithThreeFields
-    {
-        public object SubField;
-
-        public readonly object ReadOnlyField;
     }
 
     public class ObjectWithDependency

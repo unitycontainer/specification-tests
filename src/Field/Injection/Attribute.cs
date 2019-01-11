@@ -5,7 +5,7 @@ namespace Unity.Specification.Field.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void BaseLine()
+        public void Attributes()
         {
             // Act
             var result = Container.Resolve<ObjectWithAttributes>();
@@ -18,7 +18,24 @@ namespace Unity.Specification.Field.Injection
         }
 
         [TestMethod]
-        public void InjectorOverAttribute()
+        public void ValueOverAttribute()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithAttributes>(
+                Inject.Field(nameof(ObjectWithAttributes.Dependency), Name2));
+
+            // Act
+            var result = Container.Resolve<ObjectWithAttributes>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Dependency);
+            Assert.AreEqual(result.Dependency, Name2);
+            Assert.IsNull(result.Optional);
+        }
+
+        [TestMethod]
+        public void ResolveOverAttribute()
         {
             // Setup
             Container.RegisterType<ObjectWithAttributes>(
@@ -35,25 +52,7 @@ namespace Unity.Specification.Field.Injection
         }
 
         [TestMethod]
-        public void InjectedValueOverAttribute()
-        {
-            // Setup
-            Container.RegisterType<ObjectWithAttributes>(
-                Inject.Field(nameof(ObjectWithAttributes.Dependency), Name2));
-
-            // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
-
-            // Verify
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name2);
-            Assert.IsNull(result.Optional);
-        }
-
-
-        [TestMethod]
-        public void InjectedResolverOverAttribute()
+        public void ResolverOverAttribute()
         {
             // Setup
             Container.RegisterType<ObjectWithAttributes>(
