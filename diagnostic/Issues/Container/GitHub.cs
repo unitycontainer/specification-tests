@@ -16,6 +16,9 @@ namespace Unity.Specification.Diagnostic.Issues.Container
             Container.RegisterType<ObjectWithLotsOfDependencies>();
 
             // Act
+            Container.Resolve<MockLogger>();
+            Container.Resolve<ObjectWithLotsOfDependencies>();
+            Container.Resolve<ILogger>();
             Container.Resolve<ObjectWithLotsOfDependencies>();
 
             // Validate
