@@ -15,8 +15,6 @@ namespace Unity.Specification.Property.Injection
                     Inject.Property("Inner", Resolve.Parameter(typeof(ICommand<>), "inner")))
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner");
             
-            // TODO: Do with Resolved property
-
             // Act
             ICommand<Account> result = Container.Resolve<ICommand<Account>>();
 

@@ -40,9 +40,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Container\tests\Unity.Specification\Unity.Specification.Tests.v5.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="BuildUp\" />
-  </ItemGroup>
 
 </Project>
