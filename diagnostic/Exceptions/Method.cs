@@ -6,26 +6,12 @@ namespace Unity.Specification.Diagnostic.Exceptions
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void ConstructorErrorLevel0()
+        public void MethodErrorLevel1()
         {
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<string>(); }
-            catch (Exception ex) { exception = ex; }
-
-            // Validate
-            Assert.IsNotNull(exception.InnerException);
-            Assert.AreEqual(1, exception.InnerException.Data.Count);
-        }
-
-        [TestMethod]
-        public void ConstructorErrorLevel1()
-        {
-            Exception exception = null;
-
-            // Act
-            try { Container.Resolve<ClassWithStringDependency>(); }
+            try { Container.Resolve<ClassWithMethod>(); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -34,12 +20,12 @@ namespace Unity.Specification.Diagnostic.Exceptions
         }
 
         [TestMethod]
-        public void ConstructorErrorLevel2()
+        public void MethodErrorLevel2()
         {
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithOtherDependency>(); }
+            try { Container.Resolve<ClassDependingOnMethod>(); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -48,35 +34,31 @@ namespace Unity.Specification.Diagnostic.Exceptions
         }
 
         [TestMethod]
-        public void ConstructorErrorInterface()
+        public void MethodWithOutParam()
         {
-            // Setup
             Exception exception = null;
-            Container.RegisterType<IProvider, Provider>();
 
             // Act
-            try { Container.Resolve<IProvider>(); }
+            try { Container.Resolve<ClassWithOutMethod>(); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
             Assert.IsNotNull(exception.InnerException);
-            Assert.AreEqual(4, exception.InnerException.Data.Count);
+            Assert.AreEqual(1, exception.InnerException.Data.Count);
         }
 
         [TestMethod]
-        public void ConstructorErrorDeep()
+        public void MethodWithRefParam()
         {
-            // Setup
             Exception exception = null;
-            Container.RegisterType<IProvider, Provider>();
 
             // Act
-            try { Container.Resolve<DependsOnDependOnProvider>(); }
+            try { Container.Resolve<ClassWithRefMethod>(); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
             Assert.IsNotNull(exception.InnerException);
-            Assert.AreEqual(10, exception.InnerException.Data.Count);
+            Assert.AreEqual(1, exception.InnerException.Data.Count);
         }
     }
 }
