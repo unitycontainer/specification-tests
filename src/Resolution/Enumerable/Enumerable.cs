@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Specification.TestData;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Resolution.Enumerable
 {

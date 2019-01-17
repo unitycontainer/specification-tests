@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Diagnostic.Constructor.Types
 {

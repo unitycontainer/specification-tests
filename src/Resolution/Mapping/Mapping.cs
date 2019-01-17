@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Specification.TestData;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Resolution.Mapping
 {

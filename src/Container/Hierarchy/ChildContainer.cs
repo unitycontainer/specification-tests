@@ -1,6 +1,7 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Container.Hierarchy
 {

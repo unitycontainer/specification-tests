@@ -7,7 +7,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void Factory_Hierarchical()
         {
-            Container.RegisterType<IService>(Lifetime.Hierarchical, Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterType<IService>(LifetimeManager.Hierarchical, Invoke.Factory((c, t, n) => new Service()));
 
             var service = Container.Resolve<IService>();
 

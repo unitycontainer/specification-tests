@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Injection;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Resolution.Array
 {

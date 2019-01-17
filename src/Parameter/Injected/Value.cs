@@ -5,7 +5,7 @@ namespace Unity.Specification.Parameter.Injected
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void BaseLine()
+        public void InjectedAttributedBaseline()
         {
             // Act
             var result = Container.Resolve<Service>();

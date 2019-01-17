@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Unity.Lifetime;
 
 namespace Unity.Specification.Container.Registrations
 {
@@ -152,8 +153,8 @@ namespace Unity.Specification.Container.Registrations
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromAContainerByLifeTimeManager()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(       Lifetime.PerResolve, Invoke.Constructor("default"));
-            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", Lifetime.PerResolve, Invoke.Constructor("foo"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(LifetimeManager.PerResolve, Invoke.Constructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", LifetimeManager.PerResolve, Invoke.Constructor("foo"));
 
             var registrations = Container.Registrations;
 
