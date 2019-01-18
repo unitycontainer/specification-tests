@@ -49,13 +49,15 @@ namespace Unity.Specification.Issues.GitHub
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Unity_201()
         {
             var container = GetContainer();
 
-            Assert.ThrowsException<InvalidOperationException>(() =>
-                container.RegisterType<IService, OtherService>(
-                    new InjectionFactory((c, t, n) => new OtherService())));
+            container.RegisterType<IService, OtherService>(
+#pragma warning disable CS0618 // TODO: InjectionFactory
+                                new InjectionFactory((c, t, n) => new OtherService()));
+#pragma warning restore CS0618 
         }
 
         [TestMethod]
@@ -75,8 +77,7 @@ namespace Unity.Specification.Issues.GitHub
         public void Unity_165()
         {
             var container = GetContainer();
-            container.RegisterType<ILogger>( new HierarchicalLifetimeManager(),
-                                             new InjectionFactory( c => new MockLogger()));
+            container.RegisterFactory<ILogger>(c => new MockLogger(), FactoryLifetime.Hierarchical);
 
             Assert.AreSame(container.Resolve<ILogger>(), container.Resolve<ILogger>());
             Assert.AreNotSame(container.Resolve<ILogger>(), container.CreateChildContainer().Resolve<ILogger>());
@@ -90,7 +91,7 @@ namespace Unity.Specification.Issues.GitHub
             container.RegisterType<ILogger, MockLogger>();
             var foo2 = new MockLogger();
 
-            container.RegisterType<ILogger>(new InjectionFactory(x => foo2));
+            container.RegisterFactory<ILogger>(x => foo2);
             var result = container.Resolve<ILogger>();
 
             Assert.AreSame(result, foo2);
@@ -103,7 +104,7 @@ namespace Unity.Specification.Issues.GitHub
             {
                 var td = new Service();
 
-                container.RegisterType<Service>(new ContainerControlledLifetimeManager(), new InjectionFactory(_ => td));
+                container.RegisterFactory<Service>(_ => td);
                 container.RegisterType<IService, Service>();
 
                 Assert.AreSame(td, container.Resolve<IService>());
@@ -113,7 +114,7 @@ namespace Unity.Specification.Issues.GitHub
             {
                 var td = new Service();
 
-                container.RegisterType<Service>(new ContainerControlledLifetimeManager(), new InjectionFactory(_ => td));
+                container.RegisterFactory<Service>(_ => td);
                 container.RegisterType<IService, Service>();
 
                 Assert.AreSame(td, container.Resolve<Service>());

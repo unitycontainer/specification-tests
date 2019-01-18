@@ -7,7 +7,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void ShortSignature()
         {
-            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterFactory<IService>((c, t, n) => new Service());
 
             var service = Container.Resolve<IService>();
 
@@ -17,7 +17,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void LongSignature()
         {
-            Container.RegisterType<IService>(Invoke.Factory(c => new Service()));
+            Container.RegisterFactory<IService>(c => new Service());
 
             var service = Container.Resolve<IService>();
 
@@ -28,7 +28,7 @@ namespace Unity.Specification.Factory.Resolution
         [ExpectedException(typeof(ResolutionFailedException))]
         public void ShortSignatureThrowsOnResolvedNull()
         {
-            Container.RegisterType<IService>(Invoke.Factory(c => null));
+            Container.RegisterFactory<IService>(c => null);
 
             Container.Resolve<IService>();
         }
@@ -37,7 +37,7 @@ namespace Unity.Specification.Factory.Resolution
         [ExpectedException(typeof(ResolutionFailedException))]
         public void LongSignatureThrowsOnResolvedNull()
         {
-            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => null));
+            Container.RegisterFactory<IService>((c, t, n) => null);
 
             Container.Resolve<IService>();
         }

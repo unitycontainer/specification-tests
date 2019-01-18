@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Unity.Specification.Factory.Registration
 {
@@ -10,7 +9,7 @@ namespace Unity.Specification.Factory.Registration
         [TestMethod]
         public void Factory_IsNotNull()
         {
-            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterFactory<IService>((c, t, n) => new Service());
             Assert.IsNotNull(Container.Resolve<IService>());
         }
 
@@ -20,7 +19,7 @@ namespace Unity.Specification.Factory.Registration
         public void ShortSignatureThrowsOnNull()
         {
             Func<IUnityContainer, object> factoryFunc = null;
-            Container.RegisterType<IService>(Invoke.Factory(factoryFunc));
+            Container.RegisterFactory<IService>(factoryFunc);
         }
 
         [TestMethod]
@@ -28,7 +27,7 @@ namespace Unity.Specification.Factory.Registration
         public void LongSignatureThrowsOnNull()
         {
             Func<IUnityContainer, Type, string, object> factoryFunc = null;
-            Container.RegisterType<IService>(Invoke.Factory(factoryFunc));
+            Container.RegisterFactory<IService>(factoryFunc);
         }
     }
 }

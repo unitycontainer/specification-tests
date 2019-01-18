@@ -11,7 +11,7 @@ namespace Unity.Specification.Diagnostic.Constructor.Validation
         {
             // Act
             Container.RegisterType<ObjectWithAmbiguousConstructors>("Test",
-                LifetimeManager.PerContainer,
+                TypeLifetime.PerContainer,
                 Invoke.Constructor());
         }
 

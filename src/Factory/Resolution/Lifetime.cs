@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
 namespace Unity.Specification.Factory.Resolution
 {
     public abstract partial class SpecificationTests
@@ -7,7 +8,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void Factory_Hierarchical()
         {
-            Container.RegisterType<IService>(LifetimeManager.Hierarchical, Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.Hierarchical);
 
             var service = Container.Resolve<IService>();
 
@@ -23,7 +24,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void Factory_Singleton()
         {
-            Container.RegisterSingleton<IService>(Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.Singleton);
 
             var service = Container.Resolve<IService>();
 
@@ -34,7 +35,7 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void Factory_Transient()
         {
-            Container.RegisterType<IService>(Invoke.Factory((c, t, n) => new Service()));
+            Container.RegisterFactory<IService>((c, t, n) => new Service());
 
             var service = Container.Resolve<IService>();
 

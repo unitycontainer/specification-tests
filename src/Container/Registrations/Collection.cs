@@ -153,8 +153,8 @@ namespace Unity.Specification.Container.Registrations
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromAContainerByLifeTimeManager()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(LifetimeManager.PerResolve, Invoke.Constructor("default"));
-            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", LifetimeManager.PerResolve, Invoke.Constructor("foo"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(       TypeLifetime.PerResolve, Invoke.Constructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", TypeLifetime.PerResolve, Invoke.Constructor("foo"));
 
             var registrations = Container.Registrations;
 
