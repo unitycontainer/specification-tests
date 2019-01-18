@@ -98,8 +98,7 @@ namespace Unity.Specification.Issues.Codeplex
         public void CanResolveTimespan()
         {
             var container = GetContainer()
-                .RegisterType<TimeSpan>(new ExternallyControlledLifetimeManager(),
-                new InjectionConstructor(0L));
+                .RegisterType<TimeSpan>(new InjectionConstructor(0L));
             var expected = new TimeSpan();
             var result = container.Resolve<TimeSpan>();
 
