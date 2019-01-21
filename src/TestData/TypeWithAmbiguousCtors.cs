@@ -17,7 +17,7 @@ namespace Unity.Specification.TestData
             Signature = One;
         }
 
-        public TypeWithAmbiguousCtors(int first, string second, float third)
+        public TypeWithAmbiguousCtors(object first)
         {
             Signature = Two;
         }
@@ -29,12 +29,12 @@ namespace Unity.Specification.TestData
 
         public TypeWithAmbiguousCtors(string first, string second, string third)
         {
-            Signature = first;
+            Signature = Four;
         }
 
         public TypeWithAmbiguousCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
         {
-            Signature = second;
+            Signature = Five;
         }
     }
 }
