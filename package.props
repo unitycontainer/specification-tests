@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <UnityAbstractionsVersion>4.*</UnityAbstractionsVersion>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
 </Project>
