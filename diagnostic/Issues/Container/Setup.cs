@@ -17,6 +17,25 @@ namespace Unity.Specification.Diagnostic.Issues.Container
 
         #region Test Data
 
+        public interface IInterface
+        {
+        }
+
+        public class Class1 : IInterface
+        {
+        }
+
+        public class Class2 : IInterface
+        {
+        }
+
+        public class A
+        {
+            public A(IEnumerable<IInterface> interfaces)
+            {
+            }
+        }
+
         public class SpyExtension : UnityContainerExtension
         {
             private UnityBuildStage stage;
@@ -173,6 +192,7 @@ namespace Unity.Specification.Diagnostic.Issues.Container
                 get { return dep3; }
             }
         }
+
         public class ObjectWithOneDependency
         {
             private object inner;
@@ -219,6 +239,7 @@ namespace Unity.Specification.Diagnostic.Issues.Container
                 Assert.AreNotSame(obj1, obj2);
             }
         }
+
         public class ObjectWithTwoConstructorDependencies
         {
             private ObjectWithOneDependency oneDep;

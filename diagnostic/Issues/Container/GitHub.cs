@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Unity.Specification.Diagnostic.Issues.Container
 {
@@ -6,7 +7,22 @@ namespace Unity.Specification.Diagnostic.Issues.Container
     {
 
         [TestMethod]
-        // https://github.com/unitycontainer/container/issues/129
+        [ExpectedException(typeof(ResolutionFailedException))]
+        // https://github.com/unitycontainer/container/issues/119
+        public void Issue_119()
+        {
+            // Setup
+            Container.RegisterType<IInterface, Class1>(nameof(Class1));
+            Container.RegisterType<IInterface, Class2>(nameof(Class2));
+            Container.RegisterType<IEnumerable<IInterface>, IInterface[]>();
+            Container.RegisterType<A>();
+
+            // Act
+            var a = Container.Resolve<A>();
+        }
+
+        [TestMethod]
+        // https://github.com/unitycontainer/container/issues/126
         public void Issue_126()
         {
             // Setup
