@@ -13,6 +13,22 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
 
     #region Test Data
 
+    public interface IDecorator
+    { }
+
+    public class BaseDecorator : IDecorator
+    {
+        private readonly IDecorator decorator;
+
+        public BaseDecorator(IDecorator decorator)
+        {
+            this.decorator = decorator;
+        }
+    }
+
+    public class Decorator : IDecorator
+    { }
+
     public class TypeWithConstructorWithRefParameter
     {
         public TypeWithConstructorWithRefParameter(ref string ignored)

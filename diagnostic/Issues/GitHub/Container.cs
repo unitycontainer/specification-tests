@@ -5,6 +5,7 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
 {
     public abstract partial class SpecificationTests
     {
+
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/119

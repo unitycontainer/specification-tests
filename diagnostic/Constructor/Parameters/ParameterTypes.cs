@@ -6,6 +6,19 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        // https://github.com/unitycontainer/container/issues/136
+        public void GitHub_Container_135()
+        {
+            // Setup
+            Container.RegisterType<IDecorator, BaseDecorator>(new InjectionConstructor(typeof(Decorator)));
+
+            // Act/Validate
+            Assert.IsNotNull(Container.Resolve<BaseDecorator>());
+            Assert.IsInstanceOfType(Container.Resolve<IDecorator>(), typeof(BaseDecorator));
+        }
+
+
+        [TestMethod]
         public void CanBuildUpExistingObjectOnTypeWithCtorWithRefParameter()
         {
             // Setup

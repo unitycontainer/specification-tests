@@ -38,7 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Container\tests\Unity.Specification\Unity.Specification.Tests.v5.csproj" />
+    <ProjectReference Include="..\..\Container\tests\Unity.Specification\Unity.Specification.Tests.v6.csproj" />
   </ItemGroup>
 
 </Project>
