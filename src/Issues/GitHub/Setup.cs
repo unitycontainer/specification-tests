@@ -15,6 +15,51 @@ namespace Unity.Specification.Issues.GitHub
 
     #region Test Data
 
+    public interface IZoo
+    {
+
+        IAnimal GetAnimal();
+    }
+
+    public class Zoo : IZoo
+    {
+        private readonly IAnimal _animal;
+
+        public Zoo(IAnimal animal)
+        {
+            _animal = animal;
+        }
+
+
+        public IAnimal GetAnimal()
+        {
+            return _animal;
+        }
+    }
+
+    public interface IAnimal
+    {
+        string Name { get; set; }
+    }
+
+
+    public class Cat : IAnimal
+    {
+        public string Name { get; set; }
+    }
+
+
+    public class Dog : IAnimal
+    {
+
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
     public interface IGeneric<T>
     {
     }
@@ -103,6 +148,7 @@ namespace Unity.Specification.Issues.GitHub
     {
         string Value { get; }
     }
+
     public class ProctRepository : IProctRepository
     {
         public string Value { get; }
