@@ -15,6 +15,18 @@ namespace Unity.Specification.Issues.GitHub
 
     #region Test Data
 
+    public class Foo
+    {
+        private readonly string _dependency;
+
+        public Foo([Dependency] string dependency)
+        {
+            _dependency = dependency;
+        }
+
+        public override string ToString() => _dependency;
+    }
+
     public interface IZoo
     {
 
@@ -42,12 +54,10 @@ namespace Unity.Specification.Issues.GitHub
         string Name { get; set; }
     }
 
-
     public class Cat : IAnimal
     {
         public string Name { get; set; }
     }
-
 
     public class Dog : IAnimal
     {

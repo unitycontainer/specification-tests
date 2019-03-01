@@ -7,6 +7,29 @@ namespace Unity.Specification.Issues.GitHub
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
+        // https://github.com/unitycontainer/container/issues/140
+        public void Issue_Container_140()
+        {
+            // Setup
+            var noOverride = "default";
+            var parOverride = "custom-via-parameteroverride";
+            var depOverride = "custom-via-dependencyoverride";
+
+            Container.RegisterType<Foo>(Invoke.Constructor(noOverride));
+            // Act
+            var defaultValue = Container.Resolve<Foo>().ToString();
+            var depValue = Container.Resolve<Foo>(Override.Dependency<string>(depOverride))
+                                       .ToString();
+            var parValue = Container.Resolve<Foo>(Override.Parameter<string>(parOverride))
+                                       .ToString();
+
+            // Verify
+            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(parOverride, parValue);
+            Assert.AreSame(depOverride, depValue);
+        }
+
+        [TestMethod]
         // https://github.com/unitycontainer/container/issues/136
         public void Container_136()
         {

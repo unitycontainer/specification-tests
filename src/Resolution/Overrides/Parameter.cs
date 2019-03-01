@@ -23,7 +23,6 @@ namespace Unity.Specification.Resolution.Overrides
             Assert.IsNotNull(result.George);
         }
 
-
         [TestMethod]
         public void CanProvideConstructorParameterViaResolveCall()
         {
@@ -101,6 +100,23 @@ namespace Unity.Specification.Resolution.Overrides
 
             // Verify
             Assert.AreEqual(expectedValue, result.X);
+        }
+
+        [TestMethod]
+        public void InjectedParameterWithParameterOverride()
+        {
+            // Setup
+            var noOverride = "default";
+            var parOverride = "custom-via-parameteroverride";
+
+            Container.RegisterType<TestType>(Invoke.Constructor(noOverride));
+            // Act
+            var defaultValue = Container.Resolve<TestType>().ToString();
+            var parValue = Container.Resolve<TestType>(Override.Parameter<string>(parOverride))
+                                    .ToString();
+            // Verify
+            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(parOverride, parValue);
         }
     }
 }

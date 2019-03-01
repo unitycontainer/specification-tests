@@ -22,6 +22,23 @@ namespace Unity.Specification.Resolution.Overrides
 
     #region Test Data
 
+    public class TestType
+    {
+        private readonly string _dependency;
+
+        public TestType() { }
+
+        public TestType(string dependency)
+        {
+            _dependency = dependency;
+        }
+
+        public string DependencyField;
+        public string DependencyProperty { get; set; }
+
+        public override string ToString() => _dependency;
+    }
+
     public class Foo
     {
         public object Fred { get; }
@@ -29,7 +46,7 @@ namespace Unity.Specification.Resolution.Overrides
         public object George { get; }
 
         public Foo([OptionalDependency("Fred")]   IService x,
-                   [OptionalDependency("George")] IService y)
+                    [OptionalDependency("George")] IService y)
         {
             Fred = x;
             George = y;

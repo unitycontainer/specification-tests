@@ -59,8 +59,6 @@ namespace Unity.Specification.Resolution.Overrides
             Assert.IsNotNull(result.George);
         }
 
-
-
         [TestMethod]
         public void DependencyOverrideOccursEverywhereTypeMatches()
         {
@@ -131,6 +129,57 @@ namespace Unity.Specification.Resolution.Overrides
             // Verify
             Assert.AreEqual(10, instance.LogLevel);
             Assert.AreEqual(50, instance.Inner.LogLevel);
+        }
+
+        [TestMethod]
+        public void InjectedParameterWithDependencyOverride()
+        {
+            // Setup
+            var noOverride = "default";
+            var depOverride = "custom-via-dependencyoverride";
+
+            Container.RegisterType<TestType>(Invoke.Constructor(noOverride));
+            // Act
+            var defaultValue = Container.Resolve<TestType>().ToString();
+            var depValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
+                                    .ToString();
+            // Verify
+            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(depOverride, depValue);
+        }
+
+        [TestMethod]
+        public void InjectedFieldWithFielDependencyOverride()
+        {
+            // Setup
+            var noOverride = "default";
+            var depOverride = "custom-via-dependencyoverride";
+
+            Container.RegisterType<TestType>(Inject.Field(nameof(TestType.DependencyField), noOverride));
+            // Act
+            var defaultValue = Container.Resolve<TestType>().DependencyField;
+            var fieldValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
+                                    .DependencyField;
+            // Verify
+            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(depOverride, fieldValue);
+        }
+
+        [TestMethod]
+        public void InjectedPropertyWithDependencyOverride()
+        {
+            // Setup
+            var noOverride = "default";
+            var depOverride = "custom-via-dependencyoverride";
+
+            Container.RegisterType<TestType>(Inject.Property(nameof(TestType.DependencyProperty), noOverride));
+            // Act
+            var defaultValue = Container.Resolve<TestType>().DependencyProperty;
+            var propValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
+                                    .DependencyProperty;
+            // Verify
+            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(depOverride, propValue);
         }
     }
 }
