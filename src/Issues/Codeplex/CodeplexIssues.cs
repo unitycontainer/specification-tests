@@ -80,19 +80,6 @@ namespace Unity.Specification.Issues.Codeplex
             IDictionary<string, string> result = container.Resolve<IDictionary<string, string>>();
         }
 
-        // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6431
-        [TestMethod]
-        public void AccessViolationExceptionOnx64()
-        {
-            var container1 = GetContainer();
-            container1.RegisterType<InnerX64Class>();
-            // SomeProperty is static, this should throw here
-            AssertExtensions.AssertException<InvalidOperationException>(() =>
-            {
-                container1.RegisterType<OuterX64Class>(new InjectionProperty("SomeProperty"));
-            });
-        }
-
         // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6491
         [TestMethod]
         public void CanResolveTimespan()

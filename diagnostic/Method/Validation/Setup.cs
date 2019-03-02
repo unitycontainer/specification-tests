@@ -14,6 +14,75 @@ namespace Unity.Specification.Diagnostic.Method.Validation
 
     #region Test Data
 
+    public class InjectedTypeBase
+    {
+        private void PrivateMethod() { }
+
+        protected void ProtectedMethod() { }
+
+        public static void StaticMethod() { }
+    }
+
+    public class InjectedType : InjectedTypeBase
+    {
+        public void OpenGenericMethod<T>()
+        {
+        }
+
+        public void OutParamMethod<T>(out object arg)
+        {
+            arg = null;
+        }
+
+        public void RefParamMethod<T>(ref object arg)
+        {
+        }
+    }
+
+    public class AttributeOpenGenericType
+    {
+        [InjectionMethod]
+        public void OpenGenericMethod<T>()
+        {
+        }
+    }
+
+    public class AttributeOutParamType
+    {
+        [InjectionMethod]
+        public void OutParamMethod<T>(out object arg)
+        {
+            arg = null;
+        }
+    }
+
+    public class AttributeRefParamType
+    {
+        [InjectionMethod]
+        public void RefParamMethod<T>(ref object arg)
+        {
+        }
+    }
+
+    public class AttributeStaticType
+    {
+        [InjectionMethod]
+        public static void Method() { }
+    }
+
+    public class AttributePrivateType
+    {
+        [InjectionMethod]
+        private void Method() { }
+    }
+
+
+    public class AttributeProtectedType
+    {
+        [InjectionMethod]
+        protected void Method() { }
+    }
+
     public class OpenGenericInjectionMethod
     {
         public void InjectMe<T>()
