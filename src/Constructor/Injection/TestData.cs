@@ -1,14 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
+        #region class_service
+        public class Service
+        {
+            // Default constructor
+            public Service()
+            {
+                Ctor = 1;
+            }
+
+            // Constructor 2
+            public Service(object arg)
+            {
+                Ctor = 2;
+            }
+
+            // Constructor 3
+            public Service(IUnityContainer container)
+            {
+                Ctor = 2;
+            }
+
+            // Called Constructor
+            public int Ctor { get; }
+        }
+        #endregion
+
+        #region class_service_generic
+        public class Service<T>
+        {
+            // Default constructor
+            public Service()
+            {
+                Ctor = 1;
+            }
+
+            // Constructor 2
+            public Service(object arg)
+            {
+                Ctor = 2;
+            }
+
+            // Called Constructor
+            public int Ctor { get; }
+        }
+        #endregion
 
         private class TestClass
         {
@@ -51,13 +93,13 @@ namespace Unity.Specification.Constructor.Injection
         {
         }
 
-        public class Service : IService, IDisposable
+        public class OtherService : IService, IDisposable
         {
             public string ID { get; } = Guid.NewGuid().ToString();
 
             public static int Instances = 0;
 
-            public Service()
+            public OtherService()
             {
                 Interlocked.Increment(ref Instances);
             }

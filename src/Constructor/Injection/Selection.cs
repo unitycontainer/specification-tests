@@ -1,10 +1,40 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests 
     {
+        public static IEnumerable<object[]> DefaultConstructorTestData
+        {
+
+            // Format:                     |TypeFrom,  |TypeTo,                                        |Name,      |TypeToResolve
+            get
+            {
+                yield return new object[] { null, typeof(object), null, typeof(object) };
+                yield return new object[] { null, typeof(TestClass), null, typeof(TestClass) };
+                yield return new object[] { null, typeof(GenericTestClass<int, string, object>), null, typeof(GenericTestClass<int, string, object>) };
+                yield return new object[] { null, typeof(object), "0", typeof(object) };
+                yield return new object[] { null, typeof(TestClass), "1", typeof(TestClass) };
+                yield return new object[] { null, typeof(GenericTestClass<,,>), "2", typeof(GenericTestClass<int, string, object>) };
+                yield return new object[] { null, typeof(GenericTestClass<int, string, object>), "3", typeof(GenericTestClass<int, string, object>) };
+                yield return new object[] { null, typeof(GenericTestClass<,,>), "4", typeof(GenericTestClass<object, string, object>) };
+            }
+        }
+
+        public static IEnumerable<object[]> DefaultConstructorTestDataFailed
+        {
+            // Format:                      |TypeTo/TypeToResolve,        |Name
+            get
+            {
+                yield return new object[] { typeof(GenericTestClass<,,>), null };
+                yield return new object[] { typeof(GenericTestClass<,,>), null };
+                yield return new object[] { typeof(GenericTestClass<,,>), "2" };
+                yield return new object[] { typeof(GenericTestClass<,,>), "4" };
+            }
+        }
+
         public static IEnumerable<object[]> ConstructorSelectionTestData
         {
 
@@ -98,5 +128,52 @@ namespace Unity.Specification.Constructor.Injection
                 yield return new object[] { null, typeof(GenericTestClass<,,>),                   "4",  typeof(GenericTestClass<object, string, object>), new object[] {}, new Func<object, bool>(r => true) };
             }
         }
+
+
+        [DataTestMethod]
+        [DynamicData(nameof(ConstructorSelectionTestData))]
+        public void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
+        {
+            // Setup
+            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));
+
+            // Act
+            var result = Container.Resolve(typeToResolve, name);
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeToResolve);
+            Assert.IsTrue(validator?.Invoke(result) ?? true);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(DefaultConstructorTestData))]
+        public void Default(Type typeFrom, Type typeTo, string name, Type typeToResolve)
+        {
+            // Setup
+            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor());
+
+            // Act
+            var result = Container.Resolve(typeToResolve, name);
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeToResolve);
+        }
+
+
+        [DataTestMethod]
+        [DynamicData(nameof(DefaultConstructorTestDataFailed))]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void DefaultCtorValidation(Type type, string name)
+        {
+            // Setup
+            Container.RegisterType((Type)null, type, name, null, Invoke.Constructor());
+
+            // Act
+            var result = Container.Resolve(type, name);
+            Assert.IsNotNull(result);
+        }
+
     }
 }

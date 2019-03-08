@@ -1,36 +1,72 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
-        public static IEnumerable<object[]> DefaultConstructorTestData
+        [TestMethod]
+        public void InjectDefaultCtor()
         {
-                
-            // Format:                     |TypeFrom,  |TypeTo,                                        |Name,      |TypeToResolve
-            get
-            { 
-                yield return new object[] { null,       typeof(object),                                 null,       typeof(object)                                   };
-                yield return new object[] { null,       typeof(TestClass),                              null,       typeof(TestClass)                                };
-                yield return new object[] { null,       typeof(GenericTestClass<int, string, object>),  null,       typeof(GenericTestClass<int, string, object>)    };
-                yield return new object[] { null,       typeof(object),                                 "0",        typeof(object)                                   };
-                yield return new object[] { null,       typeof(TestClass),                              "1",        typeof(TestClass)                                };
-                yield return new object[] { null,       typeof(GenericTestClass<,,>),                   "2",        typeof(GenericTestClass<int, string, object>)    };
-                yield return new object[] { null,       typeof(GenericTestClass<int, string, object>),  "3",        typeof(GenericTestClass<int, string, object>)    };
-                yield return new object[] { null,       typeof(GenericTestClass<,,>),                   "4",        typeof(GenericTestClass<object, string, object>) };
-            }
+            // Arrange
+            #region inject_default_ctor_arrange
+
+            Container.RegisterType<Service>(Invoke.Constructor());
+
+            #endregion
+
+            // Act
+            #region inject_default_ctor_act
+
+            var instance = Container.Resolve<Service>();
+
+            // 1 == instance.Ctor
+
+            #endregion
+
+            // Validate
+            Assert.AreEqual(1, instance.Ctor);
         }
 
-        public static IEnumerable<object[]> DefaultConstructorTestDataFailed
+        [TestMethod]
+        public void InjectDefaultCtorClosedGeneric()
         {
-            // Format:                      |TypeTo/TypeToResolve,        |Name
-            get
-            {
-                yield return new object[] { typeof(GenericTestClass<,,>), null };
-                yield return new object[] { typeof(GenericTestClass<,,>), null };
-                yield return new object[] { typeof(GenericTestClass<,,>), "2" };
-                yield return new object[] { typeof(GenericTestClass<,,>), "4" };
-            }
+            // Arrange
+            #region inject_default_ctor_closed_generic_arrange
+
+            Container.RegisterType<Service<string>>(Invoke.Constructor());
+
+            #endregion
+
+            // Act
+            #region inject_default_ctor_closed_generic_act
+
+            var instance = Container.Resolve<Service<string>>();
+
+            // 1 == instance.Ctor
+
+            #endregion
+
+            // Validate
+            Assert.AreEqual(1, instance.Ctor);
+        }
+
+
+        [TestMethod]
+        public void InjectDefaultCtorOpenGeneric()
+        {
+            // Arrange
+            #region inject_default_ctor_open_generic_arrange
+
+            Container.RegisterType(typeof(Service<>), Invoke.Constructor());
+
+            #endregion
+
+            // Act
+            var instance = Container.Resolve<Service<int>>();
+
+            // Validate
+            Assert.AreEqual(1, instance.Ctor);
         }
     }
 }
