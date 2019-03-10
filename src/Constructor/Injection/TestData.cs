@@ -6,52 +6,6 @@ namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
-        #region class_service
-        public class Service
-        {
-            // Default constructor
-            public Service()
-            {
-                Ctor = 1;
-            }
-
-            // Constructor 2
-            public Service(object arg)
-            {
-                Ctor = 2;
-            }
-
-            // Constructor 3
-            public Service(IUnityContainer container)
-            {
-                Ctor = 2;
-            }
-
-            // Called Constructor
-            public int Ctor { get; }
-        }
-        #endregion
-
-        #region class_service_generic
-        public class Service<T>
-        {
-            // Default constructor
-            public Service()
-            {
-                Ctor = 1;
-            }
-
-            // Constructor 2
-            public Service(object arg)
-            {
-                Ctor = 2;
-            }
-
-            // Called Constructor
-            public int Ctor { get; }
-        }
-        #endregion
-
         private class TestClass
         {
             public TestClass() { }                                                    // 0
@@ -83,10 +37,6 @@ namespace Unity.Specification.Constructor.Injection
             {
 
             }
-        }
-
-        public interface IService
-        {
         }
 
         public interface IGenericService<T>

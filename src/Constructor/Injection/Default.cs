@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace Unity.Specification.Constructor.Injection
 {
@@ -34,14 +33,14 @@ namespace Unity.Specification.Constructor.Injection
             // Arrange
             #region inject_default_ctor_closed_generic_arrange
 
-            Container.RegisterType<Service<string>>(Invoke.Constructor());
+            Container.RegisterType<Service<object>>(Invoke.Constructor());
 
             #endregion
 
             // Act
             #region inject_default_ctor_closed_generic_act
 
-            var instance = Container.Resolve<Service<string>>();
+            var instance = Container.Resolve<Service<object>>();
 
             // 1 == instance.Ctor
 
@@ -63,7 +62,7 @@ namespace Unity.Specification.Constructor.Injection
             #endregion
 
             // Act
-            var instance = Container.Resolve<Service<int>>();
+            var instance = Container.Resolve<Service<object>>();
 
             // Validate
             Assert.AreEqual(1, instance.Ctor);
