@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Constructor.Attribute
+namespace Unity.Specification.Diagnostic.Constructor.Annotation
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -12,7 +12,7 @@ namespace Unity.Specification.Constructor.Attribute
     }
 
     #region class_service
-    public class Service 
+    public class Service
     {
         public Service() => Ctor = 1;
 
@@ -21,6 +21,7 @@ namespace Unity.Specification.Constructor.Attribute
 
         public Service(IUnityContainer container) => Ctor = 3;
 
+        [InjectionConstructor]
         public Service(object[] data) => Ctor = 4;
 
         public int Ctor { get; }    // Constructor called 
@@ -32,14 +33,15 @@ namespace Unity.Specification.Constructor.Attribute
     {
         public Service() => Ctor = 1;
 
+        [InjectionConstructor]
         public Service(T arg) => Ctor = 2;
 
         public Service(IUnityContainer container, T arg) => Ctor = 3;
 
+        [InjectionConstructor]
         public Service(T arg, string data) => Ctor = 4;
 
         public int Ctor { get; }    // Constructor called 
     }
     #endregion
-
 }

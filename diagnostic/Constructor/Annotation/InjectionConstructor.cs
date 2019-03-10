@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace Unity.Specification.Constructor.Attribute
+namespace Unity.Specification.Diagnostic.Constructor.Annotation
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void Constructor()
         {
             #region attribute_ctor
