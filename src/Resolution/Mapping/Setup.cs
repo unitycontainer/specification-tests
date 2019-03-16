@@ -24,7 +24,6 @@ namespace Unity.Specification.Resolution.Mapping
             Service.Instances = 0;
         }
 
-
         public interface IFoo<TEntity>
         {
             TEntity Value { get; }
@@ -61,7 +60,6 @@ namespace Unity.Specification.Resolution.Mapping
         {
         }
 
-
         public interface ITest1<T> { }
 
         public interface ITest2<T> { }
@@ -70,7 +68,6 @@ namespace Unity.Specification.Resolution.Mapping
         {
             public string Id { get; } = Guid.NewGuid().ToString();
         }
-
 
         public class Service : IService, IDisposable
         {
@@ -89,7 +86,6 @@ namespace Unity.Specification.Resolution.Mapping
                 Disposed = true;
             }
         }
-
 
         public interface IOtherService
         {

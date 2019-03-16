@@ -31,6 +31,7 @@ namespace Unity.Specification.Diagnostic.Field.Validation
 
     public class DependencyInjectedType : DependencyInjectedTypeBase
     {
+        public object NormalField;
     }
 
     public class DependencyAttributeStaticType

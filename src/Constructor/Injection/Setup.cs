@@ -5,6 +5,9 @@ namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
+        private string _data = "data";
+        private string _override = "override";
+
         [TestInitialize]
         public override void Setup()
         {
@@ -21,6 +24,35 @@ namespace Unity.Specification.Constructor.Injection
     {
     }
 
+    public class Foo
+    {
+        public Foo(string data)
+        {
+            Data = data;
+        }
+
+        public object Data { get; }
+    }
+
+    #region class_string_service
+    public class MultipleTypeService
+    {
+        public MultipleTypeService(int data)
+        {
+            Data = data;
+        }
+        public MultipleTypeService(string data)
+        {
+            Data = data;
+        }
+        public MultipleTypeService(double data)
+        {
+            Data = data;
+        }
+
+        public object Data { get; }
+    }
+    #endregion
 
     #region class_service
     public class Service : IService

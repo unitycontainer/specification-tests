@@ -7,6 +7,19 @@ namespace Unity.Specification.Diagnostic.Property.Validation
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
+        public void NoReuse()
+        {
+            // Arrange
+            var property = Inject.Property(nameof(DependencyInjectedType.NormalProperty), "test");
+
+            // Act
+            Container.RegisterType<DependencyInjectedType>("1", property)
+                     .RegisterType<DependencyInjectedType>("2", property);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void InjectReadOnlyProperty()
         {
             // Act

@@ -7,6 +7,18 @@ namespace Unity.Specification.Diagnostic.Method.Validation
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
+        public void NoReuse()
+        {
+            // Arrange
+            var method = Invoke.Method(nameof(InjectedType.NormalMethod));
+
+            // Act
+            Container.RegisterType<InjectedType>("1", method)
+                     .RegisterType<InjectedType>("2", method);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void InjectPrivateMethod()
         {
             // Act

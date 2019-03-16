@@ -32,6 +32,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
 
     public class DependencyInjectedType : DependencyInjectedTypeBase
     {
+        public object NormalProperty { get; set; }
     }
 
     public class DependencyAttributeStaticType

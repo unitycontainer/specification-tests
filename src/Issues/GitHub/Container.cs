@@ -26,7 +26,7 @@ namespace Unity.Specification.Issues.GitHub
             // Verify
             Assert.AreSame(noOverride, defaultValue);
             Assert.AreSame(parOverride, parValue);
-            Assert.AreSame(depOverride, depValue);
+            Assert.AreSame(noOverride, depValue);
         }
 
         [TestMethod]

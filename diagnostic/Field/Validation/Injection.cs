@@ -7,6 +7,18 @@ namespace Unity.Specification.Diagnostic.Field.Validation
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
+        public void NoReuse()
+        {
+            // Arrange
+            var field = Inject.Field(nameof(DependencyInjectedType.NormalField), "test");
+
+            // Act
+            Container.RegisterType<DependencyInjectedType>("1", field)
+                     .RegisterType<DependencyInjectedType>("2", field);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void InjectReadOnlyField()
         {
             // Act

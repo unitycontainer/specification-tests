@@ -12,6 +12,12 @@ namespace Unity.Specification.Resolution.Basics
 
         #region Test Data
 
+        public interface IFoo { }
+
+        public class Foo : IFoo { }
+
+        public class Foo1 : IFoo { }
+
         public class ObjectWithOneDependency
         {
             private readonly object inner;

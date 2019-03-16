@@ -25,6 +25,10 @@ namespace Unity.Specification.Diagnostic.Method.Validation
 
     public class InjectedType : InjectedTypeBase
     {
+        public void NormalMethod()
+        {
+        }
+
         public void OpenGenericMethod<T>()
         {
         }

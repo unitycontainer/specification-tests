@@ -13,7 +13,6 @@ namespace Unity.Specification.Factory.Registration
             Assert.IsNotNull(Container.Resolve<IService>());
         }
 
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShortSignatureThrowsOnNull()

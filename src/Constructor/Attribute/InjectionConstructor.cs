@@ -2,7 +2,7 @@
 
 namespace Unity.Specification.Constructor.Attribute
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
         public void Constructor()

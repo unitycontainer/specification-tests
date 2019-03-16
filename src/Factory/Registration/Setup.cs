@@ -11,35 +11,39 @@ namespace Unity.Specification.Factory.Registration
         {
             Container = GetContainer();
         }
-
-
-        public interface IService
-        {
-        }
-
-        public interface IGenericService<T>
-        {
-        }
-
-        public class Service : IService, IDisposable
-        {
-            public string ID { get; } = Guid.NewGuid().ToString();
-
-            public static int Instances = 0;
-
-            public Service()
-            {
-                Interlocked.Increment(ref Instances);
-            }
-
-            public bool Disposed = false;
-
-            public void Dispose()
-            {
-                Disposed = true;
-            }
-        }
-
-
     }
+
+    #region Test Data
+
+    public interface IFoo<T> { }
+    public class Foo<T> : IFoo<T> { }
+
+    public interface IService
+    {
+    }
+
+    public interface IGenericService<T>
+    {
+    }
+
+    public class Service : IService, IDisposable
+    {
+        public string ID { get; } = Guid.NewGuid().ToString();
+
+        public static int Instances = 0;
+
+        public Service()
+        {
+            Interlocked.Increment(ref Instances);
+        }
+
+        public bool Disposed = false;
+
+        public void Dispose()
+        {
+            Disposed = true;
+        }
+    }
+
+    #endregion
 }

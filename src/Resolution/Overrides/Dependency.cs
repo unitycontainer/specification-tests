@@ -6,6 +6,62 @@ namespace Unity.Specification.Resolution.Overrides
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        public void Type()
+        {
+            var nega = "none";
+
+            // Arrange
+            Container.RegisterType<IFoo, Foo2>()
+                     .RegisterType<IFoo, Foo1>(Name);
+
+            // Act / Validate
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFoo>().Foo, typeof(Foo2));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFoo>(new DependencyOverride(typeof(IFoo), null, new Foo3())).Foo, typeof(Foo3));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFoo>(new DependencyOverride(typeof(IFoo), Name, new Foo3())).Foo, typeof(Foo2));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFoo>(new DependencyOverride(typeof(IFoo), nega, new Foo3())).Foo, typeof(Foo2));
+        }
+
+        [TestMethod]
+        public void TypeNamed()
+        {
+            var nega = "none";
+
+            // Arrange
+            Container.RegisterType<IFoo, Foo2>()
+                     .RegisterType<IFoo, Foo1>(Name);
+
+            // Act / Validate
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>().Foo, typeof(Foo1));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), null, new Foo3())).Foo, typeof(Foo1));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), Name, new Foo3())).Foo, typeof(Foo3));
+            Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), nega, new Foo3())).Foo, typeof(Foo1));
+        }
+
+        [TestMethod]
+        public void NamedInstance()
+        {
+            // Arrange
+            Container.RegisterInstance<IFoo>(new Foo2())
+                     .RegisterInstance<IFoo>(Name, new Foo1());
+
+            // Act / Validate
+            Assert.IsInstanceOfType(Container.Resolve<IFoo>(), typeof(Foo2));
+            Assert.IsInstanceOfType(Container.Resolve<IFoo>(Name), typeof(Foo1));
+        }
+
+        [TestMethod]
+        public void NamedFactory()
+        {
+            // Arrange
+            Container.RegisterFactory<IFoo>((c, t, n) => new Foo2())
+                     .RegisterFactory<IFoo>(Name, (c, t, n) => new Foo1());
+
+            // Act / Validate
+            Assert.IsInstanceOfType(Container.Resolve<IFoo>(), typeof(Foo2));
+            Assert.IsInstanceOfType(Container.Resolve<IFoo>(Name), typeof(Foo1));
+        }
+
+        [TestMethod]
         public void OptionalViaDependency()
         {
             // Setup
@@ -136,16 +192,18 @@ namespace Unity.Specification.Resolution.Overrides
         {
             // Setup
             var noOverride = "default";
-            var depOverride = "custom-via-dependencyoverride";
+            var depOverride = "custom-via-override";
 
             Container.RegisterType<TestType>(Invoke.Constructor(noOverride));
             // Act
             var defaultValue = Container.Resolve<TestType>().ToString();
-            var depValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
-                                    .ToString();
+            var depValue     = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).ToString();
+            var propValue    = Container.Resolve<TestType>(Override.Parameter<string>(depOverride)).ToString();
+
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(depOverride, depValue);
+            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, propValue);
         }
 
         [TestMethod]
@@ -153,15 +211,17 @@ namespace Unity.Specification.Resolution.Overrides
         {
             // Setup
             var noOverride = "default";
-            var depOverride = "custom-via-dependencyoverride";
-
+            var depOverride = "custom-via-override";
             Container.RegisterType<TestType>(Inject.Field(nameof(TestType.DependencyField), noOverride));
+
             // Act
             var defaultValue = Container.Resolve<TestType>().DependencyField;
-            var fieldValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
-                                    .DependencyField;
+            var dependValue  = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).DependencyField;
+            var fieldValue   = Container.Resolve<TestType>(Override.Field(nameof(TestType.DependencyField), depOverride)).DependencyField;
+
             // Verify
             Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(noOverride, dependValue);
             Assert.AreSame(depOverride, fieldValue);
         }
 
@@ -170,15 +230,17 @@ namespace Unity.Specification.Resolution.Overrides
         {
             // Setup
             var noOverride = "default";
-            var depOverride = "custom-via-dependencyoverride";
-
+            var depOverride = "custom-via-override";
             Container.RegisterType<TestType>(Inject.Property(nameof(TestType.DependencyProperty), noOverride));
+
             // Act
             var defaultValue = Container.Resolve<TestType>().DependencyProperty;
-            var propValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride))
-                                    .DependencyProperty;
+            var depValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).DependencyProperty;
+            var propValue = Container.Resolve<TestType>(Override.Property(nameof(TestType.DependencyProperty), depOverride)).DependencyProperty;
+            
             // Verify
             Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(noOverride, depValue);
             Assert.AreSame(depOverride, propValue);
         }
     }

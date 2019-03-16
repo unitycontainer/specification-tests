@@ -39,7 +39,9 @@ namespace Unity.Specification.Resolution.Overrides
         public override string ToString() => _dependency;
     }
 
-    public class Foo
+    public interface IFoo { }
+
+    public class Foo : IFoo
     {
         public object Fred { get; }
 
@@ -52,6 +54,31 @@ namespace Unity.Specification.Resolution.Overrides
             George = y;
         }
     }
+
+    public class DependsOnIFoo
+    {
+        public DependsOnIFoo(IFoo foo)
+        {
+            Foo = foo;
+        }
+
+        public IFoo Foo { get; }
+    }
+    public class DependsOnIFooName
+    {
+        public DependsOnIFooName([Dependency("name")]IFoo foo)
+        {
+            Foo = foo;
+        }
+
+        public IFoo Foo { get; }
+    }
+
+    public class Foo1 : IFoo { }
+
+    public class Foo2 : IFoo { }
+
+    public class Foo3 : IFoo { }
 
     public class ObjectWithThreeProperties
     {

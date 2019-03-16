@@ -5,29 +5,16 @@ namespace Unity.Specification.Constructor.Overrides
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Constructor()
-        {
-            using (IUnityContainer container = GetContainer())
-            {
-                // Arrange
-
-                // Act
-
-                // Assert
-            }
-        }
-
-        [TestMethod]
-        public void SelectConstructorAttribute()
+        public void CtorParameter()
         {
             // Arrange
-            Container.RegisterType(typeof(object));
+            Container.RegisterType<Service>(Invoke.Constructor(_data));
 
             // Act
-            var result = Container.Resolve<object>();
+            var value = Container.Resolve<Service>(Override.Dependency<string>(_override));
 
-            // Assert
-            Assert.IsNotNull(result);
+            // Verify
+            Assert.AreSame(_data, value.Data);
         }
     }
 }
