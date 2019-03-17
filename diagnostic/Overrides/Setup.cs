@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Diagnostic.Override
+namespace Unity.Specification.Diagnostic.Overrides
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {

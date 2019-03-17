@@ -2,12 +2,11 @@
 using Unity.Injection;
 using Unity.Resolution;
 
-namespace Unity.Specification.Diagnostic.Override
+namespace Unity.Specification.Diagnostic.Overrides
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [Ignore]
         public void DependencyLegacy()
         {
             // arrange
