@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Win32;
 
 namespace Unity.Specification.Diagnostic.Constructor.Parameters
 {
@@ -46,6 +47,25 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
         }
 
         public int Property { get; set; }
+    }
+
+
+    public class Unresolvable
+    {
+        private Unresolvable() { }
+
+        public Unresolvable(ref long data) { }
+
+        public static Unresolvable Create() => new Unresolvable();
+    }
+
+    public class Service
+    {
+        public Service(Unresolvable data) => Ctor = 2;
+
+        public Service(Unresolvable unr, RegistryKey data) => Ctor = 3;
+
+        public int Ctor { get; }
     }
 
     #endregion

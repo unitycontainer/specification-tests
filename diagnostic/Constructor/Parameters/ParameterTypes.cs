@@ -47,5 +47,13 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
             Assert.AreEqual(10, instance.Property);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void FalsePositive()
+        {
+            // Act
+            var instance = Container.Resolve<Service>();
+        }
+
     }
 }
