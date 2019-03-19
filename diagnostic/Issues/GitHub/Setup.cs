@@ -304,6 +304,15 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
         }
     }
 
+    public class TestClass
+    {
+        public TestClass(string field)
+        {
+            this.Field = field;
+        }
+        public string Field { get; }
+    }
+
     public class SpyPolicy
     {
         public int Count;

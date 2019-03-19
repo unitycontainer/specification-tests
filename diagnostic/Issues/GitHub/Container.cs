@@ -1,10 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Unity.Injection;
+using Unity.Resolution;
 
 namespace Unity.Specification.Diagnostic.Issues.GitHub
 {
     public abstract partial class SpecificationTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        // https://github.com/unitycontainer/container/issues/149
+        public void Issue_149()
+        {
+            Container.RegisterInstance("123");
+            var instance = Container.Resolve<TestClass>(new DependencyOverride<string>(new OptionalParameter<string>()));
+            Assert.AreEqual("123", instance.Field);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        // https://github.com/unitycontainer/container/issues/149
+        public void Issue_149_Negative()
+        {
+            // BUG: StackOverflow happens here since 5.9.0
+            var instance = Container.Resolve<TestClass>(new DependencyOverride<string>(new OptionalParameter<string>()));
+            Assert.IsNull(instance.Field);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
