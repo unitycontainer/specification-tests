@@ -23,23 +23,5 @@ namespace Unity.Specification.Factory.Resolution
 
             Assert.IsNotNull(service);
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void ShortSignatureThrowsOnResolvedNull()
-        {
-            Container.RegisterFactory<IService>(c => null);
-
-            Container.Resolve<IService>();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void LongSignatureThrowsOnResolvedNull()
-        {
-            Container.RegisterFactory<IService>((c, t, n) => null);
-
-            Container.Resolve<IService>();
-        }
     }
 }

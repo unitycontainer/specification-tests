@@ -7,6 +7,14 @@ namespace Unity.Specification.Registration
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Instance_Null_Null()
+        {
+            // Act
+            Container.RegisterInstance(null, null, null, InstanceLifetime.Singleton);
+        }
+
+        [TestMethod]
         public void Instance_IUC_SimpleObject()
         {
             var instance = Guid.NewGuid().ToString();

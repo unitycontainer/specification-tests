@@ -69,6 +69,5 @@ namespace Unity.Specification.Lifetime
 
             Assert.AreNotSame(a, b);
         }
-
     }
 }
