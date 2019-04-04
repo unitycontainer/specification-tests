@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using Unity.Specification.TestData;
 
 namespace Unity.Specification.Diagnostic.Constructor.Annotation
 {
@@ -19,6 +19,22 @@ namespace Unity.Specification.Diagnostic.Constructor.Annotation
             #endregion
             // Assert
             Assert.AreEqual(2, instance.Ctor);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void MultipleConstructorsAnnotated()
+        {
+            #region attribute_ctor
+
+            // Act
+            var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();
+
+            // 2 == instance.Ctor
+
+            #endregion
+            // Assert
+            Assert.AreEqual(Container, instance.Container);
         }
     }
 }

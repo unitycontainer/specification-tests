@@ -79,51 +79,6 @@ namespace Unity.Specification.Diagnostic.Constructor.Types
         }
     }
 
-    public interface IFooInterface
-    {
-        [Dependency]
-        object InterfaceProp
-        {
-            get;
-            set;
-        }
-    }
-
-    public interface IFooInterface2
-    {
-        object InterfaceProp
-        {
-            get;
-            set;
-        }
-    }
-
-    public class BarClass : IFooInterface
-    {
-        public object InterfaceProp { get; set; }
-    }
-
-    public class BarClass2 : IFooInterface2
-    {
-        [Dependency]
-        public object InterfaceProp { get; set; }
-    }
-
-    public class PropertyDependencyClassStub1
-    {
-        [Dependency]
-        public object MyFirstObj { get; set; }
-    }
-
-    public class PropertyDependencyClassStub2
-    {
-        [Dependency]
-        public object MyFirstObj { get; set; }
-
-        [Dependency]
-        public object MySecondObj { get; set; }
-    }
-
     public abstract class AbstractBase
     {
         private object baseProp;

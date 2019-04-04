@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Unity.Lifetime;
-using Unity.Specification.TestData;
 
 namespace Unity.Specification.Registration.Extended
 {

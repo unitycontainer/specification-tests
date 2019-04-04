@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Diagnostic.Constructor.Types
+namespace Unity.Specification.BuildUp
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void BuildInterfacePropertyInjectTest1()
+        public void BuildUpInterfaceWithDependency()
         {
             // Setup
             BarClass objBase = new BarClass();
@@ -18,7 +18,7 @@ namespace Unity.Specification.Diagnostic.Constructor.Types
         }
 
         [TestMethod]
-        public void BuildInterfacePropertyInjectTest2()
+        public void BuildUpInterfaceWithoutDependency()
         {
             // Setup
             BarClass2 objBase = new BarClass2();

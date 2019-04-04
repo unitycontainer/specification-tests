@@ -17,24 +17,22 @@ namespace Unity.Specification.TestData
             Signature = One;
         }
 
-        public TypeWithAmbiguousCtors(object first)
+        public TypeWithAmbiguousCtors(object first, object second)
         {
             Signature = Two;
         }
 
-        public TypeWithAmbiguousCtors(Type first, Type second, Type third)
+        public TypeWithAmbiguousCtors(IUnityContainer first, object second)
         {
             Signature = Three;
         }
 
-        public TypeWithAmbiguousCtors(string first, string second, string third)
+        public TypeWithAmbiguousCtors(object first, IUnityContainer second)
         {
             Signature = Four;
         }
 
-        public TypeWithAmbiguousCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
-        {
-            Signature = Five;
-        }
+        [Dependency]
+        public IUnityContainer Container { get; set; }
     }
 }

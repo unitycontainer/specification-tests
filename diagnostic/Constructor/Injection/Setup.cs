@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Unity.Specification.Diagnostic.Constructor.Validation
+namespace Unity.Specification.Diagnostic.Constructor.Injection
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {

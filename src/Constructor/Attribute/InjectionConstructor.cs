@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Specification.TestData;
 
 namespace Unity.Specification.Constructor.Attribute
 {
@@ -18,5 +19,16 @@ namespace Unity.Specification.Constructor.Attribute
             // Assert
             Assert.AreEqual(2, instance.Ctor);
         }
+
+        [TestMethod]
+        public void MultipleConstructorsAnnotated()
+        {
+            // Act
+            var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();
+
+            // Assert
+            Assert.AreEqual(Container, instance.Container);
+        }
+
     }
 }
