@@ -97,44 +97,6 @@ namespace Unity.Specification.Constructor.Injection
             }
         }
 
-        public class TypeWithAmbiguousCtors
-        {
-            public const string One = "1";
-            public const string Two = "2";
-            public const string Three = "3";
-            public const string Four = "4";
-            public const string Five = "5";
-
-            public string Signature { get; }
-
-            public TypeWithAmbiguousCtors()
-            {
-                Signature = One;
-            }
-
-            public TypeWithAmbiguousCtors(int first, string second, float third)
-            {
-                Signature = Two;
-            }
-
-            public TypeWithAmbiguousCtors(Type first, Type second, Type third)
-            {
-                Signature = Three;
-            }
-
-            public TypeWithAmbiguousCtors(string first, string second, string third)
-            {
-                Signature = Four;
-            }
-
-            public TypeWithAmbiguousCtors(object first, object second, object third)
-            {
-                Signature = Five;
-            }
-        }
-
-
-
         public class InjectionTestCollection<T>
         {
             public IGenericService<T> Printer { get; }

@@ -1,23 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Specification.TestData;
 using System;
+using Unity.Specification.TestData;
 
-namespace Unity.Specification.Diagnostic.Constructor.Injection
+namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoReuse()
-        {
-            // Arrange
-            var ctor = Invoke.Constructor();
-
-            // Act
-            Container.RegisterType<TypeWithAmbiguousCtors>("1", ctor)
-                     .RegisterType<TypeWithAmbiguousCtors>("2", ctor);
-        }
-
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NoConstructor()
@@ -28,7 +16,6 @@ namespace Unity.Specification.Diagnostic.Constructor.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
         public void MultipleConstructor()
         {
             // Arrange
@@ -37,7 +24,11 @@ namespace Unity.Specification.Diagnostic.Constructor.Injection
                 Invoke.Constructor());
 
             // Act
-            Container.Resolve<TypeWithAmbiguousCtors>();
+            var instance = Container.Resolve<TypeWithAmbiguousCtors>();
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(TypeWithAmbiguousCtors.One, instance.Signature);
         }
 
     }
