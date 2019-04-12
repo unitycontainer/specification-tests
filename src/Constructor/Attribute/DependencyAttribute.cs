@@ -19,7 +19,6 @@ namespace Unity.Specification.Constructor.Attribute
             Assert.AreEqual(_data, instance.Data);
         }
 
-
         [TestMethod]
         public void WithNamedDependency()
         {
@@ -33,5 +32,22 @@ namespace Unity.Specification.Constructor.Attribute
             // Validate
             Assert.AreEqual(Name, instance.Data);
         }
+
+
+        [TestMethod]
+        public void ChecksForDependencyName()
+        {
+            // Arrange
+            Container.RegisterInstance(_data)
+                     .RegisterInstance(null, Name)
+                     .RegisterInstance("OtherName", Name);
+
+            // Act
+            var instance = Container.Resolve<CtorWithNamedDependency>();
+
+            // Validate
+            Assert.AreEqual(null, instance.Data);
+        }
+
     }
 }

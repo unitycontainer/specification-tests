@@ -25,6 +25,11 @@ namespace Unity.Specification.Constructor.Attribute
     #region class_ctor_with_named_dependency
     public class CtorWithNamedDependency
     {
+        public CtorWithNamedDependency()
+        {
+            Data = null;
+        }
+
         public CtorWithNamedDependency([Dependency("name")]string data)
         {
             Data = data;
