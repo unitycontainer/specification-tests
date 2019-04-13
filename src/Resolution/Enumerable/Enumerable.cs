@@ -44,12 +44,9 @@ namespace Unity.Specification.Resolution.Enumerable
             var array = enumerable.ToArray();
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(array);
-            Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(1, array.Length);
             Assert.IsNotNull(array[0].Value);
-            Assert.IsNotNull(array[1].Value);
-            Assert.IsNotNull(array[2].Value);
-            Assert.IsNotNull(array[3].Value);
-            Assert.AreEqual(4, Service.Instances);
+            Assert.AreEqual(1, Service.Instances);
         }
 
         [TestMethod]
@@ -61,7 +58,7 @@ namespace Unity.Specification.Resolution.Enumerable
             // Verify
             var array = enumerable.ToArray();
             Assert.IsNotNull(array);
-            Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(1, array.Length);
         }
 
         [TestMethod]
@@ -74,17 +71,11 @@ namespace Unity.Specification.Resolution.Enumerable
             var array = enumerable.ToArray();
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(array);
-            Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(1, array.Length);
             Assert.IsNotNull(array[0].Value);
-            Assert.IsNotNull(array[1].Value);
-            Assert.IsNotNull(array[2].Value);
-            Assert.IsNotNull(array[3].Value);
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(array[0].Value());
-            Assert.IsNotNull(array[1].Value());
-            Assert.IsNotNull(array[2].Value());
-            Assert.IsNotNull(array[3].Value());
-            Assert.AreEqual(4, Service.Instances);
+            Assert.AreEqual(1, Service.Instances);
         }
 
         [TestMethod]
@@ -97,17 +88,11 @@ namespace Unity.Specification.Resolution.Enumerable
             var array = enumerable.ToArray();
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(array);
-            Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(1, array.Length);
             Assert.IsNotNull(array[0]);
-            Assert.IsNotNull(array[1]);
-            Assert.IsNotNull(array[2]);
-            Assert.IsNotNull(array[3]);
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(array[0]().Value);
-            Assert.IsNotNull(array[1]().Value);
-            Assert.IsNotNull(array[2]().Value);
-            Assert.IsNotNull(array[3]().Value);
-            Assert.AreEqual(4, Service.Instances);
+            Assert.AreEqual(1, Service.Instances);
         }
 
         [TestMethod]
