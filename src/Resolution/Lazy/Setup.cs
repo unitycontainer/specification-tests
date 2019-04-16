@@ -16,9 +16,9 @@ namespace Unity.Specification.Resolution.Lazy
 
             Container.RegisterType(typeof(IList<>), typeof(List<>), new InjectionConstructor());
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-            Container.RegisterType<IService, Service>("1", new ContainerControlledLifetimeManager());
-            Container.RegisterType<IService, Service>("2", new ContainerControlledLifetimeManager());
-            Container.RegisterType<IService, Service>("3", new ContainerControlledLifetimeManager());
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, OtherService>("3");
             Container.RegisterType<IService, Service>();
 
             Service.Instances = 0;

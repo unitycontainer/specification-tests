@@ -9,22 +9,33 @@ namespace Unity.Specification.Resolution.Enumerable
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Enumerable()
+        public void Registered()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<IService>>();
 
             // Verify
-            Assert.AreEqual(4, Service.Instances);
-
             var array = enumerable.ToArray();
             Assert.IsNotNull(array);
             Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(4, Service.Instances);
         }
 
         [TestMethod]
-        public void Enumerable_Empty()
+        public void Unregistered()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>();
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<IDictionary<IService, Service>>>();
 
@@ -35,8 +46,15 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_Lazy()
+        public void Lazy()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<Lazy<IService>>>();
 
@@ -50,8 +68,15 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_Func()
+        public void Func()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<Func<IService>>>();
 
@@ -62,8 +87,13 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_Lazy_Func()
+        public void Lazy_Func()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<Lazy<Func<IService>>>>();
 
@@ -79,8 +109,15 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_Func_Lazy()
+        public void Func_Lazy()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var enumerable = Container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
 
@@ -96,10 +133,15 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_Func_Lazy_Instance()
+        public void Func_Lazy_Instance()
         {
-            // Setup
+            // Arrange
             Container.RegisterInstance(new Lazy<IService>(() => new Service()));
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, Service>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
 
             // Act
             var enumerable = Container.Resolve<IEnumerable<Func<Lazy<IService>>>>();
@@ -116,123 +158,128 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void Enumerable_SingleService()
+        public void SingleService()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
+            // Act
+            var services = Container.Resolve<IEnumerable<IService>>();
+            var service = services.Single();
+
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(Service));
+        }
+
+        [TestMethod]
+        public void MixedServices()
+        {
+            // Arrange
+            Container.RegisterType<IService, Service>(typeof(Service).FullName);
+            Container.RegisterType<IService, Service>();
+            Container.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
+
+            // Act
+            var services = Container.Resolve<IEnumerable<IService>>();
+
+            // Assert
+            using (var enumerator = services.GetEnumerator())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>();
-
-                // Act
-                var services = provider.Resolve<IEnumerable<IService>>();
-                var service = services.Single();
-
-                // Assert
-                Assert.IsNotNull(service);
-                Assert.IsInstanceOfType(service, typeof(Service));
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
             }
         }
 
         [TestMethod]
-        public void Enumerable_MixedServices()
+        public void MultipleServices()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>(typeof(Service).FullName);
+            Container.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
+
+            // Act
+            var services = Container.Resolve<IEnumerable<IService>>();
+
+            // Assert
+            using (var enumerator = services.GetEnumerator())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(typeof(Service).FullName);
-                provider.RegisterType<IService, Service>();
-                provider.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
-
-                // Act
-                var services = provider.Resolve<IEnumerable<IService>>();
-
-                // Assert
-                using (var enumerator = services.GetEnumerator())
-                {
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
-                }
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
             }
         }
 
         [TestMethod]
-        public void Enumerable_MultipleServices()
+        public void RegistrationOrderIsPreserved()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
+            Container.RegisterType<IService, Service>(typeof(Service).FullName);
+
+            // Act
+            var services = Container.Resolve<IEnumerable<IService>>();
+
+            // Assert
+            using (var enumerator = services.GetEnumerator())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(typeof(Service).FullName);
-                provider.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
-
-                // Act
-                var services = provider.Resolve<IEnumerable<IService>>();
-
-                // Assert
-                using (var enumerator = services.GetEnumerator())
-                {
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
-                }
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
+                Assert.IsTrue(enumerator.MoveNext());
+                Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
             }
         }
 
         [TestMethod]
-        public void Enumerable_RegistrationOrderIsPreserved()
+        public void NonexistentService()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, OtherService>(typeof(OtherService).FullName);
-                provider.RegisterType<IService, Service>(typeof(Service).FullName);
+            var services = Container.Resolve<IEnumerable<IService>>();
 
-                // Act
-                var services = provider.Resolve<IEnumerable<IService>>();
-
-                // Assert
-                using (var enumerator = services.GetEnumerator())
-                {
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(OtherService));
-                    Assert.IsTrue(enumerator.MoveNext());
-                    Assert.IsInstanceOfType(enumerator.Current, typeof(Service));
-                }
-            }
+            // Assert
+            Assert.AreEqual(0, services.Count());
         }
 
         [TestMethod]
-        public void Enumerable_NonexistentService()
+        public void ResolvesMixedOpenClosedGenericsAsEnumerable()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                var services = provider.Resolve<IEnumerable<IService>>();
+            // Arrange
+            var instance = new Foo<IService>(new OtherService());
 
-                // Assert
-                Assert.AreEqual(0, services.Count());
-            }
+            Container.RegisterType<IService, Service>();
+            Container.RegisterType<IFoo<IService>, Foo<IService>>("Instance");
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa");
+            Container.RegisterInstance<IFoo<IService>>(instance);
+
+            // Act
+            var enumerable = Container.Resolve<IEnumerable<IFoo<IService>>>().ToArray();
+
+            // Assert
+            Assert.AreEqual(3, enumerable.Length);
+            Assert.IsNotNull(enumerable[0]);
+            Assert.IsNotNull(enumerable[1]);
+            Assert.IsNotNull(enumerable[2]);
         }
 
         [TestMethod]
-        public void Enumerable_ResolvesMixedOpenClosedGenericsAsEnumerable()
+        public void ResolvesDifferentInstances()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>("1", new ContainerControlledLifetimeManager());
+            Container.RegisterType<IService, Service>("2", new ContainerControlledLifetimeManager());
+            Container.RegisterType<IService, Service>("3", new ContainerControlledLifetimeManager());
+
+            using (var scope = Container.CreateChildContainer())
             {
-                // Arrange
-                var instance = new Foo<IService>(new OtherService());
-
-                provider.RegisterType<IService>();
-                provider.RegisterType<IService, Service>();
-                provider.RegisterType<IFoo<IService>, Foo<IService>>("Instance", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa", new ContainerControlledLifetimeManager());
-                provider.RegisterInstance<IFoo<IService>>(instance);
-
-                // Act
-                var enumerable = provider.Resolve<IEnumerable<IFoo<IService>>>().ToArray();
+                var enumerable = scope.Resolve<IEnumerable<IService>>().ToArray();
+                var service = scope.Resolve<IService>("3");
 
                 // Assert
                 Assert.AreEqual(3, enumerable.Length);
@@ -240,63 +287,35 @@ namespace Unity.Specification.Resolution.Enumerable
                 Assert.IsNotNull(enumerable[1]);
                 Assert.IsNotNull(enumerable[2]);
 
+                Assert.AreNotSame(enumerable[0], enumerable[1]);
+                Assert.AreNotSame(enumerable[1], enumerable[2]);
+                Assert.AreSame(service, enumerable[2]);
             }
         }
 
         [TestMethod]
-        public void Enumerable_ResolvesDifferentInstances()
+        public void ResolvesDifferentInstancesForOpenGenerics()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>();
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "1", new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "2", new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "3", new ContainerControlledLifetimeManager());
+
+            using (var scope = Container.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>("1", new ContainerControlledLifetimeManager());
-                provider.RegisterType<IService, Service>("2", new ContainerControlledLifetimeManager());
-                provider.RegisterType<IService, Service>("3", new ContainerControlledLifetimeManager());
+                var enumerable = scope.Resolve<IEnumerable<IFoo<IService>>>().ToArray();
+                var service = scope.Resolve<IFoo<IService>>("3");
 
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var enumerable = scope.Resolve<IEnumerable<IService>>().ToArray();
-                    var service = scope.Resolve<IService>("3");
+                // Assert
+                Assert.AreEqual(3, enumerable.Length);
+                Assert.IsNotNull(enumerable[0]);
+                Assert.IsNotNull(enumerable[1]);
+                Assert.IsNotNull(enumerable[2]);
 
-                    // Assert
-                    Assert.AreEqual(3, enumerable.Length);
-                    Assert.IsNotNull(enumerable[0]);
-                    Assert.IsNotNull(enumerable[1]);
-                    Assert.IsNotNull(enumerable[2]);
-
-                    Assert.AreNotSame(enumerable[0], enumerable[1]);
-                    Assert.AreNotSame(enumerable[1], enumerable[2]);
-                    Assert.AreSame(service, enumerable[2]);
-                }
-            }
-        }
-
-        [TestMethod]
-        public void Enumerable_ResolvesDifferentInstancesForOpenGenerics()
-        {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "1", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "2", new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>), "3", new ContainerControlledLifetimeManager());
-
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var enumerable = scope.Resolve<IEnumerable<IFoo<IService>>>().ToArray();
-                    var service = scope.Resolve<IFoo<IService>>("3");
-
-                    // Assert
-                    Assert.AreEqual(3, enumerable.Length);
-                    Assert.IsNotNull(enumerable[0]);
-                    Assert.IsNotNull(enumerable[1]);
-                    Assert.IsNotNull(enumerable[2]);
-
-                    Assert.AreNotSame(enumerable[0], enumerable[1]);
-                    Assert.AreNotSame(enumerable[1], enumerable[2]);
-                    Assert.AreSame(service, enumerable[2]);
-                }
+                Assert.AreNotSame(enumerable[0], enumerable[1]);
+                Assert.AreNotSame(enumerable[1], enumerable[2]);
+                Assert.AreSame(service, enumerable[2]);
             }
         }
 

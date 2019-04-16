@@ -11,7 +11,6 @@ namespace Unity.Specification.Resolution.Lazy
         public void Lazy()
         {
             // Setup
-            Container.RegisterType<IService, Service>();
             Service.Instances = 0;
 
             // Act
@@ -22,6 +21,40 @@ namespace Unity.Specification.Resolution.Lazy
             Assert.IsNotNull(lazy);
             Assert.IsNotNull(lazy.Value);
             Assert.AreEqual(1, Service.Instances);
+        }
+
+        [TestMethod]
+        public void WithMatchingName()
+        {
+            // Act
+            var lazy = Container.Resolve<Lazy<IService>>("1");
+
+            // Verify
+            Assert.IsNotNull(lazy);
+            Assert.IsInstanceOfType(lazy.Value, typeof(Service));
+        }
+
+        [TestMethod]
+        public void WithOtherName()
+        {
+            // Act
+            var lazy = Container.Resolve<Lazy<IService>>("3");
+
+            // Verify
+            Assert.IsNotNull(lazy);
+            Assert.IsInstanceOfType(lazy.Value, typeof(OtherService));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void WithNotMatchingName()
+        {
+            // Act
+            var lazy = Container.Resolve<Lazy<IService>>("10");
+
+            // Verify
+            Assert.IsNotNull(lazy);
+            Assert.IsInstanceOfType(lazy.Value, typeof(Service));
         }
 
         [TestMethod]
@@ -130,10 +163,10 @@ namespace Unity.Specification.Resolution.Lazy
             Assert.AreEqual(0, Service.Instances);
             Assert.IsNotNull(lazy);
             Assert.IsNotNull(lazy.Value);
-            Assert.AreEqual(3, Service.Instances);
 
             var array = lazy.Value.ToArray();
             Assert.IsNotNull(array);
+            Assert.AreEqual(3, Service.Instances);
             Assert.AreEqual(4, array.Length);
         }
 

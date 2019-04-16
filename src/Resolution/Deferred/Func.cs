@@ -8,7 +8,7 @@ namespace Unity.Specification.Resolution.Deferred
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Func()
+        public void Registered()
         {
             // Act
             var resolver = Container.Resolve<Func<IService>>();
@@ -19,7 +19,7 @@ namespace Unity.Specification.Resolution.Deferred
         }
 
         [TestMethod]
-        public void Func_ResolvesThroughContainer()
+        public void ResolvesThroughContainer()
         {
             // Act
             var resolver = Container.Resolve<Func<IService>>();
@@ -31,7 +31,7 @@ namespace Unity.Specification.Resolution.Deferred
         }
 
         [TestMethod]
-        public void Func_GetsInjectedAsADependency()
+        public void GetsInjectedAsADependency()
         {
             // Setup
 
@@ -44,31 +44,41 @@ namespace Unity.Specification.Resolution.Deferred
         }
 
         [TestMethod]
-        public void Func_WithName()
+        public void WithMatchingName()
         {
             // Act
             var resolver = Container.Resolve<Func<IService>>("1");
 
             // Verify
             Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver(), typeof(Service));
         }
 
         [TestMethod]
-        public void Func_WithNameResolvedThroughContainerWithName()
+        public void WithOtherName()
         {
-            // Setup
-
             // Act
-            var resolver = Container.Resolve<Func<IService>>("1");
-            var result = resolver();
+            var resolver = Container.Resolve<Func<IService>>("3");
 
             // Verify
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(Service));
+            Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver(), typeof(OtherService));
         }
 
         [TestMethod]
-        public void Func_OfIEnumerableCallsResolveAll()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void WithNotMatchingName()
+        {
+            // Act
+            var resolver = Container.Resolve<Func<IService>>("10");
+
+            // Verify
+            Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver(), typeof(Service));
+        }
+
+        [TestMethod]
+        public void OfIEnumerableCallsResolveAll()
         {
             // Setup
             Container.RegisterInstance("one", "first")
