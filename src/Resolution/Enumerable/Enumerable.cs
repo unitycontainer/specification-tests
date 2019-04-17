@@ -9,13 +9,34 @@ namespace Unity.Specification.Resolution.Enumerable
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Registered()
+        public void RegisterTypeTo()
         {
             // Arrange
-            Container.RegisterType<IService, Service>("1");
-            Container.RegisterType<IService, Service>("2");
-            Container.RegisterType<IService, Service>("3");
-            Container.RegisterType<IService, Service>();
+            Container.RegisterType(null, typeof(Service), null, null);
+            Container.RegisterType(null, typeof(Service), "1", null);
+            Container.RegisterType(null, typeof(Service), "2", null);
+            Container.RegisterType(null, typeof(Service), "3", null);
+            Service.Instances = 0;
+
+
+            // Act
+            var enumerable = Container.Resolve<IEnumerable<Service>>();
+
+            // Verify
+            var array = enumerable.ToArray();
+            Assert.IsNotNull(array);
+            Assert.AreEqual(4, array.Length);
+            Assert.AreEqual(4, Service.Instances);
+        }
+
+        [TestMethod]
+        public void RegisterMapping()
+        {
+            // Arrange
+            Container.RegisterType(typeof(IService), typeof(Service), null, null);
+            Container.RegisterType(typeof(IService), typeof(Service), "1",  null);
+            Container.RegisterType(typeof(IService), typeof(Service), "2",  null);
+            Container.RegisterType(typeof(IService), typeof(Service), "3",  null);
             Service.Instances = 0;
 
 
