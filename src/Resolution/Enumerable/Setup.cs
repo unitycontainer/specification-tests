@@ -12,71 +12,76 @@ namespace Unity.Specification.Resolution.Enumerable
         {
             base.Setup();
         }
+    }
 
-        public interface IFoo<TEntity>
-        {
-            TEntity Value { get; }
-        }
+    #region Test Data
 
-        public class Foo<TEntity> : IFoo<TEntity>
-        {
-            public Foo()
-            {
-            }
 
-            public Foo(TEntity value)
-            {
-                Value = value;
-            }
+    public interface IFoo<TEntity>
+    {
+        TEntity Value { get; }
+    }
 
-            public TEntity Value { get; }
-        }
-
-        public interface IService
+    public class Foo<TEntity> : IFoo<TEntity>
+    {
+        public Foo()
         {
         }
 
-        public class Service : IService, IDisposable
+        public Foo(TEntity value)
         {
-            public string ID { get; } = Guid.NewGuid().ToString();
-
-            public static int Instances = 0;
-
-            public Service()
-            {
-                Interlocked.Increment(ref Instances);
-            }
-
-            public bool Disposed = false;
-            public void Dispose()
-            {
-                Disposed = true;
-            }
+            Value = value;
         }
 
-        public interface IOtherService
+        public TEntity Value { get; }
+    }
+
+    public interface IService
+    {
+    }
+
+    public class Service : IService, IDisposable
+    {
+        public string ID { get; } = Guid.NewGuid().ToString();
+
+        public static int Instances = 0;
+
+        public Service()
         {
+            Interlocked.Increment(ref Instances);
         }
 
-        public class OtherService : IService, IOtherService, IDisposable
+        public bool Disposed = false;
+        public void Dispose()
         {
-            [InjectionConstructor]
-            public OtherService()
-            {
-
-            }
-
-            public OtherService(IUnityContainer container)
-            {
-
-            }
-
-
-            public bool Disposed = false;
-            public void Dispose()
-            {
-                Disposed = true;
-            }
+            Disposed = true;
         }
     }
+
+    public interface IOtherService
+    {
+    }
+
+    public class OtherService : IService, IOtherService, IDisposable
+    {
+        [InjectionConstructor]
+        public OtherService()
+        {
+
+        }
+
+        public OtherService(IUnityContainer container)
+        {
+
+        }
+
+
+        public bool Disposed = false;
+        public void Dispose()
+        {
+            Disposed = true;
+        }
+    }
+    
+    #endregion
 }

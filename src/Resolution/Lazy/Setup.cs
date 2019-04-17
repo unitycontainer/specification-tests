@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Unity.Injection;
-using Unity.Lifetime;
 
 namespace Unity.Specification.Resolution.Lazy
 {
@@ -13,15 +11,6 @@ namespace Unity.Specification.Resolution.Lazy
         public override void Setup()
         {
             base.Setup();
-
-            Container.RegisterType(typeof(IList<>), typeof(List<>), new InjectionConstructor());
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-            Container.RegisterType<IService, Service>("1");
-            Container.RegisterType<IService, Service>("2");
-            Container.RegisterType<IService, OtherService>("3");
-            Container.RegisterType<IService, Service>();
-
-            Service.Instances = 0;
         }
 
         public interface ILogger

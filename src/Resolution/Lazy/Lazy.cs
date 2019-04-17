@@ -8,12 +8,13 @@ namespace Unity.Specification.Resolution.Lazy
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Lazy()
+        public void Registered()
         {
             // Setup
             Service.Instances = 0;
 
             // Act
+            Container.RegisterType<IService, Service>();
             var lazy = Container.Resolve<Lazy<IService>>();
 
             // Verify
@@ -26,6 +27,15 @@ namespace Unity.Specification.Resolution.Lazy
         [TestMethod]
         public void WithMatchingName()
         {
+            // Arrange
+            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, OtherService>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var lazy = Container.Resolve<Lazy<IService>>("1");
 
@@ -37,6 +47,15 @@ namespace Unity.Specification.Resolution.Lazy
         [TestMethod]
         public void WithOtherName()
         {
+            // Arrange
+            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, OtherService>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
+
             // Act
             var lazy = Container.Resolve<Lazy<IService>>("3");
 
