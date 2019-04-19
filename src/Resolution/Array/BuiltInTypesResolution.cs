@@ -7,15 +7,6 @@ namespace Unity.Specification.Resolution.Array
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Empty()
-        {
-            var results = Container.Resolve<IService[]>();
-
-            Assert.IsNotNull(results);
-            Assert.AreEqual(0, results.Length);
-        }
-
-        [TestMethod]
         public void Registered()
         {
             // Arrange
@@ -60,7 +51,6 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        [Ignore]
         public void Lazy()
         {
             // Arrange
@@ -84,9 +74,26 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        [Ignore]
         public void Func()
         {
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, OtherService>("3");
+            Container.RegisterType<IService, Service>();
+
+            // Act
+            var array = Container.Resolve<Func<IService>[]>();
+
+            // Verify
+            Assert.IsNotNull(array);
+            Assert.AreEqual(3, array.Length);
+        }
+
+        [TestMethod]
+        public void FuncNamed()
+        {
+            // Arrange
             Container.RegisterType(typeof(Func<>), "0");
             Container.RegisterType(typeof(Func<>), "1");
             Container.RegisterType(typeof(Func<>), "2");
@@ -100,7 +107,6 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        [Ignore]
         public void LazyFunc()
         {
             // Arrange
@@ -130,12 +136,14 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        [Ignore]
         public void FuncLazy()
         {
-            Container.RegisterType(typeof(Func<>), "0");
-            Container.RegisterType(typeof(Func<>), "1");
-            Container.RegisterType(typeof(Func<>), "2");
+            // Arrange
+            Container.RegisterType<IService, Service>("1");
+            Container.RegisterType<IService, Service>("2");
+            Container.RegisterType<IService, OtherService>("3");
+            Container.RegisterType<IService, Service>();
+            Service.Instances = 0;
 
             // Act
             var array = Container.Resolve<Func<Lazy<IService>>[]>();
@@ -151,28 +159,49 @@ namespace Unity.Specification.Resolution.Array
             Assert.IsNotNull(array[0]().Value);
             Assert.IsNotNull(array[1]().Value);
             Assert.IsNotNull(array[2]().Value);
-            Assert.AreEqual(3, Service.Instances);
+            Assert.AreEqual(2, Service.Instances);
+        }
+
+        [TestMethod]
+        public void FuncLazyInstance()
+        {
+            // Arrange
+            Container.RegisterInstance(null, "Instance", new Lazy<IService>(() => new Service()));
+            Service.Instances = 0;
+
+            // Act
+            var array = Container.Resolve<Func<Lazy<IService>>[]>();
+
+            // Verify
+            Assert.AreEqual(0, Service.Instances);
+            Assert.IsNotNull(array);
+            Assert.AreEqual(1, array.Length);
+            Assert.IsNotNull(array[0]);
+            Assert.AreEqual(0, Service.Instances);
+            Assert.IsNotNull(array[0]().Value);
+            Assert.AreEqual(1, Service.Instances);
         }
 
 
         [TestMethod]
-        [Ignore]
-        public void FuncLazyInstance()
+        public void ResolvesMixedOpenClosedFuncGenericsAsArray()
         {
-            //// Setup
-            //Container.RegisterInstance(Container, null, "Instance", new Lazy<IService>(() => new Service()));
+            // Arrange
+            var instance = new Foo<IService>(new OtherService());
 
-            //// Act
-            //var array = Container.Resolve<Func<Lazy<IService>>[]>();
+            Container.RegisterType<IService, Service>();
+            Container.RegisterType<IFoo<IService>, Foo<IService>>("Instance");
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa");
+            Container.RegisterInstance<IFoo<IService>>("1", instance);
 
-            //// Verify
-            //Assert.AreEqual(0, Service.Instances);
-            //Assert.IsNotNull(array);
-            //Assert.AreEqual(1, array.Length);
-            //Assert.IsNotNull(array[0]);
-            //Assert.AreEqual(0, Service.Instances);
-            //Assert.IsNotNull(array[0]().Value);
-            //Assert.AreEqual(1, Service.Instances);
+            // Act
+            var enumerable = Container.Resolve<Func<IFoo<IService>>[]>();
+
+            // Assert
+            Assert.AreEqual(3, enumerable.Length);
+            Assert.IsNotNull(enumerable[0]);
+            Assert.IsNotNull(enumerable[1]);
+            Assert.IsNotNull(enumerable[2]);
         }
     }
 }

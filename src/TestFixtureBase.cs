@@ -5,6 +5,8 @@ namespace Unity.Specification
     {
         protected IUnityContainer Container;
         protected const string Name = "name";
+        protected const string Legacy = "legacy";
+
 
         public abstract IUnityContainer GetContainer();
 

@@ -18,6 +18,46 @@ namespace Unity.Specification.Resolution.Array
     {
     }
 
+    public class InjectedObject
+    {
+        public readonly object InjectedValue;
+
+        public InjectedObject(object injectedValue)
+        {
+            this.InjectedValue = injectedValue;
+        }
+    }
+
+    public class GenericTypeWithArrayProperty<T>
+    {
+        public T[] Prop { get; set; }
+    }
+
+
+    public class ClassWithOneArrayGenericParameter<T>
+    {
+        private T[] injectedValue;
+        public readonly bool DefaultConstructorCalled;
+
+        public ClassWithOneArrayGenericParameter()
+        {
+            DefaultConstructorCalled = true;
+        }
+
+        public ClassWithOneArrayGenericParameter(T[] injectedValue)
+        {
+            DefaultConstructorCalled = false;
+
+            this.injectedValue = injectedValue;
+        }
+
+        public T[] InjectedValue
+        {
+            get { return this.injectedValue; }
+            set { this.injectedValue = value; }
+        }
+    }
+
     public interface ILogger
     {
     }

@@ -26,7 +26,6 @@ namespace Unity.Specification.Resolution.Enumerable
             var array = enumerable.ToArray();
             Assert.IsNotNull(array);
             Assert.AreEqual(4, array.Length);
-            Assert.AreEqual(4, Service.Instances);
         }
 
         [TestMethod]
