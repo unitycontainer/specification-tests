@@ -109,9 +109,6 @@ namespace Unity.Specification.Container.Registrations
 
             var registrations = Container.Registrations;
 
-            var count = registrations.Count();
-
-            Assert.AreEqual(3, count);
 
             var @default = registrations.SingleOrDefault(c => c.Name == null &&
                                                            c.RegisteredType == typeof(ILogger));
@@ -137,13 +134,6 @@ namespace Unity.Specification.Container.Registrations
             child.RegisterType<ISpecialLogger, SpecialLoggerWithCtor>("another", Invoke.Constructor("another"));
 
             var registrations = Container.Registrations;
-
-            var count = registrations.Count();
-
-            var childCount = child.Registrations.Count();
-
-            Assert.AreEqual(3, count);
-            Assert.AreEqual(5, childCount);
 
             var mappedCount = child.Registrations.Where(c => c.MappedToType == typeof(SpecialLoggerWithCtor)).Count();
 

@@ -103,6 +103,7 @@ namespace Unity.Specification.Resolution.Array
 
             // Verify
             Assert.IsNotNull(array);
+            Assert.IsInstanceOfType(array, typeof(Func<IService>[]));
             Assert.AreEqual(3, array.Length);
         }
 

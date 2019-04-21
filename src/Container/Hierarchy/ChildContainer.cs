@@ -336,26 +336,24 @@ namespace Unity.Specification.Container.Hierarchy
         [TestMethod]
         public void ChildParentRegisrationOverlapTest()
         {
-            var container = GetContainer();
+            Container.RegisterInstance("str1", "string1");
+            Container.RegisterInstance("str2", "string2");
 
-            container.RegisterInstance("str1", "string1");
-            container.RegisterInstance("str2", "string2");
-
-            var child = container.CreateChildContainer();
+            var child = Container.CreateChildContainer();
 
             child.RegisterInstance("str2", "string20");
             child.RegisterInstance("str3", "string30");
 
-            var childStrList = child.ResolveAll<string>();
-            var parentStrList = container.ResolveAll<string>();
-            string childString = String.Empty;
-            string parentString = String.Empty;
+            var childStrSet = new HashSet<string>(child.ResolveAll<string>());
+            var parentStrSet = new HashSet<string>( Container.ResolveAll<string>());
 
-            foreach (string str in childStrList) { childString = childString + str; }
-            foreach (string str1 in parentStrList) { parentString = parentString + str1; }
+            Assert.IsTrue(childStrSet.SetEquals(new[] { "string1", "string20", "string30" }));
+            Assert.IsTrue(parentStrSet.SetEquals(new[] { "string1", "string2" }));
+        }
 
-            Assert.AreEqual<string>("string1string20string30", childString);
-            Assert.AreEqual<string>("string1string2", parentString);
+        private object HashSet<T>(IEnumerable<T> enumerable)
+        {
+            throw new NotImplementedException();
         }
 
         public interface ITemporary

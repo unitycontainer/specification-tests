@@ -9,6 +9,19 @@ namespace Unity.Specification.Registration.Native
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        public void RegistrationsToArray()
+        {
+            // Setup
+            Container.RegisterType(null, typeof(object), null, null);
+
+            // Act
+            var registrations = Container.Registrations.ToArray();
+
+            // Validate
+            Assert.IsNotNull(registrations);
+        }
+
+        [TestMethod]
         public void Type()
         {
             // Setup
@@ -81,7 +94,8 @@ namespace Unity.Specification.Registration.Native
 
             // Act
             var registration = Container.Registrations
-                                        .ElementAt(1);
+                                        .Where(r => r.RegisteredType == typeof(IService))
+                                        .First();
 
             // Validate
             Assert.IsNotNull(registration);
@@ -99,7 +113,8 @@ namespace Unity.Specification.Registration.Native
 
             // Act
             var registration = Container.Registrations
-                                        .ElementAt(1);
+                                        .Where(r => r.RegisteredType == typeof(IService))
+                                        .First();
 
             // Validate
             Assert.IsNotNull(registration);
@@ -117,7 +132,8 @@ namespace Unity.Specification.Registration.Native
 
             // Act
             var registration = Container.Registrations
-                                        .ElementAt(1);
+                                        .Where(r => r.RegisteredType == typeof(IService))
+                                        .First();
 
             // Validate
             Assert.IsNotNull(registration);
@@ -135,7 +151,8 @@ namespace Unity.Specification.Registration.Native
 
             // Act
             var registration = Container.Registrations
-                                        .ElementAt(1);
+                                        .Where(r => r.RegisteredType == typeof(IService))
+                                        .First();
 
             // Validate
             Assert.IsNotNull(registration);

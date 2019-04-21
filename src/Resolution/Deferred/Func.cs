@@ -16,6 +16,7 @@ namespace Unity.Specification.Resolution.Deferred
             // Verify
 
             Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
         }
 
         [TestMethod]
@@ -27,6 +28,7 @@ namespace Unity.Specification.Resolution.Deferred
             // Verify
             var logger = resolver();
 
+            Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
             Assert.IsInstanceOfType(logger, typeof(Service));
         }
 
@@ -40,6 +42,7 @@ namespace Unity.Specification.Resolution.Deferred
 
             // Verify
             Assert.IsNotNull(result.LoggerResolver);
+            Assert.IsInstanceOfType(result, typeof(ObjectThatGetsAResolver));
             Assert.IsInstanceOfType(result.LoggerResolver(), typeof(Service));
         }
 
@@ -51,6 +54,7 @@ namespace Unity.Specification.Resolution.Deferred
 
             // Verify
             Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
             Assert.IsInstanceOfType(resolver(), typeof(Service));
         }
 
@@ -62,6 +66,7 @@ namespace Unity.Specification.Resolution.Deferred
 
             // Verify
             Assert.IsNotNull(resolver);
+            Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
             Assert.IsInstanceOfType(resolver(), typeof(OtherService));
         }
 
@@ -74,7 +79,14 @@ namespace Unity.Specification.Resolution.Deferred
 
             // Verify
             Assert.IsNotNull(resolver);
-            Assert.IsInstanceOfType(resolver(), typeof(Service));
+            Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
+
+            // This must throw
+            var instance = resolver();
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IService));
+
+            Assert.Fail($"Failed to throw and the instance is not null: {null != instance}");
         }
 
         [TestMethod]
@@ -89,6 +101,7 @@ namespace Unity.Specification.Resolution.Deferred
             var resolver = Container.Resolve<Func<IEnumerable<string>>>();
 
             // Verify
+            Assert.IsInstanceOfType(resolver, typeof(Func<IEnumerable<string>>));
             AreEquivalent(new string[] { "first", "second", "third" }, resolver().ToArray() );
         }
     }

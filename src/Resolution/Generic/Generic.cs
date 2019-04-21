@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace Unity.Specification.Resolution.Generic
 {
@@ -16,6 +15,7 @@ namespace Unity.Specification.Resolution.Generic
 
             // Validate
             Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IFoo<IService>));
         }
 
         [TestMethod]
@@ -29,6 +29,7 @@ namespace Unity.Specification.Resolution.Generic
 
             // Validate
             Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IFoo<IService>));
         }
 
         [TestMethod]
@@ -40,7 +41,11 @@ namespace Unity.Specification.Resolution.Generic
             Container.RegisterType<IOtherService, OtherService>(Name);
 
             // Act 
-            Container.Resolve<IFoo<IOtherService>>();
+            var instance = Container.Resolve<IFoo<IOtherService>>();
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IFoo<IOtherService>));
         }
 
         [TestMethod]
@@ -55,6 +60,7 @@ namespace Unity.Specification.Resolution.Generic
 
             // Validate
             Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IFoo<IService>));
         }
 
         [TestMethod]
@@ -69,6 +75,7 @@ namespace Unity.Specification.Resolution.Generic
 
             // Validate
             Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IFoo<IService>));
         }
 
     }
