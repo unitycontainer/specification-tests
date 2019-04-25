@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Unity.Specification.Registration.Syntax
 {
@@ -14,6 +15,11 @@ namespace Unity.Specification.Registration.Syntax
     #region Test Data
 
     public interface IService { }
+
+    public class Service : IService
+    {
+        string _id = Guid.NewGuid().ToString();
+    }
 
     #endregion
 }
