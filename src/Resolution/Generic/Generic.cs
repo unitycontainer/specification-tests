@@ -49,6 +49,7 @@ namespace Unity.Specification.Resolution.Generic
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void Named_null_Name_name()
         {
             // Arrange

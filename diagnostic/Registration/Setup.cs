@@ -1,6 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Unity.Specification.Registration.Syntax
+namespace Unity.Specification.Diagnostic.Registration
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
