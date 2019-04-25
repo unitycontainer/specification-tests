@@ -15,7 +15,14 @@ namespace Unity.Specification.Issues.GitHub
 
     #region Test Data
 
-    public class Foo
+
+    public interface IFoo { }
+
+    public interface IBar { }
+
+    public class Bar : IBar { }
+
+    public class Foo : IFoo 
     {
         private readonly string _dependency;
 

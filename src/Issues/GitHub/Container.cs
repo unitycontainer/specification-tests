@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 using Unity.Injection;
 using Unity.Lifetime;
 
@@ -6,6 +8,37 @@ namespace Unity.Specification.Issues.GitHub
 {
     public abstract partial class SpecificationTests 
     {
+        [TestMethod]
+        // https://github.com/unitycontainer/container/issues/160
+        public void Issue_Container_160()
+        {
+            for (var i = 0; i < 10000; i++)
+            {
+                var container = GetContainer()
+                    .RegisterType<IFoo, Foo>()
+                    .RegisterType<IBar, Bar>()
+                    // It's important the name is random
+                    .RegisterType<IBar, Bar>(Guid.NewGuid().ToString());
+
+                var child = container
+                    .CreateChildContainer()
+                    .RegisterType<IFoo, Foo>(new ContainerControlledLifetimeManager());
+
+                var registrations = child.Registrations
+                    .Where(r => r.RegisteredType == typeof(IFoo))
+                    .ToList();
+
+                Assert.IsNotNull(
+                    registrations.FirstOrDefault(r => r.LifetimeManager is ContainerControlledLifetimeManager),
+                    "Singleton registration not found on iteration #" + i);
+
+                // This check fails on random iteration, usually i < 300.
+                // It passes for v.5.8.13 but fails for v.5.9.0 and later both for .NET Core and for Framework.
+                var registration = registrations.FirstOrDefault(r => r.LifetimeManager is TransientLifetimeManager);
+                Assert.IsNull(registration, "Transient registration found on iteration #" + i);
+            }
+        }
+
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/140
         public void Issue_Container_140()

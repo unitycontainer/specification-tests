@@ -22,7 +22,7 @@ namespace Unity.Specification.Container.Registrations
         public void NewRegistrationsShowUpInRegistrationsSequence()
         {
             Container.RegisterType<ILogger, MockLogger>()
-                .RegisterType<ILogger, MockLogger>("second");
+                     .RegisterType<ILogger, MockLogger>("second");
 
             var registrations = (from r in Container.Registrations
                                  where r.RegisteredType == typeof(ILogger)
