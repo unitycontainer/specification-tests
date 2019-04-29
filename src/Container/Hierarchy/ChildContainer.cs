@@ -255,20 +255,19 @@ namespace Unity.Specification.Container.Hierarchy
         {
             var parent = GetContainer();
             parent.RegisterType<ITemporary, Temp>("First", new HierarchicalLifetimeManager());
+            var result  = parent.Resolve<ITemporary>("First");
 
             var child1 = parent.CreateChildContainer();
             child1.RegisterType<ITemporary, Temp>("First", new HierarchicalLifetimeManager());
-            var result = parent.Resolve<ITemporary>("First");
             var result1 = child1.Resolve<ITemporary>("First");
-
-            Assert.AreNotEqual<int>(result.GetHashCode(), result1.GetHashCode());
 
             var child2 = child1.CreateChildContainer();
             child2.RegisterType<ITemporary, Temp>("First", new HierarchicalLifetimeManager());
             var result2 = child2.Resolve<ITemporary>("First");
 
-            Assert.AreNotEqual<int>(result.GetHashCode(), result2.GetHashCode());
-            Assert.AreNotEqual<int>(result1.GetHashCode(), result2.GetHashCode());
+            Assert.AreNotEqual(result.GetHashCode(), result1.GetHashCode());
+            Assert.AreNotEqual(result.GetHashCode(), result2.GetHashCode());
+            Assert.AreNotEqual(result1.GetHashCode(), result2.GetHashCode());
 
             List<ITemporary> count = new List<ITemporary>(child2.ResolveAll<ITemporary>());
 

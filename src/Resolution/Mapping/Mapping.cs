@@ -89,7 +89,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_LastReplacesPrevious()
+        public void LastReplacesPrevious()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -107,7 +107,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_ScopedServiceCanBeResolved()
+        public void ScopedServiceCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -129,7 +129,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_NestedScopedServiceCanBeResolved()
+        public void NestedScopedServiceCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -152,7 +152,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_SingletonServicesComeFromRootProvider()
+        public void SingletonServicesComeFromRootProvider()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -185,7 +185,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_NestedScopedServiceCanBeResolvedWithNoFallbackProvider()
+        public void NestedScopedServiceCanBeResolvedWithNoFallbackProvider()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -205,7 +205,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_OpenGenericServicesCanBeResolved()
+        public void OpenGenericServicesCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -223,7 +223,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_ClosedServicesPreferredOverOpenGenericServices()
+        public void ClosedServicesPreferredOverOpenGenericServices()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -243,7 +243,7 @@ namespace Unity.Specification.Resolution.Mapping
 
 
         [TestMethod]
-        public void Enumerable_ServicesRegisteredWithImplementationTypeCanBeResolved()
+        public void ServicesRegisteredWithImplementationTypeCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -260,7 +260,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_ServicesRegisteredWithImplementationType_ReturnDifferentInstancesPerResolution_ForTransientServices()
+        public void ServicesRegisteredWithImplementationType_ReturnDifferentInstancesPerResolution_ForTransientServices()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -281,7 +281,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_ServicesRegisteredWithImplementationType_ReturnSameInstancesPerResolution_ForSingletons()
+        public void ServicesRegisteredWithImplementationType_ReturnSameInstancesPerResolution_ForSingletons()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -301,7 +301,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_ServiceInstanceCanBeResolved()
+        public void ServiceInstanceCanBeResolved()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -318,7 +318,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_TransientServiceCanBeResolvedFromProvider()
+        public void TransientServiceCanBeResolvedFromProvider()
         {
             using (IUnityContainer provider = GetContainer())
             {
@@ -336,7 +336,7 @@ namespace Unity.Specification.Resolution.Mapping
         }
 
         [TestMethod]
-        public void Enumerable_TransientServiceCanBeResolvedFromScope()
+        public void TransientServiceCanBeResolvedFromScope()
         {
             using (IUnityContainer provider = GetContainer())
             {

@@ -46,8 +46,10 @@ namespace Unity.Specification.Resolution.Basics
             Container.RegisterType<IFoo, Foo>()
                      .RegisterType<IFoo, Foo1>(Name);
 
+            var instance = Container.Resolve<IFoo>();
+
             // Act / Validate
-            Assert.IsInstanceOfType(Container.Resolve<IFoo>(), typeof(Foo));
+            Assert.IsInstanceOfType(instance, typeof(Foo));
             Assert.IsInstanceOfType(Container.Resolve<IFoo>(Name), typeof(Foo1));
         }
 
