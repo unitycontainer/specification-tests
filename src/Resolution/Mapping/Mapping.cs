@@ -6,6 +6,39 @@ namespace Unity.Specification.Resolution.Mapping
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        public void ServiceItself()
+        {
+            using (IUnityContainer container = GetContainer())
+            {
+                // Arrange
+                var instance = new Foo();
+                var factory = new Foo();
+
+                container.RegisterType<Foo>();
+                container.RegisterInstance(Name, instance, InstanceLifetime.Singleton);
+                container.RegisterFactory<Foo>(Legacy, (c, t, n) => factory);
+
+                // Act
+                var service1 = container.Resolve<Foo>();
+                var service2 = container.Resolve<Foo>(Name);
+                var service3 = container.Resolve<Foo>(Legacy);
+
+
+                // Assert
+                Assert.IsNotNull(service1);
+                Assert.IsNotNull(service2);
+                Assert.IsNotNull(service3);
+
+                Assert.IsInstanceOfType(service1, typeof(Foo));
+                Assert.IsInstanceOfType(service2, typeof(Foo));
+                Assert.IsInstanceOfType(service3, typeof(Foo));
+
+                Assert.AreSame(instance, service2);
+                Assert.AreSame(factory,  service3);
+            }
+        }
+
+        [TestMethod]
         public void Mapping()
         {
             using (IUnityContainer container = GetContainer())
