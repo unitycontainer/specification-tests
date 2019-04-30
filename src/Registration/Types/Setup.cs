@@ -1,9 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
-using Unity.Injection;
+using System.Threading.Tasks;
 
-namespace Unity.Specification.Resolution.Mapping
+namespace Unity.Specification.Registration.Types
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -11,6 +14,18 @@ namespace Unity.Specification.Resolution.Mapping
         public override void Setup()
         {
             base.Setup();
+
+            Container.RegisterInstance(Name);
+
+            Container.RegisterType<ILogger, MockLogger>();
+            Container.RegisterType<ILogger, MockLogger>(Name);
+
+            var service = new Service();
+            Container.RegisterInstance<IService>(service);
+            Container.RegisterInstance<IService>(Name, service);
+
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), Name);
         }
     }
 
@@ -43,6 +58,13 @@ namespace Unity.Specification.Resolution.Mapping
     {
     }
 
+    public interface ILogger
+    {
+    }
+
+    public class MockLogger : ILogger
+    {
+    }
 
     public interface IService
     {
@@ -50,15 +72,6 @@ namespace Unity.Specification.Resolution.Mapping
 
     public interface IGenericService<T>
     {
-    }
-
-    public interface ITest1<T> { }
-
-    public interface ITest2<T> { }
-
-    public class Test<T> : ITest1<T>, ITest2<T>
-    {
-        public string Id { get; } = Guid.NewGuid().ToString();
     }
 
     public class Service : IService, IDisposable
@@ -78,6 +91,7 @@ namespace Unity.Specification.Resolution.Mapping
             Disposed = true;
         }
     }
+
 
     public interface IOtherService
     {
@@ -103,6 +117,5 @@ namespace Unity.Specification.Resolution.Mapping
             Disposed = true;
         }
     }
-
     #endregion
 }

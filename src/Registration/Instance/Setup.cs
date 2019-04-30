@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading;
-using Unity.Injection;
 
-namespace Unity.Specification.Resolution.Mapping
+namespace Unity.Specification.Registration.Instance
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -21,10 +20,6 @@ namespace Unity.Specification.Resolution.Mapping
         TEntity Value { get; }
     }
 
-    public interface IFoo { }
-    public interface IFoo1 { }
-    public interface IFoo2 { }
-
     public class Foo<TEntity> : IFoo<TEntity>
     {
         public Foo()
@@ -39,26 +34,8 @@ namespace Unity.Specification.Resolution.Mapping
         public TEntity Value { get; }
     }
 
-    public class Foo : IFoo, IFoo1, IFoo2
-    {
-    }
-
-
     public interface IService
     {
-    }
-
-    public interface IGenericService<T>
-    {
-    }
-
-    public interface ITest1<T> { }
-
-    public interface ITest2<T> { }
-
-    public class Test<T> : ITest1<T>, ITest2<T>
-    {
-        public string Id { get; } = Guid.NewGuid().ToString();
     }
 
     public class Service : IService, IDisposable
@@ -78,6 +55,7 @@ namespace Unity.Specification.Resolution.Mapping
             Disposed = true;
         }
     }
+
 
     public interface IOtherService
     {

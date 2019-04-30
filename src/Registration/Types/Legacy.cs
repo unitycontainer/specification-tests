@@ -1,12 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Specification.TestData;
 
-namespace Unity.Specification.Registration
+namespace Unity.Specification.Registration.Types
 {
-    public abstract partial class SpecificationTests 
+    public abstract partial class SpecificationTests
     {
+        [TestMethod]
+        public void ChainRegistrations()
+        {
+            // Arrange
+            var instance = new Service();
+
+            Container.RegisterInstance(instance);
+            Container.RegisterType<IService, Service>();
+
+            // Act/Validate
+            Assert.AreEqual(Container.Resolve<IService>(), instance);
+        }
+
 
         [TestMethod]
         public void Registration_ShowsUpInRegistrationsSequence()
@@ -26,7 +38,8 @@ namespace Unity.Specification.Registration
         {
             var registration =
                 (from r in Container.Registrations
-                    where r.RegisteredType == typeof(ILogger) select r).First();
+                 where r.RegisteredType == typeof(ILogger)
+                 select r).First();
 
             Assert.AreSame(typeof(MockLogger), registration.MappedToType);
         }
@@ -77,7 +90,7 @@ namespace Unity.Specification.Registration
                                                      r.Name == local);
 
             var parentRegistration = Container.Registrations
-                                               .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) && 
+                                               .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) &&
                                                                     r.Name == local);
             Assert.IsNull(parentRegistration);
             Assert.IsNotNull(childRegistration);

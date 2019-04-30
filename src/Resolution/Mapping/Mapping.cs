@@ -8,56 +8,81 @@ namespace Unity.Specification.Resolution.Mapping
         [TestMethod]
         public void ServiceItself()
         {
-            using (IUnityContainer container = GetContainer())
-            {
-                // Arrange
-                var instance = new Foo();
-                var factory = new Foo();
+            // Arrange
+            var instance = new Foo();
+            var factory = new Foo();
 
-                container.RegisterType<Foo>();
-                container.RegisterInstance(Name, instance, InstanceLifetime.Singleton);
-                container.RegisterFactory<Foo>(Legacy, (c, t, n) => factory);
+            Container.RegisterType<Foo>();
+            Container.RegisterInstance(Name, instance, InstanceLifetime.Singleton);
+            Container.RegisterFactory<Foo>(Legacy, (c, t, n) => factory);
 
-                // Act
-                var service1 = container.Resolve<Foo>();
-                var service2 = container.Resolve<Foo>(Name);
-                var service3 = container.Resolve<Foo>(Legacy);
+            // Act
+            var service1 = Container.Resolve<Foo>();
+            var service2 = Container.Resolve<Foo>(Name);
+            var service3 = Container.Resolve<Foo>(Legacy);
 
 
-                // Assert
-                Assert.IsNotNull(service1);
-                Assert.IsNotNull(service2);
-                Assert.IsNotNull(service3);
+            // Assert
+            Assert.IsNotNull(service1);
+            Assert.IsNotNull(service2);
+            Assert.IsNotNull(service3);
 
-                Assert.IsInstanceOfType(service1, typeof(Foo));
-                Assert.IsInstanceOfType(service2, typeof(Foo));
-                Assert.IsInstanceOfType(service3, typeof(Foo));
+            Assert.IsInstanceOfType(service1, typeof(Foo));
+            Assert.IsInstanceOfType(service2, typeof(Foo));
+            Assert.IsInstanceOfType(service3, typeof(Foo));
 
-                Assert.AreSame(instance, service2);
-                Assert.AreSame(factory,  service3);
-            }
+            Assert.AreSame(instance, service2);
+            Assert.AreSame(factory, service3);
+        }
+
+        [TestMethod]
+        public void ServiceToImplementation()
+        {
+            // Arrange
+            Container.RegisterType(typeof(IFoo), typeof(Foo));
+
+            // Act
+            var service = Container.Resolve<IFoo>();
+
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(Foo));
+        }
+
+
+        [TestMethod]
+        public void MappingToInstance()
+        {
+            // Arrange
+            var service = new Foo();
+            Container.RegisterInstance(service);
+            Container.RegisterType(typeof(IFoo1), typeof(Foo));
+
+            // Act
+            var service1 = Container.Resolve<IFoo1>();
+
+            // Assert
+            Assert.IsNotNull(service1);
+            Assert.AreSame(service, service1);
         }
 
         [TestMethod]
         public void Mapping()
         {
-            using (IUnityContainer container = GetContainer())
-            {
-                // Arrange
-                container.RegisterType(typeof(Foo), new ContainerControlledLifetimeManager());
-                container.RegisterType(typeof(IFoo1), typeof(Foo));
-                container.RegisterType(typeof(IFoo2), typeof(Foo));
+            // Arrange
+            Container.RegisterType(typeof(Foo), new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(IFoo1), typeof(Foo));
+            Container.RegisterType(typeof(IFoo2), typeof(Foo));
 
-                // Act
-                var service1 = container.Resolve<IFoo1>();
-                var service2 = container.Resolve<IFoo2>();
+            // Act
+            var service1 = Container.Resolve<IFoo1>();
+            var service2 = Container.Resolve<IFoo2>();
 
-                // Assert
-                Assert.IsNotNull(service1);
-                Assert.IsNotNull(service2);
+            // Assert
+            Assert.IsNotNull(service1);
+            Assert.IsNotNull(service2);
 
-                Assert.AreSame(service1, service2);
-            }
+            Assert.AreSame(service1, service2);
         }
 
         [TestMethod]
@@ -71,205 +96,110 @@ namespace Unity.Specification.Resolution.Mapping
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public void UnnamedMappingThrowsResolutionFailedException()
+        public void ThrowsExceptionOnNagative()
         {
             Container.RegisterType<IFoo1, IFoo1>();
             Container.Resolve<IFoo1>("ATest");
         }
 
         [TestMethod]
-        public void Mapping_Generic_Closed()
-        {
-            using (IUnityContainer container = GetContainer())
-            {
-                // Arrange
-                container.RegisterType(typeof(Test<int>), new ContainerControlledLifetimeManager());
-                container.RegisterType(typeof(ITest1<int>), typeof(Test<int>));
-                container.RegisterType(typeof(ITest2<int>), typeof(Test<int>));
-
-                // Act
-                var service1 = container.Resolve<ITest1<int>>();
-                var service2 = container.Resolve<ITest2<int>>();
-
-                // Assert
-                Assert.IsNotNull(service1);
-                Assert.IsNotNull(service2);
-
-                Assert.AreSame(service1, service2);
-            }
-        }
-
-        [TestMethod]
-        public void Mapping_Generic_Open()
-        {
-            using (IUnityContainer container = GetContainer())
-            {
-                // Arrange
-                container.RegisterType(typeof(Test<>), new ContainerControlledLifetimeManager());
-                container.RegisterType(typeof(ITest1<>), typeof(Test<>));
-                container.RegisterType(typeof(ITest2<>), typeof(Test<>));
-
-                // Act
-                var service1 = container.Resolve<ITest1<int>>();
-                var service2 = container.Resolve<ITest2<int>>();
-
-                // Assert
-                Assert.IsNotNull(service1);
-                Assert.IsNotNull(service2);
-
-                Assert.AreSame(service1, service2);
-            }
-        }
-
-        [TestMethod]
         public void LastReplacesPrevious()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
-                provider.RegisterType<IService, OtherService>();
+            // Arrange
+            Container.RegisterType<IService, Service>();
+            Container.RegisterType<IService, OtherService>();
 
-                // Act
-                var service = provider.Resolve<IService>();
+            // Act
+            var service = Container.Resolve<IService>();
 
-                // Assert
-                Assert.IsNotNull(service);
-                Assert.IsInstanceOfType(service, typeof(OtherService));
-            }
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(OtherService));
         }
 
         [TestMethod]
         public void ScopedServiceCanBeResolved()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
+
+            // Act
+            using (var scope = Container.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
+                var ContainerScopedService = Container.Resolve<IService>();
+                var scopedService1 = scope.Resolve<IService>();
+                var scopedService2 = scope.Resolve<IService>();
 
-                // Act
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var providerScopedService = provider.Resolve<IService>();
-                    var scopedService1 = scope.Resolve<IService>();
-                    var scopedService2 = scope.Resolve<IService>();
-
-                    // Assert
-                    Assert.AreNotSame(providerScopedService, scopedService1);
-                    Assert.AreSame(scopedService1, scopedService2);
-                }
+                // Assert
+                Assert.AreNotSame(ContainerScopedService, scopedService1);
+                Assert.AreSame(scopedService1, scopedService2);
             }
         }
 
         [TestMethod]
         public void NestedScopedServiceCanBeResolved()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
+
+            // Act
+            using (var outerScope = Container.CreateChildContainer())
+            using (var innerScope = outerScope.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
+                var outerScopedService = outerScope.Resolve<IService>();
+                var innerScopedService = innerScope.Resolve<IService>();
 
-                // Act
-                using (var outerScope = provider.CreateChildContainer())
-                using (var innerScope = outerScope.CreateChildContainer())
-                {
-                    var outerScopedService = outerScope.Resolve<IService>();
-                    var innerScopedService = innerScope.Resolve<IService>();
-
-                    // Assert
-                    Assert.IsNotNull(outerScopedService);
-                    Assert.IsNotNull(innerScopedService);
-                    Assert.AreNotSame(outerScopedService, innerScopedService);
-                }
+                // Assert
+                Assert.IsNotNull(outerScopedService);
+                Assert.IsNotNull(innerScopedService);
+                Assert.AreNotSame(outerScopedService, innerScopedService);
             }
         }
 
         [TestMethod]
-        public void SingletonServicesComeFromRootProvider()
+        public void SingletonServicesComeFromRootContainer()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
+
+            Service disposableService1;
+            Service disposableService2;
+
+            // Act and Assert
+            using (var scope = Container.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
-
-                Service disposableService1;
-                Service disposableService2;
-
-                // Act and Assert
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var service = scope.Resolve<IService>();
-                    disposableService1 = (Service)service;
-                    Assert.IsFalse(disposableService1.Disposed);
-                }
-
+                var service = scope.Resolve<IService>();
+                disposableService1 = (Service)service;
                 Assert.IsFalse(disposableService1.Disposed);
+            }
 
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var service = scope.Resolve<IService>();
-                    disposableService2 = (Service)service;
-                    Assert.IsFalse(disposableService2.Disposed);
-                }
+            Assert.IsFalse(disposableService1.Disposed);
 
+            using (var scope = Container.CreateChildContainer())
+            {
+                var service = scope.Resolve<IService>();
+                disposableService2 = (Service)service;
                 Assert.IsFalse(disposableService2.Disposed);
-                Assert.AreSame(disposableService1, disposableService2);
             }
+
+            Assert.IsFalse(disposableService2.Disposed);
+            Assert.AreSame(disposableService1, disposableService2);
         }
 
         [TestMethod]
-        public void NestedScopedServiceCanBeResolvedWithNoFallbackProvider()
+        public void NestedScopedServiceCanBeResolvedWithNoFallbackContainer()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
+            // Act
+            using (var outerScope = Container.CreateChildContainer())
+            using (var innerScope = outerScope.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>(new HierarchicalLifetimeManager());
-                // Act
-                using (var outerScope = provider.CreateChildContainer())
-                using (var innerScope = outerScope.CreateChildContainer())
-                {
-                    var outerScopedService = outerScope.Resolve<IService>();
-                    var innerScopedService = innerScope.Resolve<IService>();
-
-                    // Assert
-                    Assert.AreNotSame(outerScopedService, innerScopedService);
-                }
-            }
-        }
-
-        [TestMethod]
-        public void OpenGenericServicesCanBeResolved()
-        {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-
-                // Act
-                var genericService = provider.Resolve<IFoo<IService>>();
-                var singletonService = provider.Resolve<IService>();
+                var outerScopedService = outerScope.Resolve<IService>();
+                var innerScopedService = innerScope.Resolve<IService>();
 
                 // Assert
-                Assert.AreSame(singletonService, genericService.Value);
-            }
-        }
-
-        [TestMethod]
-        public void ClosedServicesPreferredOverOpenGenericServices()
-        {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
-                provider.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-                provider.RegisterType(typeof(IFoo<IService>), typeof(Foo<IService>));
-
-                // Act
-                var service = provider.Resolve<IFoo<IService>>();
-
-                // Assert
-                Assert.IsInstanceOfType(service.Value, typeof(Service));
+                Assert.AreNotSame(outerScopedService, innerScopedService);
             }
         }
 
@@ -278,116 +208,97 @@ namespace Unity.Specification.Resolution.Mapping
         [TestMethod]
         public void ServicesRegisteredWithImplementationTypeCanBeResolved()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
+            // Arrange
+            Container.RegisterType<IService, Service>();
 
-                // Act
-                var service = provider.Resolve<IService>();
+            // Act
+            var service = Container.Resolve<IService>();
 
-                // Assert
-                Assert.IsNotNull(service);
-                Assert.IsInstanceOfType(service, typeof(Service));
-            }
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(Service));
         }
 
         [TestMethod]
         public void ServicesRegisteredWithImplementationType_ReturnDifferentInstancesPerResolution_ForTransientServices()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
+            // Arrange
+            Container.RegisterType<IService, Service>();
 
-                // Act
-                var service1 = provider.Resolve<IService>();
-                var service2 = provider.Resolve<IService>();
+            // Act
+            var service1 = Container.Resolve<IService>();
+            var service2 = Container.Resolve<IService>();
 
-                // Assert
-                Assert.IsInstanceOfType(service1, typeof(Service));
-                Assert.IsInstanceOfType(service1, typeof(Service));
+            // Assert
+            Assert.IsInstanceOfType(service1, typeof(Service));
+            Assert.IsInstanceOfType(service1, typeof(Service));
 
-                Assert.AreNotSame(service1, service2);
-            }
-
+            Assert.AreNotSame(service1, service2);
         }
 
         [TestMethod]
         public void ServicesRegisteredWithImplementationType_ReturnSameInstancesPerResolution_ForSingletons()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
+            // Arrange
+            Container.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
 
-                // Act
-                var service1 = provider.Resolve<IService>();
-                var service2 = provider.Resolve<IService>();
+            // Act
+            var service1 = Container.Resolve<IService>();
+            var service2 = Container.Resolve<IService>();
 
-                // Assert
-                Assert.IsInstanceOfType(service1, typeof(Service));
-                Assert.IsInstanceOfType(service1, typeof(Service));
+            // Assert
+            Assert.IsInstanceOfType(service1, typeof(Service));
+            Assert.IsInstanceOfType(service1, typeof(Service));
 
-                Assert.AreSame(service1, service2);
-            }
+            Assert.AreSame(service1, service2);
         }
 
         [TestMethod]
         public void ServiceInstanceCanBeResolved()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                var instance = new Service();
-                provider.RegisterInstance<IService>(instance);
+            // Arrange
+            var instance = new Service();
+            Container.RegisterInstance<IService>(instance);
 
-                // Act
-                var service = provider.Resolve<IService>();
+            // Act
+            var service = Container.Resolve<IService>();
 
-                // Assert
-                Assert.AreSame(instance, service);
-            }
+            // Assert
+            Assert.AreSame(instance, service);
         }
 
         [TestMethod]
-        public void TransientServiceCanBeResolvedFromProvider()
+        public void TransientServiceCanBeResolvedFromContainer()
         {
-            using (IUnityContainer provider = GetContainer())
-            {
-                // Arrange
-                provider.RegisterType<IService, Service>();
+            // Arrange
+            Container.RegisterType<IService, Service>();
 
-                // Act
-                var service1 = provider.Resolve<IService>();
-                var service2 = provider.Resolve<IService>();
+            // Act
+            var service1 = Container.Resolve<IService>();
+            var service2 = Container.Resolve<IService>();
 
-                // Assert
-                Assert.IsNotNull(service1);
-                Assert.AreNotSame(service1, service2);
-            }
+            // Assert
+            Assert.IsNotNull(service1);
+            Assert.AreNotSame(service1, service2);
         }
 
         [TestMethod]
         public void TransientServiceCanBeResolvedFromScope()
         {
-            using (IUnityContainer provider = GetContainer())
+            // Arrange
+            Container.RegisterType<IService, Service>();
+
+            // Act
+            var service1 = Container.Resolve<IService>();
+            using (var scope = Container.CreateChildContainer())
             {
-                // Arrange
-                provider.RegisterType<IService, Service>();
+                var scopedService1 = scope.Resolve<IService>();
+                var scopedService2 = scope.Resolve<IService>();
 
-                // Act
-                var service1 = provider.Resolve<IService>();
-                using (var scope = provider.CreateChildContainer())
-                {
-                    var scopedService1 = scope.Resolve<IService>();
-                    var scopedService2 = scope.Resolve<IService>();
-
-                    // Assert
-                    Assert.AreNotSame(service1, scopedService1);
-                    Assert.AreNotSame(service1, scopedService2);
-                    Assert.AreNotSame(scopedService1, scopedService2);
-                }
+                // Assert
+                Assert.AreNotSame(service1, scopedService1);
+                Assert.AreNotSame(service1, scopedService2);
+                Assert.AreNotSame(scopedService1, scopedService2);
             }
         }
 
