@@ -56,10 +56,10 @@ namespace Unity.Specification.Resolution.Mapping
             // Arrange
             var service = new Foo();
             Container.RegisterInstance(service);
-            Container.RegisterType(typeof(IFoo1), typeof(Foo));
+            Container.RegisterType(typeof(IFoo), typeof(Foo));
 
             // Act
-            var service1 = Container.Resolve<IFoo1>();
+            var service1 = Container.Resolve<IFoo>();
 
             // Assert
             Assert.IsNotNull(service1);

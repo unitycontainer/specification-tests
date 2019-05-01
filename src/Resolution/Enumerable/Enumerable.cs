@@ -9,7 +9,7 @@ namespace Unity.Specification.Resolution.Enumerable
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void RegisterTypeTo()
+        public void EnumerableOfRegistered()
         {
             // Arrange
             Container.RegisterType(null, typeof(Service), null, null);
@@ -29,7 +29,7 @@ namespace Unity.Specification.Resolution.Enumerable
         }
 
         [TestMethod]
-        public void RegisterMapping()
+        public void EnumerableOfRegisterMapping()
         {
             // Arrange
             Container.RegisterType(typeof(IService), typeof(Service), null, null);

@@ -7,7 +7,7 @@ namespace Unity.Specification.Resolution.Array
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Registered()
+        public void ArrayOfRegistered()
         {
             // Arrange
             Container.RegisterType<IService, Service>("1");
@@ -26,7 +26,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public void RegisteredPoco()
+        public void ArrayOfRegisteredPoco()
         {
             // Arrange
             Container.RegisterType<Service>("1");
