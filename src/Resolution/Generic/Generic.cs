@@ -5,7 +5,36 @@ namespace Unity.Specification.Resolution.Generic
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Mapping()
+        public void GenericService()
+        {
+            // Arrange
+            Container.RegisterType(typeof(Foo<>));
+
+            // Act 
+            var instance = Container.Resolve<Foo<Service>>();
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(Foo<Service>));
+        }
+
+        [TestMethod]
+        public void GenericIService()
+        {
+            // Arrange
+            Container.RegisterType(typeof(IService), typeof(Service))
+                     .RegisterType(typeof(Foo<>));
+
+            // Act 
+            var instance = Container.Resolve<Foo<IService>>();
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(Foo<IService>));
+        }
+
+        [TestMethod]
+        public void GenericMapping()
         {
             // Arrange
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
@@ -78,6 +107,5 @@ namespace Unity.Specification.Resolution.Generic
             Assert.IsNotNull(instance);
             Assert.IsInstanceOfType(instance, typeof(IFoo<IService>));
         }
-
     }
 }

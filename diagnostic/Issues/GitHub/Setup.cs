@@ -238,12 +238,14 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
 
         protected override void Initialize()
         {
-            Context.Strategies.Add(Strategy, this.stage);
+            // TODO: Reacquire implementation
+            throw new NotImplementedException();
+            //Context.Strategies.Add(Strategy, this.stage);
 
-            if (this.policy != null)
-            {
-                Context.Policies.Set(null, null, this.policyType, this.policy);
-            }
+            //if (this.policy != null)
+            //{
+            //    Context.Policies.Set(null, null, this.policyType, this.policy);
+            //}
         }
 
         public BuilderStrategy Strategy { get; }

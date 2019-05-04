@@ -47,15 +47,12 @@ namespace Unity.Specification.Resolution.Generic
         [TestMethod]
         public void CanCallDefaultConstructorOnGeneric()
         {
-            Container.RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>), new InjectionConstructor())
-                .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner");
+            Container.RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>),  new InjectionConstructor())
+                     .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner");
 
             ICommand<User> result = Container.Resolve<ICommand<User>>();
+
             Assert.IsInstanceOfType(result, typeof(LoggingCommand<User>));
-
-            ICommand<Account> accountResult = Container.Resolve<ICommand<Account>>();
-
-            Assert.IsInstanceOfType(accountResult, typeof(LoggingCommand<Account>));
         }
 
         [TestMethod]

@@ -106,11 +106,11 @@ namespace Unity.Specification.Resolution.Array
         {
             // Arrange
             var instance = new Foo<IService>(new OtherService());
-
             Container.RegisterType<IService, Service>();
-            Container.RegisterType<IFoo<IService>, Foo<IService>>("Instance");
+
+            Container.RegisterType<IFoo<IService>, Foo<IService>>("1");
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa");
-            Container.RegisterInstance<IFoo<IService>>("1", instance);
+            Container.RegisterInstance<IFoo<IService>>("Instance", instance);
 
             // Act
             var enumerable = Container.Resolve<IFoo<IService>[]>();

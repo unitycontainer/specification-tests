@@ -183,17 +183,16 @@ namespace Unity.Specification.Resolution.Array
             Assert.AreEqual(1, Service.Instances);
         }
 
-
         [TestMethod]
         public void ResolvesMixedOpenClosedFuncGenericsAsArray()
         {
             // Arrange
             var instance = new Foo<IService>(new OtherService());
-
             Container.RegisterType<IService, Service>();
-            Container.RegisterType<IFoo<IService>, Foo<IService>>("Instance");
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "fa");
-            Container.RegisterInstance<IFoo<IService>>("1", instance);
+
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), "open");
+            Container.RegisterType<IFoo<IService>, Foo<IService>>("closed");
+            Container.RegisterInstance<IFoo<IService>>("Instance", instance);
 
             // Act
             var enumerable = Container.Resolve<Func<IFoo<IService>>[]>();
@@ -203,6 +202,26 @@ namespace Unity.Specification.Resolution.Array
             Assert.IsNotNull(enumerable[0]);
             Assert.IsNotNull(enumerable[1]);
             Assert.IsNotNull(enumerable[2]);
+        }
+
+        [TestMethod]
+        public void ClosedTrumpsOpenGeneric()
+        {
+            // Arrange
+            var instance = new Foo<IService>(new OtherService());
+
+            Container.RegisterInstance<IFoo<IService>>(Name, instance)
+                     .RegisterType(typeof(IFoo<>), typeof(Foo<>), Name)
+                     .RegisterType<IFoo<IService>, Foo<IService>>("closed")
+                     .RegisterType<IService, Service>();
+
+            // Act
+            var enumerable = Container.Resolve<IFoo<IService>[]>();
+
+            // Assert
+            Assert.AreEqual(2, enumerable.Length);
+            Assert.IsNotNull(enumerable[0]);
+            Assert.IsNotNull(enumerable[1]);
         }
     }
 }

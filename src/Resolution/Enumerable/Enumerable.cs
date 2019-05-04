@@ -339,5 +339,24 @@ namespace Unity.Specification.Resolution.Enumerable
             }
         }
 
+        [TestMethod]
+        public void ClosedTrumpsOpenGeneric()
+        {
+            // Arrange
+            var instance = new Foo<IService>(new OtherService());
+
+            Container.RegisterInstance<IFoo<IService>>(Name, instance)
+                     .RegisterType(typeof(IFoo<>), typeof(Foo<>), Name)
+                     .RegisterType<IFoo<IService>, Foo<IService>>()
+                     .RegisterType<IService, Service>();
+
+            // Act
+            var enumerable = Container.Resolve<IEnumerable<IFoo<IService>>>()
+                                      .ToArray();
+            // Assert
+            Assert.AreEqual(2, enumerable.Length);
+            Assert.IsNotNull(enumerable[0]);
+            Assert.IsNotNull(enumerable[1]);
+        }
     }
 }

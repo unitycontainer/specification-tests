@@ -6,6 +6,31 @@ namespace Unity.Specification.Resolution.Mapping
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        public void PocoTypeRegistered()
+        {
+            // Arrange
+            Container.RegisterType(typeof(Foo));
+
+            // Act
+            var service = Container.Resolve<Foo>();
+
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(Foo));
+        }
+
+        [TestMethod]
+        public void PocoTypeUnregistered()
+        {
+            // Act
+            var service = Container.Resolve<Foo>();
+
+            // Assert
+            Assert.IsNotNull(service);
+            Assert.IsInstanceOfType(service, typeof(Foo));
+        }
+
+        [TestMethod]
         public void ServiceItself()
         {
             // Arrange
@@ -49,7 +74,6 @@ namespace Unity.Specification.Resolution.Mapping
             Assert.IsInstanceOfType(service, typeof(Foo));
         }
 
-
         [TestMethod]
         public void MappingToInstance()
         {
@@ -64,6 +88,42 @@ namespace Unity.Specification.Resolution.Mapping
             // Assert
             Assert.IsNotNull(service1);
             Assert.AreSame(service, service1);
+        }
+
+        [TestMethod]
+        public void MappingToInstanceInChild()
+        {
+            // Arrange
+            var service = new Foo();
+            Container.RegisterInstance(service);
+            Container.RegisterType(typeof(IFoo), typeof(Foo));
+
+            // Act
+            var service1 = Container.CreateChildContainer()
+                                    .Resolve<IFoo>();
+            // Assert
+            Assert.IsNotNull(service1);
+            Assert.AreSame(service, service1);
+        }
+
+        [TestMethod]
+        public void MappingOverriddenToInstance()
+        {
+            // Arrange
+            var service = new Foo();
+            Container.RegisterInstance(service);
+            Container.RegisterType(typeof(IFoo), typeof(Foo));
+
+            // Act / Validate
+            var service1 = Container.Resolve<IFoo>();
+            Assert.IsNotNull(service1);
+            Assert.AreSame(service, service1);
+
+            // Act / Validate
+            Container.RegisterInstance(new Foo());
+            var service2 = Container.Resolve<IFoo>();
+            Assert.IsNotNull(service2);
+            Assert.AreNotSame(service1, service2);
         }
 
         [TestMethod]

@@ -216,7 +216,7 @@ namespace Unity.Specification.Resolution.Generic
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void FailedResolveAllTest()
         {
             // Arrange

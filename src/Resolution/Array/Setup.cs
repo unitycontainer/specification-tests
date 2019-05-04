@@ -12,6 +12,7 @@ namespace Unity.Specification.Resolution.Array
             base.Setup();
         }
     }
+
     #region Test Data
 
     public class EmptyClass
