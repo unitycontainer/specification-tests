@@ -25,7 +25,7 @@ namespace Unity.Specification.Diagnostic.Constructor.Types
                 try
                 {
                     var instance = container.Resolve<ITestClass>(); //2
-                    Assert.IsNull(instance, "Should threw an exception");
+                    Assert.Fail("Should throw an exception");
                 }
                 catch (ResolutionFailedException e)
                 {
