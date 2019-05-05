@@ -28,6 +28,13 @@ namespace Unity.Specification.Resolution.Generic
             CollectionAssert.AreEquivalent(new[] { "first", "second" }, result.Stuff);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void WhenResolvingAnOpenGenericType()
+        {
+            Container.Resolve(typeof(List<>));
+        }
+
         /// <summary>
         /// Sample from Unit test cases.
         /// modified for WithLifetime.

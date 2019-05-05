@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Unity.Builder;
-using Unity.Extension;
-using Unity.Strategies;
 
 namespace Unity.Specification.Diagnostic.Issues.GitHub
 {
@@ -79,18 +76,17 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
     {
     }
 
-    public class A
+    public class ATestClass
     {
-        public A(IEnumerable<IInterface> interfaces)
+        public ATestClass(IEnumerable<IInterface> interfaces)
         {
+            Value = interfaces;
         }
+
+        public IEnumerable<IInterface> Value { get; }
     }
 
     public interface ILogger
-    {
-    }
-
-    public class MockLogger : ILogger
     {
     }
 
@@ -216,96 +212,6 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
         }
     }
 
-    public class SpyExtension : UnityContainerExtension
-    {
-        private UnityBuildStage stage;
-        private object policy;
-        private Type policyType;
-
-        public SpyExtension(BuilderStrategy strategy, UnityBuildStage stage)
-        {
-            Strategy = strategy;
-            this.stage = stage;
-        }
-
-        public SpyExtension(BuilderStrategy strategy, UnityBuildStage stage, object policy, Type policyType)
-        {
-            Strategy = strategy;
-            this.stage = stage;
-            this.policy = policy;
-            this.policyType = policyType;
-        }
-
-        protected override void Initialize()
-        {
-            // TODO: Reacquire implementation
-            throw new NotImplementedException();
-            //Context.Strategies.Add(Strategy, this.stage);
-
-            //if (this.policy != null)
-            //{
-            //    Context.Policies.Set(null, null, this.policyType, this.policy);
-            //}
-        }
-
-        public BuilderStrategy Strategy { get; }
-    }
-
-    public class SpyStrategy : BuilderStrategy
-    {
-        private object existing = null;
-        private bool buildUpWasCalled = false;
-
-        public Dictionary<(Type, string), int> BuildUpCallCount { get; private set; } = new Dictionary<(Type, string), int>();              // change
-
-        public override void PreBuildUp(ref BuilderContext context)
-        {
-            buildUpWasCalled = true;
-            existing = context.Existing;
-            this.UpdateBuildUpCallCount(context.Type, context.Name);
-            UpdateSpyPolicy(ref context);
-        }
-
-        public override void PostBuildUp(ref BuilderContext context)
-        {
-            existing = context.Existing;
-        }
-
-        public object Existing
-        {
-            get { return this.existing; }
-        }
-
-        private void UpdateBuildUpCallCount(Type type, string name)                 // change
-        {
-            var tuple = (type, name);
-
-            if (!this.BuildUpCallCount.ContainsKey(tuple))
-            {
-                this.BuildUpCallCount[tuple] = 1;
-                return;
-            }
-
-            this.BuildUpCallCount[tuple]++;
-        }
-
-        public bool BuildUpWasCalled
-        {
-            get { return this.buildUpWasCalled; }
-        }
-
-        private void UpdateSpyPolicy(ref BuilderContext context)
-        {
-            SpyPolicy policy = (SpyPolicy)context.Get(null, null, typeof(SpyPolicy));
-
-            if (policy != null)
-            {
-                policy.WasSpiedOn = true;
-                policy.Count += 1;
-            }
-        }
-    }
-
     public class TestClass
     {
         public TestClass(string field)
@@ -313,13 +219,6 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
             this.Field = field;
         }
         public string Field { get; }
-    }
-
-    public class SpyPolicy
-    {
-        public int Count;
-
-        public bool WasSpiedOn { get; set; }
     }
 
     #endregion

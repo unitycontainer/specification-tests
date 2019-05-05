@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace Unity.Specification.Diagnostic.Constructor.Types
 {
@@ -26,6 +27,13 @@ namespace Unity.Specification.Diagnostic.Constructor.Types
 
             // Verify
             o.ValidateInterface();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void WhenResolvingAnOpenGenericType()
+        {
+            Container.Resolve(typeof(List<>));
         }
 
         [TestMethod]
