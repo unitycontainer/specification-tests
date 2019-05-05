@@ -33,7 +33,7 @@ namespace Unity.Specification.Diagnostic.BuildUp
             Assert.IsNull(obj2.MySecondObj);
 
             // "type of the object should match"
-            Container.BuildUp(typeof(BuildUnmatchedObject2_PropertyDependencyClassStub1), obj2);
+            var instance = Container.BuildUp(typeof(BuildUnmatchedObject2_PropertyDependencyClassStub1), obj2);
         }
     }
 }
