@@ -113,6 +113,5 @@ namespace Unity.Specification.Resolution.Basics
             // Act / Validate
             Container.Resolve<IFoo>("none");
         }
-
     }
 }

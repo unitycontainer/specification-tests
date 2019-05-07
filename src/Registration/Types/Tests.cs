@@ -8,43 +8,6 @@ namespace Unity.Specification.Registration.Types
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Null_Null_Null()
-        {
-            // Act
-            Container.RegisterType(null, null, null, null);
-        }
-
-        [TestMethod]
-        public void Type_Null_Null()
-        {
-            // Act
-            Container.RegisterType(typeof(object), null, null, null);
-        }
-
-        [TestMethod]
-        public void Type_Type_Null()
-        {
-            // Act
-            Container.RegisterType(typeof(object), typeof(object), null, null);
-        }
-
-        [TestMethod]
-        public void Null_Type_Null()
-        {
-            // Act
-            Container.RegisterType(typeof(object), null, null, null);
-        }
-
-        [TestMethod]
-        public void Type_Type_Name()
-        {
-            // Act
-            Container.RegisterType(typeof(object), typeof(object), Name, null);
-        }
-
-
-        [TestMethod]
         public void DefaultLifetime()
         {
             // Arrange

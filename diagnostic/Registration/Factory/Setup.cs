@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Unity.Specification.Diagnostic.Registration
+namespace Unity.Specification.Diagnostic.Registration.Factory
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -19,6 +14,8 @@ namespace Unity.Specification.Diagnostic.Registration
     #region Test Data
 
     public interface IService { }
+
+    public class Service : IService { }
 
     #endregion
 }

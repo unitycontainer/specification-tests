@@ -11,7 +11,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithStringField>(); }
+            try { Container.Resolve(typeof(ClassWithStringField)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -25,7 +25,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithStringFieldDependency>(); }
+            try { Container.Resolve(typeof(ClassWithStringFieldDependency)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -40,7 +40,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithNamedStringField>(); }
+            try { Container.Resolve(typeof(ClassWithNamedStringField)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate

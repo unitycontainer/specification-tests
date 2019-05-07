@@ -11,7 +11,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithStringProperty>(); }
+            try { Container.Resolve(typeof(ClassWithStringProperty)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -25,7 +25,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithStringPropertyDependency>(); }
+            try { Container.Resolve(typeof(ClassWithStringPropertyDependency)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -39,7 +39,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithNamedStringProperty>(); }
+            try { Container.Resolve(typeof(ClassWithNamedStringProperty)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate

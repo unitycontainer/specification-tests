@@ -11,7 +11,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithMethod>(); }
+            try { Container.Resolve(typeof(ClassWithMethod)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -25,7 +25,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassDependingOnMethod>(); }
+            try { Container.Resolve(typeof(ClassDependingOnMethod)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -39,7 +39,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithOutMethod>(); }
+            try { Container.Resolve(typeof(ClassWithOutMethod)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate
@@ -53,7 +53,7 @@ namespace Unity.Specification.Diagnostic.Exceptions
             Exception exception = null;
 
             // Act
-            try { Container.Resolve<ClassWithRefMethod>(); }
+            try { Container.Resolve(typeof(ClassWithRefMethod)); }
             catch (Exception ex) { exception = ex; }
 
             // Validate

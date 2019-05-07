@@ -23,6 +23,18 @@ namespace Unity.Specification.Registration.Types
         [TestMethod]
         public void Registration_ShowsUpInRegistrationsSequence()
         {
+            // Arrange
+            Container.RegisterInstance(Name);
+            Container.RegisterType<ILogger, MockLogger>();
+            Container.RegisterType<ILogger, MockLogger>(Name);
+
+            var service = new Service();
+            Container.RegisterInstance<IService>(service);
+            Container.RegisterInstance<IService>(Name, service);
+
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), Name);
+
             var registrations = (from r in Container.Registrations
                                  where r.RegisteredType == typeof(ILogger)
                                  select r).ToList();
@@ -36,6 +48,19 @@ namespace Unity.Specification.Registration.Types
         [TestMethod]
         public void TypeMappingShowsUpInRegistrationsCorrectly()
         {
+            // Arrange
+            Container.RegisterInstance(Name);
+
+            Container.RegisterType<ILogger, MockLogger>();
+            Container.RegisterType<ILogger, MockLogger>(Name);
+
+            var service = new Service();
+            Container.RegisterInstance<IService>(service);
+            Container.RegisterInstance<IService>(Name, service);
+
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
+            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), Name);
+
             var registration =
                 (from r in Container.Registrations
                  where r.RegisteredType == typeof(ILogger)

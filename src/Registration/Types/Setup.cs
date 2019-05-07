@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Unity.Specification.Registration.Types
 {
@@ -14,18 +10,6 @@ namespace Unity.Specification.Registration.Types
         public override void Setup()
         {
             base.Setup();
-
-            Container.RegisterInstance(Name);
-
-            Container.RegisterType<ILogger, MockLogger>();
-            Container.RegisterType<ILogger, MockLogger>(Name);
-
-            var service = new Service();
-            Container.RegisterInstance<IService>(service);
-            Container.RegisterInstance<IService>(Name, service);
-
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), Name);
         }
     }
 
@@ -35,10 +19,6 @@ namespace Unity.Specification.Registration.Types
     {
         TEntity Value { get; }
     }
-
-    public interface IFoo { }
-    public interface IFoo1 { }
-    public interface IFoo2 { }
 
     public class Foo<TEntity> : IFoo<TEntity>
     {
@@ -54,10 +34,6 @@ namespace Unity.Specification.Registration.Types
         public TEntity Value { get; }
     }
 
-    public class Foo : IFoo, IFoo1, IFoo2
-    {
-    }
-
     public interface ILogger
     {
     }
@@ -67,10 +43,6 @@ namespace Unity.Specification.Registration.Types
     }
 
     public interface IService
-    {
-    }
-
-    public interface IGenericService<T>
     {
     }
 
@@ -91,7 +63,6 @@ namespace Unity.Specification.Registration.Types
             Disposed = true;
         }
     }
-
 
     public interface IOtherService
     {
@@ -117,5 +88,6 @@ namespace Unity.Specification.Registration.Types
             Disposed = true;
         }
     }
+    
     #endregion
 }
