@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Unity.Specification.Lifetime
+namespace Unity.Specification.Diagnostic.Lifetime
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {

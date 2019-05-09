@@ -65,13 +65,5 @@ namespace Unity.Specification.Registration.Instance
             Assert.AreSame(child.Resolve<string>(), child.Resolve<string>());
             Assert.AreNotSame(Container.Resolve<string>(), child.Resolve<string>());
         }
-
-
-        [TestMethod]
-        [Ignore]
-        public void HierarchicalLifetimeManager()
-        {
-            //            Assert.ThrowsException<Exception>(() => GetContainer().RegisterInstance(null, null, Guid.NewGuid().ToString(), new HierarchicalLifetimeManager()));
-        }
     }
 }
