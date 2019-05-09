@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Unity.Specification.Resolution.Basics
 {
@@ -113,5 +114,17 @@ namespace Unity.Specification.Resolution.Basics
             // Act / Validate
             Container.Resolve<IFoo>("none");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void UserExceptionIsNotWrappad()
+        {
+            // Arrange
+            Container.RegisterFactory<IFoo>(c => { throw new System.InvalidOperationException("User error"); });
+
+            // Act
+            Container.Resolve<IFoo>();
+        }
+
     }
 }

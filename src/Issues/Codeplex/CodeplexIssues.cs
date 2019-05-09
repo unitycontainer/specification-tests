@@ -197,9 +197,13 @@ namespace Unity.Specification.Issues.Codeplex
                 {
                     var func = container.Resolve<IComparable<object>>();
                 }
-                catch (ResolutionFailedException e)
+                catch (ResolutionFailedException)
                 {
-                    AssertExtensions.IsInstanceOfType(e.InnerException, typeof(InvalidOperationException));
+                    // Ignore
+                }
+                catch
+                {
+                    Assert.Fail("Invalid Exception Type");
                 }
             }
         }
@@ -214,9 +218,13 @@ namespace Unity.Specification.Issues.Codeplex
                 {
                     var func = container.Resolve<Type>();
                 }
-                catch (ResolutionFailedException e)
+                catch (ResolutionFailedException)
                 {
-                    AssertExtensions.IsInstanceOfType(e.InnerException, typeof(InvalidOperationException));
+                    // Ignore
+                }
+                catch
+                {
+                    Assert.Fail("Invalid Exception Type");
                 }
             }
         }

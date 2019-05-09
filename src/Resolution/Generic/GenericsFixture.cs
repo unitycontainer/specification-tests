@@ -224,18 +224,6 @@ namespace Unity.Specification.Resolution.Generic
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void FailedResolveAllTest()
-        {
-            // Arrange
-            Container.RegisterType<IService, Service>("1");
-            Container.RegisterFactory<IService>("2", c => { throw new System.InvalidOperationException("User error"); });
-
-            // Act
-            Container.ResolveAll<IService>();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void UserExceptionIsNotWrappadInResolutionFailed()
         {
             // Arrange

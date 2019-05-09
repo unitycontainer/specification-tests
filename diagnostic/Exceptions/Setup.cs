@@ -15,6 +15,8 @@ namespace Unity.Specification.Diagnostic.Exceptions
 
     public interface IService { }
 
+    public class Service : IService { }
+
     public interface IProvider { }
 
     public class Provider : IProvider
