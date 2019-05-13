@@ -113,7 +113,7 @@ namespace Unity.Specification.Container.Hierarchy
 
             parent.RegisterInstance(parentSpy);
             var child = parent.CreateChildContainer()
-                .RegisterInstance(childSpy);
+                              .RegisterInstance(childSpy);
             child.Dispose();
 
             Assert.IsFalse(parentSpy.WasDisposed);
