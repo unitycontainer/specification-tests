@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -47,15 +48,24 @@ namespace Unity.Specification.Lifetime
 
     #region Test Data
 
-    public class Foo
+    public class TestClass : IDisposable
     {
+        public bool Disposed { get; private set; }
+
+        public void Dispose()
+        {
+            Disposed = true;
+        }
     }
 
     public interface IService { }
 
     public class Service : IService { }
 
+    public class OtherService : IService { }
+
     public interface IPresenter { }
+
     public class MockPresenter : IPresenter
     {
         public IView View { get; set; }
@@ -76,6 +86,7 @@ namespace Unity.Specification.Lifetime
         [Dependency]
         public IPresenter Presenter { get; set; }
     }
+
     public class SomeService { }
 
     public class SomeOtherService
@@ -98,6 +109,48 @@ namespace Unity.Specification.Lifetime
         public SomeService SomeService { get; set; }
 
         public SomeOtherService OtherService { get; set; }
+    }
+
+    public class ObjectWithOneDependency
+    {
+        private object inner;
+        public string id = Guid.NewGuid().ToString();
+
+        public ObjectWithOneDependency(object inner)
+        {
+            this.inner = inner;
+        }
+
+        public object InnerObject
+        {
+            get { return inner; }
+        }
+
+        public void Validate()
+        {
+            Assert.IsNotNull(inner);
+        }
+    }
+
+    public class ObjectWithTwoConstructorDependencies
+    {
+        private ObjectWithOneDependency oneDep;
+
+        public ObjectWithTwoConstructorDependencies(ObjectWithOneDependency oneDep)
+        {
+            this.oneDep = oneDep;
+        }
+
+        public ObjectWithOneDependency OneDep
+        {
+            get { return oneDep; }
+        }
+
+        public void Validate()
+        {
+            Assert.IsNotNull(oneDep);
+            oneDep.Validate();
+        }
     }
 
     #endregion

@@ -12,10 +12,23 @@ namespace Unity.Specification.Resolution.Basics
         }
 
         [TestMethod]
-        public void CanCreateObjectFromUnConfiguredContainer()
+        public void ObjectFromEmptyContainer()
         {
             // Act/Verify
             Assert.IsNotNull(Container.Resolve<object>());
+        }
+
+
+        /// <summary>
+        /// The Resolve method returns the object registered with the named mapping, 
+        /// or raises an exception if there is no mapping that matches the specified name. Testing this scenario
+        /// Bug ID : 16371
+        /// </summary>
+        [TestMethod]
+        public void ObjectFromEmptyContainerWithName()
+        {
+            // Act/Verify
+            Assert.IsNotNull(Container.Resolve<object>("Hello"));
         }
 
         [TestMethod]
