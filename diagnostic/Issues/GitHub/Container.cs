@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Injection;
@@ -29,8 +30,8 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         // https://github.com/unitycontainer/container/issues/119
-        [ExpectedException(typeof(ResolutionFailedException))]
         public void Issue_119()
         {
             // Setup
