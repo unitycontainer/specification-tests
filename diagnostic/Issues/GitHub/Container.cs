@@ -17,6 +17,7 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
             var instance = Container.Resolve<TestClass>(new DependencyOverride<string>(new OptionalParameter<string>()));
             Assert.AreEqual("123", instance.Field);
         }
+
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/149
@@ -29,6 +30,7 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
 
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/119
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void Issue_119()
         {
             // Setup

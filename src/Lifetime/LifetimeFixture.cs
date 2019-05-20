@@ -345,9 +345,8 @@ namespace Unity.Specification.Lifetime
         [TestMethod]
         public void TestStringEmpty()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer);
-            Container.RegisterType<Service>(string.Empty, TypeLifetime.PerContainer);
             Container.RegisterType<Service>(null, TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(string.Empty, TypeLifetime.PerContainer);
 
             Service a = Container.Resolve<Service>();
             Service b = Container.Resolve<Service>(string.Empty);
