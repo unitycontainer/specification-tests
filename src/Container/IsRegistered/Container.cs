@@ -8,7 +8,8 @@ namespace Unity.Specification.Container.IsRegistered
         [TestMethod]
         public void IUnityContainer()
         {
-            Assert.IsNotNull(Container.Registrations.FirstOrDefault(r => r.RegisteredType == typeof(IUnityContainer)));
+            var registrations = Container.Registrations;
+            Assert.IsNotNull(registrations.FirstOrDefault(r => r.RegisteredType == typeof(IUnityContainer)));
         }
 
         [TestMethod]
