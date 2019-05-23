@@ -35,12 +35,15 @@ namespace Unity.Specification.Factory.Resolution
         [TestMethod]
         public void Factory_Transient()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service());
+            var foo = new Service();
+            Container.RegisterFactory<IService>((c, t, n) => foo);
 
             var service = Container.Resolve<IService>();
+            var repeat = Container.Resolve<IService>();
 
             Assert.IsNotNull(service);
-            Assert.AreNotSame(service, Container.Resolve<IService>());
+            Assert.AreSame(service, foo);
+            Assert.AreSame(service, repeat);
         }
     }
 }

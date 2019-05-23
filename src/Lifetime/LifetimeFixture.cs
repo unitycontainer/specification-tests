@@ -349,8 +349,8 @@ namespace Unity.Specification.Lifetime
             Container.RegisterType<Service>(string.Empty, TypeLifetime.PerContainer);
 
             Service a = Container.Resolve<Service>();
-            Service b = Container.Resolve<Service>(string.Empty);
             Service c = Container.Resolve<Service>((string)null);
+            Service b = Container.Resolve<Service>(string.Empty);
 
             Assert.AreNotEqual(a, b);
             Assert.AreNotEqual(b, c);
