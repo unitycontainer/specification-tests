@@ -48,6 +48,21 @@ namespace Unity.Specification.Lifetime
 
     #region Test Data
 
+    public interface IFoo<TEntity>
+    {
+        TEntity Value { get; }
+    }
+
+    public class Foo<TEntity> : IFoo<TEntity>
+    {
+        public Foo(TEntity value)
+        {
+            Value = value;
+        }
+
+        public TEntity Value { get; }
+    }
+
     public class TestClass : IDisposable
     {
         public bool Disposed { get; private set; }

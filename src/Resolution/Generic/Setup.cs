@@ -296,7 +296,6 @@ namespace Unity.Specification.Resolution.Generic
         public TEntity Value { get; }
     }
 
-
     public interface IService
     {
     }

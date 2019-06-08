@@ -1,18 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace Unity.Specification.Lifetime
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void PerBuildCanBeConfigured()
+        public void PerResolveCanBeConfigured()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);
         }
 
         [TestMethod]
-        public void PerBuildViewIsReusedAcrossGraph()
+        public void PerResolveViewIsReusedAcrossGraph()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);
@@ -24,7 +25,7 @@ namespace Unity.Specification.Lifetime
         }
 
         [TestMethod]
-        public void PerBuildViewsAreDifferentInDifferentResolveCalls()
+        public void PerResolveViewsAreDifferentInDifferentResolveCalls()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);
@@ -36,12 +37,45 @@ namespace Unity.Specification.Lifetime
         }
 
         [TestMethod]
-        public void PerBuildLifetimeIsHonoredWhenUsingFactory()
+        public void PerResolveLifetimeIsHonoredWhenUsingFactory()
         {
             Container.RegisterFactory<SomeService>(c => new SomeService(), FactoryLifetime.PerResolve);
 
             var rootService = Container.Resolve<AService>();
             Assert.AreSame(rootService.SomeService, rootService.OtherService.SomeService);
+        }
+
+        [TestMethod]
+        public void PerResolveFromMultipleThreads()
+        {
+            Container.RegisterType<IPresenter, MockPresenter>()
+                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+
+            object result1 = null;
+            object result2 = null;
+
+            Thread thread1 = new Thread(delegate ()
+            {
+                result1 = Container.Resolve<IView>();
+            });
+
+            Thread thread2 = new Thread(delegate ()
+            {
+                result2 = Container.Resolve<IView>();
+            });
+
+            thread1.Name = "1";
+            thread2.Name = "2";
+
+            thread1.Start();
+            thread2.Start();
+
+            thread2.Join();
+            thread1.Join();
+
+            Assert.IsNotNull(result1);
+            Assert.IsNotNull(result2);
+            Assert.AreNotSame(result1, result2);
         }
     }
 }
