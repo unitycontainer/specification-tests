@@ -5,14 +5,14 @@ namespace Unity.Specification.Lifetime
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void ContainerCanBeConfiguredForPerBuildSingleton()
+        public void PerBuildCanBeConfigured()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);
         }
 
         [TestMethod]
-        public void ViewIsReusedAcrossGraph()
+        public void PerBuildViewIsReusedAcrossGraph()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);
@@ -24,7 +24,7 @@ namespace Unity.Specification.Lifetime
         }
 
         [TestMethod]
-        public void ViewsAreDifferentInDifferentResolveCalls()
+        public void PerBuildViewsAreDifferentInDifferentResolveCalls()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
                      .RegisterType<IView, View>(TypeLifetime.PerResolve);

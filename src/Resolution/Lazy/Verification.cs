@@ -144,7 +144,10 @@ namespace Unity.Specification.Resolution.Lazy
             Assert.IsInstanceOfType(result.LoggerLazy2.Value, typeof(MockLogger));
             Assert.AreSame(result.LoggerLazy1.Value, result.LoggerLazy2.Value);
 
-            Assert.AreNotSame(result.LoggerLazy1.Value, Container.Resolve<Lazy<ILogger>>().Value);
+            var value1 = result.LoggerLazy1.Value;
+            var value2 = Container.Resolve<Lazy<ILogger>>().Value;
+
+            Assert.AreNotSame(value1, value2);
         }
 
         [TestMethod]

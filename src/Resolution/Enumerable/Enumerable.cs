@@ -181,10 +181,8 @@ namespace Unity.Specification.Resolution.Enumerable
         public void SingleService()
         {
             // Arrange
-            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-            Container.RegisterType<IService, Service>();
             Service.Instances = 0;
+            Container.RegisterType<IService, Service>();
 
             // Act
             var services = Container.Resolve<IEnumerable<IService>>();

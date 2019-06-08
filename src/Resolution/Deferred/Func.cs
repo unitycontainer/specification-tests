@@ -14,7 +14,6 @@ namespace Unity.Specification.Resolution.Deferred
             var resolver = Container.Resolve<Func<IService>>();
 
             // Verify
-
             Assert.IsNotNull(resolver);
             Assert.IsInstanceOfType(resolver, typeof(Func<IService>));
         }
