@@ -168,5 +168,84 @@ namespace Unity.Specification.Lifetime
         }
     }
 
+    interface ITestElement : IDisposable
+    {
+        bool IsDisposed { get; }
+
+        long ContainerId { get; }
+    }
+
+    class TestElement : ITestElement
+    {
+        public long ContainerId { get; }
+
+        public bool IsDisposed { get; private set; }
+
+        public TestElement(IUnityContainer container)
+        {
+            ContainerId = container.GetHashCode();
+        }
+
+        public void Dispose()
+        {
+            IsDisposed = true;
+        }
+    }
+
+    interface ITestElementFactory
+    {
+        ITestElement CreateElement();
+    }
+
+    interface ISingletonService : IDisposable
+    {
+        long ContainerId { get; }
+
+        bool IsDisposed { get; }
+
+        IEnumerable<ITestElement> GetElements();
+    }
+
+    class TestElementFactory : ITestElementFactory
+    {
+        private readonly IUnityContainer _container;
+
+        public TestElementFactory(IUnityContainer container)
+        {
+            _container = container;
+        }
+
+        public ITestElement CreateElement()
+        {
+            return _container.Resolve<ITestElement>();
+        }
+    }
+
+    class SingletonService : ISingletonService
+    {
+        private readonly ITestElementFactory _elementFactory;
+
+        public long ContainerId { get; }
+
+        public bool IsDisposed { get; private set; }
+
+        public SingletonService(IUnityContainer container, ITestElementFactory elementFactory)
+        {
+            ContainerId = container.GetHashCode();
+            _elementFactory = elementFactory;
+        }
+
+        public IEnumerable<ITestElement> GetElements()
+        {
+            for (int i = 0; i < 10; i++)
+                yield return _elementFactory.CreateElement();
+        }
+
+        public void Dispose()
+        {
+            IsDisposed = true;
+        }
+    }
+
     #endregion
 }
