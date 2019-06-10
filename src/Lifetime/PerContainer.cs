@@ -31,5 +31,40 @@ namespace Unity.Specification.Lifetime
             Assert.IsNull(instance);
             Assert.IsNull(Container.Resolve<IService>());
         }
+
+        [TestMethod]
+        public void PerContainer_GenericWithInstances()
+        {
+            Container.RegisterSingleton(typeof(IFoo<>), typeof(Foo<>));
+
+            var rootContainer = Container as IUnityContainer;
+
+            var childContainer1 = rootContainer.CreateChildContainer();
+            var childContainer2 = rootContainer.CreateChildContainer();
+
+            childContainer1.RegisterInstance<IService>(new Service());
+            childContainer2.RegisterInstance<IService>(new Service());
+
+            var test1 = childContainer1.Resolve<IFoo<object>>();
+            var test2 = childContainer2.Resolve<IFoo<object>>();
+
+            Assert.AreSame(test1, test2);
+        }
+
+        [TestMethod]
+        public void PerContainer_GenericSingletons()
+        {
+            Container.RegisterSingleton(typeof(IFoo<>), typeof(Foo<>));
+
+            var rootContainer = Container as IUnityContainer;
+
+            var childContainer1 = rootContainer.CreateChildContainer();
+            var childContainer2 = rootContainer.CreateChildContainer();
+
+            var test1 = childContainer1.Resolve<IFoo<object>>();
+            var test2 = childContainer2.Resolve<IFoo<object>>();
+
+            Assert.AreSame(test1, test2);
+        }
     }
 }

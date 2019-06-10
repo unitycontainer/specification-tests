@@ -60,7 +60,7 @@ namespace Unity.Specification.Lifetime
             Assert.AreEqual(rootContainerId, reference3.ContainerId, "Instance by reference3 should be created in root container");
         }
 
-        [TestMethod, Ignore("This test will fail until the singleton and all of it dependencies are created in the root container")]
+        [TestMethod]
         public void Singleton_ResolveInChildContainer()
         {
             // Arrange
@@ -113,7 +113,7 @@ namespace Unity.Specification.Lifetime
             Assert.IsTrue(itemsFrom3.All(i => i.ContainerId == rootContainerId), "Not all items from instance by reference3 are created in root container");
         }
 
-        [TestMethod, Ignore("This test will fail until the singleton and all of it dependencies are created in the root container")]
+        [TestMethod]
         public void Signleton_AsFactoryInChildContainer()
         {
             // Arrange
@@ -161,7 +161,7 @@ namespace Unity.Specification.Lifetime
         }
 
 
-        [TestMethod, Ignore("This test will fail until the singleton and all of it dependencies are created in the root container")]
+        [TestMethod]
         public void Signleton_AsFactory_WHEN_ItIsResolvedInChildContainer_AND_ChildContainerIsDisposed_THEN_ItWorksFromRootContainer()
         {
             // Arrange
@@ -270,7 +270,7 @@ namespace Unity.Specification.Lifetime
             Assert.IsFalse(items.Any(i => i.IsDisposed), "Items created by singleton should not be disposed");
         }
 
-        [TestMethod, Ignore("This test will fail until the singleton and all of it dependencies are created in the root container")]
+        [TestMethod]
         public void Singleton_CreatedDependenciesDisposing_WHEN_ItIsResolvedInChildContainer_AND_ChildContainerIsDisposed_THEN_ItDependencies_NotDisposed()
         {
             // Arrange
