@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Unity.Specification.Resolution.Basics
 {
@@ -18,17 +20,56 @@ namespace Unity.Specification.Resolution.Basics
             Assert.IsNotNull(Container.Resolve<object>());
         }
 
-
-        /// <summary>
-        /// The Resolve method returns the object registered with the named mapping, 
-        /// or raises an exception if there is no mapping that matches the specified name. Testing this scenario
-        /// Bug ID : 16371
-        /// </summary>
         [TestMethod]
         public void ObjectFromEmptyContainerWithName()
         {
             // Act/Verify
             Assert.IsNotNull(Container.Resolve<object>("Hello"));
+        }
+
+        [TestMethod]
+        public void ObjectFromEmptyContainerConcurently()
+        {
+            const int Threads = 40;
+            var barrier = new System.Threading.Barrier(Threads);
+            var countdown = new CountdownEvent(Threads);
+            var random = new Random();
+            var errors = false;
+
+            for (int i = 0; i < Threads; i++)
+            {
+                Task.Factory.StartNew(
+                    wait =>
+                    {
+                        barrier.SignalAndWait();
+
+                        Task.Delay((int)wait).Wait();
+                        try
+                        {
+                            var result = Container.Resolve<object>();
+                        }
+                        catch (Exception ex)
+                        {
+                            errors = true;
+                        }
+
+                        countdown.Signal();
+                    },
+                    random.Next(0, 3),
+                    TaskCreationOptions.LongRunning);
+            }
+
+            countdown.Wait();
+            Assert.IsFalse(errors);
+        }
+
+        [TestMethod]
+        public void ObjectRegistered()
+        {
+            Container.RegisterType<object>();
+
+                // Act/Verify
+            Assert.IsNotNull(Container.Resolve<object>());
         }
 
         [TestMethod]

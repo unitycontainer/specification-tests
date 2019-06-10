@@ -53,6 +53,12 @@ namespace Unity.Specification.Resolution.Basics
             }
         }
 
+        public class ClassWithMultipleConstructorParameters
+        {
+            public ClassWithMultipleConstructorParameters(string parameterA, string parameterB, string parameterC, string parameterD)
+            {
+            }
+        }
 
         #endregion
     }
