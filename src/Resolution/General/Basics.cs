@@ -20,6 +20,14 @@ namespace Unity.Specification.Resolution.Basics
             Assert.IsNotNull(Container.Resolve<object>());
         }
 
+
+        [TestMethod]
+        public void UnregisteredType()
+        {
+            // Act/Verify
+            Assert.IsNotNull(Container.Resolve<ClassWithMultipleConstructorParameters>());
+        }
+
         [TestMethod]
         public void ObjectFromEmptyContainerWithName()
         {
@@ -48,7 +56,7 @@ namespace Unity.Specification.Resolution.Basics
                         {
                             var result = Container.Resolve<object>();
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             errors = true;
                         }
