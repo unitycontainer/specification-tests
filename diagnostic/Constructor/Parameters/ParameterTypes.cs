@@ -55,5 +55,20 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
             var instance = Container.Resolve<Service>();
         }
 
+
+        [TestMethod]
+        public void FalsePositiveMessage()
+        {
+            try
+            {
+                var instance = Container.Resolve<Service>();
+            }
+            catch (System.Exception ex)
+            {
+
+                Assert.IsNotNull(ex);
+            }
+        }
+
     }
 }
