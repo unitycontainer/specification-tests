@@ -36,7 +36,7 @@ namespace Unity.Specification.Diagnostic.Lifetime
         }
 
         [TestMethod]
-        public void PerBuildLifetimeIsHonoredWhenUsingFactory()
+        public void PerResolveLifetimeIsHonoredWhenUsingFactory()
         {
             Container.RegisterFactory<SomeService>(c => new SomeService(), FactoryLifetime.PerResolve);
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Win32;
 
 namespace Unity.Specification.Diagnostic.Constructor.Parameters
 {
@@ -14,34 +13,42 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
 
     #region Test Data
 
-    public interface IDecorator
-    { }
-
-    public class BaseDecorator : IDecorator
+    public struct TestStruct
     {
-        private readonly IDecorator decorator;
-
-        public BaseDecorator(IDecorator decorator)
-        {
-            this.decorator = decorator;
-        }
     }
 
-    public class Decorator : IDecorator
-    { }
-
-    public class TypeWithConstructorWithRefParameter
+    public class TypeWithStructParameter
     {
-        public TypeWithConstructorWithRefParameter(ref string ignored)
+        public TypeWithStructParameter(TestStruct data)
+        {
+            Data = data;
+        }
+
+        public TestStruct Data { get; set; }
+    }
+
+    public class TypeWithDynamicParameter
+    {
+        public TypeWithDynamicParameter(dynamic data)
+        {
+            Data = data;
+        }
+
+        public dynamic Data { get; set; }
+    }
+
+    public class TypeWithRefParameter
+    {
+        public TypeWithRefParameter(ref string ignored)
         {
         }
 
         public int Property { get; set; }
     }
 
-    public class TypeWithConstructorWithOutParameter
+    public class TypeWithOutParameter
     {
-        public TypeWithConstructorWithOutParameter(out string ignored)
+        public TypeWithOutParameter(out string ignored)
         {
             ignored = null;
         }
@@ -49,7 +56,15 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
         public int Property { get; set; }
     }
 
-
+    public class TypeWithUnresolvableParameter
+    {
+        public TypeWithUnresolvableParameter(Unresolvable data)
+        {
+            Data = data;
+        }
+        public dynamic Data { get; set; }
+    }
+    
     public class Unresolvable
     {
         private Unresolvable() { }
@@ -57,15 +72,6 @@ namespace Unity.Specification.Diagnostic.Constructor.Parameters
         public Unresolvable(ref long data) { }
 
         public static Unresolvable Create() => new Unresolvable();
-    }
-
-    public class Service
-    {
-        public Service(Unresolvable data) => Ctor = 2;
-
-        public Service(Unresolvable unr, RegistryKey data) => Ctor = 3;
-
-        public int Ctor { get; }
     }
 
     #endregion

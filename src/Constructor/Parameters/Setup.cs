@@ -13,18 +13,42 @@ namespace Unity.Specification.Constructor.Parameters
 
     #region Test Data
 
-    public class TypeWithConstructorWithRefParameter
+    public struct TestStruct
     {
-        public TypeWithConstructorWithRefParameter(ref string ignored)
+    }
+
+    public class TypeWithStructParameter
+    {
+        public TypeWithStructParameter(TestStruct data)
+        {
+            Data = data;
+        }
+
+        public TestStruct Data { get; set; }
+    }
+
+    public class TypeWithDynamicParameter
+    {
+        public TypeWithDynamicParameter(dynamic data)
+        {
+            Data = data;
+        }
+
+        public dynamic Data { get; set; }
+    }
+
+    public class TypeWithRefParameter
+    {
+        public TypeWithRefParameter(ref string ignored)
         {
         }
 
         public int Property { get; set; }
     }
 
-    public class TypeWithConstructorWithOutParameter
+    public class TypeWithOutParameter
     {
-        public TypeWithConstructorWithOutParameter(out string ignored)
+        public TypeWithOutParameter(out string ignored)
         {
             ignored = null;
         }
@@ -32,14 +56,14 @@ namespace Unity.Specification.Constructor.Parameters
         public int Property { get; set; }
     }
 
-    public interface I1 { }
-    public interface I2 { }
-
-    public class B1 : I1 { }
-
-    public class C1 : I1 { public C1(I2 i2) { } }
-
-    public class C2 : I2 { public C2(I1 i1) { } }
+    public class TypeWithUnresolvableParameter
+    {
+        public TypeWithUnresolvableParameter(Unresolvable data)
+        {
+            Data = data;
+        }
+        public dynamic Data { get; set; }
+    }
 
     #endregion
 
@@ -49,21 +73,6 @@ namespace Unity.Specification.Constructor.Parameters
         private Unresolvable() { }
 
         public static Unresolvable Create() => new Unresolvable();
-    }
-    #endregion
-
-    #region type_service
-    public class Service
-    {
-        public Service() => Ctor = 0;
-
-        public Service(string str) => Ctor = 1;
-
-        public Service(Unresolvable data) => Ctor = 2;
-
-        public Service(I1 i1, Unresolvable unr, object data) => Ctor = 3;
-
-        public int Ctor { get; }
     }
     #endregion
 }

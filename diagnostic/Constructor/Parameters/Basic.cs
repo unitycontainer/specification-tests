@@ -1,17 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Specification.TestData;
+using Microsoft.Win32;
 
 namespace Unity.Specification.Diagnostic.Constructor.Parameters
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void AmbuguousConstructor()
+        public void DynamicParameter()
         {
             // Act
-            var instance = Container.Resolve<TypeWithAmbiguousCtors>();
-        }
+            var instance = Container.Resolve<TypeWithDynamicParameter>();
 
+            // Validate
+            Assert.IsNotNull(instance);
+        }
     }
 }
