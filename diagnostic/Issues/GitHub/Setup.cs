@@ -70,10 +70,22 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
 
     public class Class1 : IInterface
     {
+        public void MyCompletelyUnambiguousInitializeMethod(bool arg)
+        {
+            Console.WriteLine($"Initialized: {arg}");
+        }
     }
 
     public class Class2 : IInterface
     {
+        public void AmbiguousInitializeMethod1(bool arg)
+        {
+            Console.WriteLine($"Initialized 1: {arg}");
+        }
+        public void AmbiguousInitializeMethod2(bool arg)
+        {
+            Console.WriteLine($"Initialized 2: {arg}");
+        }
     }
 
     public class ATestClass

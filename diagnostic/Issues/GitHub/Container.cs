@@ -10,6 +10,21 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        // https://github.com/unitycontainer/container/issues/180
+        public void Issue_180()
+        {
+            Container.RegisterType<Class1>(TypeLifetime.PerContainer, new InjectionMethod(nameof(Class1.MyCompletelyUnambiguousInitializeMethod), true));
+            Container.RegisterType<Class2>("1", TypeLifetime.PerContainer, new InjectionMethod(nameof(Class2.AmbiguousInitializeMethod1), true));
+            Container.RegisterType<Class2>("2", TypeLifetime.PerContainer, new InjectionMethod(nameof(Class2.AmbiguousInitializeMethod2), true));
+
+            var res1 = Container.Resolve<Class1>();
+            var res2 = Container.Resolve<Class1>("1");
+            var res3 = Container.Resolve<Class1>("2");
+        }
+
+
+
+        [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/149
         public void Issue_149()
