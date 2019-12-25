@@ -1,41 +1,44 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Specification.Utility;
 
 namespace Unity.Specification.Property.Overrides
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void CanOverrideValue()
+        public void CanOverrideValueFactory()
         {
             // Act
+            var resolver = new ValidatingResolverFactory(new Something2());
             var result = Container.Resolve<ObjectWithProperty>(
-                Override.Property(nameof(ObjectWithProperty.MyProperty), Resolve.Dependency<ISomething>(Name))
-                        .OnType<ObjectWithProperty>());
+                Override.Property(nameof(ObjectWithProperty.MyProperty), resolver));
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.MyProperty);
             Assert.IsInstanceOfType(result.MyProperty, typeof(Something2));
+            Assert.AreEqual(typeof(ISomething), resolver.Type);
         }
 
         [TestMethod]
-        public void CanOverrideAttributedValue()
+        public void CanOverrideAttributedValueFactory()
         {
             var other = "other";
+            var resolver = new ValidatingResolverFactory(other);
 
             // Act
             var result = Container.Resolve<ObjectWithThreeProperties>(
-                Override.Property(nameof(ObjectWithThreeProperties.Name), other)
-                    .OnType<ObjectWithThreeProperties>());
+                Override.Property(nameof(ObjectWithThreeProperties.Name), resolver));
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Container);
-            Assert.AreEqual<string>(result.Name, other);
+            Assert.AreEqual(result.Name, other);
+            Assert.AreEqual(typeof(string), resolver.Type);
         }
 
         [TestMethod]
-        public void CanOverridePropOnAttributed()
+        public void CanOverridePropOnAttributedFactory()
         {
             // Arrange
             Container.RegisterType<ObjectWithThreeProperties>(
@@ -43,8 +46,9 @@ namespace Unity.Specification.Property.Overrides
 
             // Act
             var other = "other";
+            var resolver = new ValidatingResolverFactory(other);
             var result = Container.Resolve<ObjectWithThreeProperties>(
-                Override.Property(nameof(ObjectWithThreeProperties.Property), other)
+                Override.Property(nameof(ObjectWithThreeProperties.Property), resolver)
                         .OnType<ObjectWithThreeProperties>());
 
             // Assert
@@ -52,21 +56,8 @@ namespace Unity.Specification.Property.Overrides
             Assert.IsNotNull(result.Name);
             Assert.IsNotNull(result.Container);
             Assert.IsNotNull(result.Property);
-            Assert.AreEqual((object) other, result.Property);
-        }
-
-        [TestMethod]
-        public void ValueOverrideForTypeDifferentThanResolvedTypeIsIgnored()
-        {
-            // Act
-            var result = Container.Resolve<ObjectWithProperty>(
-                Override.Property(nameof(ObjectWithProperty.MyProperty), Resolve.Dependency<ISomething>(Name))
-                        .OnType<ObjectThatDependsOnSimpleObject>());
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.MyProperty);
-            Assert.IsInstanceOfType(result.MyProperty, typeof(Something1));
+            Assert.AreEqual(other, result.Property);
+            Assert.AreEqual(typeof(object), resolver.Type);
         }
     }
 }
