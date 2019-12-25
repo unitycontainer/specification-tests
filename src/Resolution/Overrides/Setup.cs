@@ -64,6 +64,7 @@ namespace Unity.Specification.Resolution.Overrides
 
         public IFoo Foo { get; }
     }
+
     public class DependsOnIFooName
     {
         public DependsOnIFooName([Dependency("name")]IFoo foo)
