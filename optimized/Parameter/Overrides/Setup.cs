@@ -18,6 +18,12 @@ namespace Unity.Specification.Parameter.Overrides
 
         #region Test Data
 
+        public interface IService { }
+
+        public class Service1 : IService { }
+
+        public class Service2 : IService { }
+
         public class Service
         {
             public const string DefaultString = "default";
@@ -129,6 +135,67 @@ namespace Unity.Specification.Parameter.Overrides
                 Value = value;
                 Called = 16;
             }
+        }
+
+        public interface IFoo { }
+
+        public class Foo : IFoo
+        {
+            public object Fred { get; }
+
+            public object George { get; }
+
+            public Foo([OptionalDependency("Fred")]   IService x,
+                       [OptionalDependency("George")] IService y)
+            {
+                Fred = x;
+                George = y;
+            }
+        }
+
+        public class SimpleTestObject
+        {
+            public SimpleTestObject()
+            {
+            }
+
+            [InjectionConstructor]
+            public SimpleTestObject(int x)
+            {
+                X = x;
+            }
+
+            public int X { get; private set; }
+        }
+
+
+        public class ObjectThatDependsOnSimpleObject
+        {
+            public SimpleTestObject TestObject { get; set; }
+
+            public ObjectThatDependsOnSimpleObject(SimpleTestObject testObject)
+            {
+                TestObject = testObject;
+            }
+
+            public SimpleTestObject OtherTestObject { get; set; }
+        }
+
+        public class TestType
+        {
+            private readonly string _dependency;
+
+            public TestType() { }
+
+            public TestType(string dependency)
+            {
+                _dependency = dependency;
+            }
+
+            public string DependencyField;
+            public string DependencyProperty { get; set; }
+
+            public override string ToString() => _dependency;
         }
 
         #endregion
