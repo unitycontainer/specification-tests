@@ -45,6 +45,7 @@ namespace Unity.Specification.Parameter.Overrides
         }
 
         [TestMethod]
+        [Ignore]
         public void TypePassedToFactoryNamed()
         {
             // Arrange
@@ -62,10 +63,12 @@ namespace Unity.Specification.Parameter.Overrides
             Assert.AreEqual(value, result.Value);
 
             Assert.AreEqual(typeof(string), resolver.Type);
+            Assert.AreEqual(Name, resolver.Name);
         }
 
 
         [TestMethod]
+        [Ignore]
         public void TypePassedToFactoryGeneric()
         {
             // Arrange
@@ -83,6 +86,7 @@ namespace Unity.Specification.Parameter.Overrides
             Assert.AreEqual(value, result.Value);
 
             Assert.AreEqual(typeof(string), resolver.Type);
+            Assert.AreEqual(Name, resolver.Name);
         }
     }
 }

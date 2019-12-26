@@ -29,6 +29,14 @@ namespace Unity.Specification.Property.Overrides
             public IUnityContainer Container { get; set; }
         }
 
+        public class ObjectWithNamedDependencyProperties
+        {
+            [Dependency(Name)]
+            public string Property { get; set; }
+
+            public IUnityContainer Container { get; set; }
+        }
+
         public class SimpleTestObject
         {
             public SimpleTestObject()

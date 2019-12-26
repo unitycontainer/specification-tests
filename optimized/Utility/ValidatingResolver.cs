@@ -15,10 +15,13 @@ namespace Unity.Specification.Utility
         public object Resolve<TContext>(ref TContext context) where TContext : IResolveContext
         {
             Type = context.Type;
+            Name = context.Name;
 
             return _value;
         }
 
         public Type Type { get; private set; }
+
+        public string Name { get; private set; }
     }
 }
