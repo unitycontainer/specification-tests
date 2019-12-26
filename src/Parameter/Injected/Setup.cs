@@ -18,6 +18,53 @@ namespace Unity.Specification.Parameter.Injected
 
         public class Service
         {
+            public const string DefaultString = "default";
+            public const int DefaultInt = 111;
+
+            #region Properties
+
+            public int Called { get; private set; } = -1;
+
+            public object Value { get; private set; }
+
+            #endregion
+
+
+            public void NoParameters() => Called = 0;
+
+            public void NoAttributeParameter(object value)
+            {
+                Value = value;
+                Called = 1;
+            }
+
+            public void DependencyAttribute([Dependency]object value)
+            {
+                Value = value;
+                Called = 2;
+            }
+
+            public void NamedDependencyAttribute([Dependency(Name)]string value)
+            {
+                Value = value;
+                Called = 3;
+            }
+
+            public void OptionalDependencyAttribute([OptionalDependency]object value)
+            {
+                Value = value;
+                Called = 4;
+            }
+
+            public void OptionalNamedDependencyAttribute([OptionalDependency(Name)]string value)
+            {
+                Value = value;
+                Called = 5;
+            }
+        }
+
+        public class OtherService
+        {
             #region Properties
 
             public object Value { get; private set; }

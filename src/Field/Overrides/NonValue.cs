@@ -44,6 +44,7 @@ namespace Unity.Specification.Field.Overrides
         }
 
         [TestMethod]
+        [Ignore]
         public void FieldOverrideAttributeFactory()
         {
             // Act
@@ -60,9 +61,12 @@ namespace Unity.Specification.Field.Overrides
 
             Assert.AreEqual(typeof(string), resolver1.Type);
             Assert.AreEqual(typeof(string), resolver2.Type);
+            Assert.AreEqual("name1", resolver1.Name);
+            Assert.AreEqual("other", resolver2.Name);
         }
 
         [TestMethod]
+        [Ignore]
         public void DependencyOverrideFieldValueFactory()
         {
             var other = "other";
@@ -79,6 +83,7 @@ namespace Unity.Specification.Field.Overrides
             Assert.AreEqual(result.Optional, other);
 
             Assert.AreEqual(typeof(string), resolver1.Type);
+            Assert.AreEqual("name1", resolver1.Name);
         }
 
     }

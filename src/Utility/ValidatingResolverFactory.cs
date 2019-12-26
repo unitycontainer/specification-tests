@@ -13,6 +13,7 @@ namespace Unity.Specification.Utility
         }
 
         public Type Type { get; private set; }
+        public string Name { get; private set; }
 
         public ResolveDelegate<TContext> GetResolver<TContext>(Type info) 
             where TContext : IResolveContext
@@ -20,6 +21,8 @@ namespace Unity.Specification.Utility
             return (ref TContext context) =>
             {
                 Type = context.Type;
+                Name = context.Name;
+
                 return _value;
             };
         }

@@ -11,8 +11,8 @@ namespace Unity.Specification.Diagnostic.Field.Validation
         public void InvalidValue()
         {
             // Act
-            Container.RegisterType<Specification.Field.Injection.ObjectWithThreeFields>(
-                Inject.Field(nameof(Specification.Field.Injection.ObjectWithThreeFields.Container), Name));
+            Container.RegisterType<ObjectWithThreeFields>(
+                Inject.Field(nameof(ObjectWithThreeFields.Container), Name));
         }
 
         [TestMethod]

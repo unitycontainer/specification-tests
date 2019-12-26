@@ -59,5 +59,27 @@ namespace Unity.Specification.Property.Overrides
             Assert.AreEqual(other, result.Property);
             Assert.AreEqual(typeof(object), resolver.Type);
         }
+
+        [TestMethod]
+        [Ignore]
+        public void CanOverrideNamedPropResolver()
+        {
+            // Arrange
+            Container.RegisterType<ObjectWithNamedDependencyProperties>(
+                new Unity.Injection.InjectionProperty(nameof(ObjectWithNamedDependencyProperties.Property), Name));
+
+            // Act
+            var other = "other";
+            var resolver = new ValidatingResolver(other);
+            var result = Container.Resolve<ObjectWithNamedDependencyProperties>(
+                Override.Property(nameof(ObjectWithNamedDependencyProperties.Property), resolver));
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Property);
+            Assert.AreEqual(other, result.Property);
+            Assert.AreEqual(typeof(string), resolver.Type);
+            Assert.AreEqual(Name, resolver.Name);
+        }
     }
 }
