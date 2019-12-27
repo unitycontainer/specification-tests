@@ -18,7 +18,16 @@ namespace Unity.Specification.Property.Injection
 
         #region Test Data
 
-        public class ObjectWithThreeProperties
+
+        public class ObjectWithHiddenProperties
+        {
+            private string PrivateProperty { get; set; }
+
+            public string ReadonlyProperty { get; }
+        }
+
+
+        public class ObjectWithThreeProperties : ObjectWithHiddenProperties
         {
             [Dependency]
             public string Name { get; set; }
