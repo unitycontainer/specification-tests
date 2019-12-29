@@ -44,8 +44,7 @@ namespace Unity.Specification.Parameter.Overrides
         }
 
         [TestMethod]
-        [Ignore]
-        public void TypePassedToResolverNamed()
+        public void TypeAndNamePassedToResolverNamed()
         {
             // Arrange
             var value = "value";
@@ -66,8 +65,7 @@ namespace Unity.Specification.Parameter.Overrides
         }
 
         [TestMethod]
-        [Ignore]
-        public void TypePassedToResolverGeneric()
+        public void TypeAndNamePassedToResolverGeneric()
         {
             // Arrange
             var value = "value";
