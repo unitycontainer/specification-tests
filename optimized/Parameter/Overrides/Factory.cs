@@ -45,8 +45,7 @@ namespace Unity.Specification.Parameter.Overrides
         }
 
         [TestMethod]
-        [Ignore]
-        public void TypePassedToFactoryNamed()
+        public void TypeAndNamePassedToFactoryNamed()
         {
             // Arrange
             var value = "value";
@@ -68,8 +67,7 @@ namespace Unity.Specification.Parameter.Overrides
 
 
         [TestMethod]
-        [Ignore]
-        public void TypePassedToFactoryGeneric()
+        public void TypeAndNamePassedToFactoryGeneric()
         {
             // Arrange
             var value = "value";
