@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <Import Project="..\package.props" />
+  
   <PropertyGroup>
     <FileVersion>$(Version).0</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
