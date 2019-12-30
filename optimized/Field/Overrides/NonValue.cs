@@ -44,7 +44,6 @@ namespace Unity.Specification.Field.Overrides
         }
 
         [TestMethod]
-        [Ignore]
         public void FieldOverrideAttributeFactory()
         {
             // Act
@@ -66,7 +65,6 @@ namespace Unity.Specification.Field.Overrides
         }
 
         [TestMethod]
-        [Ignore]
         public void DependencyOverrideFieldValueFactory()
         {
             var other = "other";
