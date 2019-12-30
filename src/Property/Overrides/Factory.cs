@@ -61,7 +61,6 @@ namespace Unity.Specification.Property.Overrides
         }
 
         [TestMethod]
-        [Ignore]
         public void CanOverrideNamedPropFactory()
         {
             // Arrange
