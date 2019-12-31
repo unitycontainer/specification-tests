@@ -40,7 +40,6 @@ namespace Unity.Specification.Parameter.Injected
         }
 
         [TestMethod]
-        [Ignore]
         public void NamedDependencyByResolver()
         {
             var injected = "injected";
@@ -63,7 +62,6 @@ namespace Unity.Specification.Parameter.Injected
         }
 
         [TestMethod]
-        [Ignore]
         public void NamedDependencyByFactory()
         {
             var injected = "injected";
