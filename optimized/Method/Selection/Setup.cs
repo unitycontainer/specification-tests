@@ -28,11 +28,8 @@ namespace Unity.Specification.Method.Selection
             string Executed { get; }
         }
 
-
         public class InjectedMethodTest : IInjectedMethodTest
         {
-            public bool ExecutedVoid { get; private set; }
-
             [InjectionMethod]
             public void ExecuteVoid() => ExecutedVoid = true;
 
@@ -41,12 +38,11 @@ namespace Unity.Specification.Method.Selection
             {
                 Executed = data;
             }
+            
+            public bool ExecutedVoid { get; private set; }
 
             public string Executed { get; private set; }
         }
-
-
-
 
         public interface IGenericInjectedMethodTest<T>
         {

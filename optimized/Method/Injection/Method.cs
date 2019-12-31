@@ -52,7 +52,7 @@ namespace Unity.Specification.Method.Injection
 
 
         [TestMethod]
-        public void MethodPassingVoid()
+        public virtual void MethodPassingVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -66,7 +66,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void ReturningVoid()
+        public virtual void ReturningVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -80,7 +80,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void ReturningInt()
+        public virtual void ReturningInt()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -95,7 +95,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void MultipleMethods()
+        public virtual void MultipleMethods()
         {
             // Setup
             Container.RegisterType<GuineaPig>(
@@ -112,7 +112,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void StaticMethod()
+        public virtual void StaticMethod()
         {
             // Act
             Container.Resolve<GuineaPig>();

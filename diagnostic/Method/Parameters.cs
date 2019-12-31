@@ -1,10 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Unity.Specification.Diagnostic.Method.Parameters
+namespace Unity.Specification.Method.Parameters.Validation
 {
-    public abstract partial class SpecificationTests
+    public abstract partial class SpecificationTests : Unity.Specification.Method.Parameters.SpecificationTests
     {
+        [TestInitialize]
+        public override void Setup() => base.Setup();
+
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ChainedExecuteMethodBaseline()
