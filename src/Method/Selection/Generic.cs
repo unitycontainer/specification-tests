@@ -4,7 +4,6 @@ namespace Unity.Specification.Method.Selection
 {
     public abstract partial class SpecificationTests
     {
-
         [TestMethod]
         public void Method_Called_Generic()
         {
