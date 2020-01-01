@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Specification.TestData;
 
 namespace Unity.Specification.Constructor.Attribute.Validation
 {
@@ -6,5 +7,18 @@ namespace Unity.Specification.Constructor.Attribute.Validation
     {
         [TestInitialize]
         public override void Setup() => base.Setup();
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public override void MultipleConstructorsAnnotated()
+        {
+            // Act
+            var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();
+
+            // Assert
+            Assert.AreEqual(Container, instance.Container);
+        }
+
     }
 }

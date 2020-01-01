@@ -52,7 +52,7 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         [TestMethod]
-        public void ByCountNamedGeneric()
+        public virtual void ByCountNamedGeneric()
         {
             // Arrange
             #region inject_count_named_generic
@@ -78,7 +78,7 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         [TestMethod]
-        public void ByCountNameOverrideGeneric()
+        public virtual void ByCountNameOverrideGeneric()
         {
             // Arrange
             Container.RegisterType<IService, ServiceOne>("one")
