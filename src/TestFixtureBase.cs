@@ -4,8 +4,8 @@ namespace Unity.Specification
     public abstract class TestFixtureBase
     {
         protected IUnityContainer Container;
-        protected const string Name = "name";
-        protected const string Legacy = "legacy";
+        public const string Name = "name";
+        public const string Legacy = "legacy";
 
 
         public abstract IUnityContainer GetContainer();

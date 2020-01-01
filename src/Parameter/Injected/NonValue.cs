@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification.Utility;
 
-namespace Unity.Specification.Parameter.Injected
+namespace Unity.Specification.Parameter.Injection
 {
     public abstract partial class SpecificationTests
     {
