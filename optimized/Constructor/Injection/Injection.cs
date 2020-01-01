@@ -16,7 +16,7 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         [TestMethod]
-        public void MultipleConstructor()
+        public virtual void MultipleConstructor()
         {
             // Arrange
             Container.RegisterType<TypeWithAmbiguousCtors>(
