@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Unity.Specification.Method.Parameters.Validation
 {
@@ -9,7 +8,7 @@ namespace Unity.Specification.Method.Parameters.Validation
         public override void Setup() => base.Setup();
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void ChainedExecuteMethodBaseline()
         {
             // Setup
@@ -19,6 +18,9 @@ namespace Unity.Specification.Method.Parameters.Validation
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();
+            
+            // Verify
+            Assert.Fail();
         }
     }
 }
