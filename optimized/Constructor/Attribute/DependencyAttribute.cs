@@ -4,6 +4,15 @@ namespace Unity.Specification.Constructor.Attribute
 {
     public abstract partial class SpecificationTests
     {
+        [TestMethod]
+        public void WithDefaultCtor()
+        {
+            // Act
+            var instance = Container.Resolve<WithDefaultCtor>();
+
+            // Validate
+            Assert.AreSame(instance, instance.Data);
+        }
 
         [TestMethod]
         public void WithDependency()

@@ -5,7 +5,7 @@ namespace Unity.Specification.Method.Attribute
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
-        public void MethodWithNoParameters()
+        public void NoParameters()
         {
             // Act
             var result = Container.Resolve<TypeNoParameters>();
@@ -16,7 +16,7 @@ namespace Unity.Specification.Method.Attribute
         }
 
         [TestMethod]
-        public void MethodWithParameters()
+        public void WithParameters()
         {
             // Act
             var result = Container.Resolve<TypeWithParameter>();
@@ -28,7 +28,7 @@ namespace Unity.Specification.Method.Attribute
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public void MethodWithRefParameters()
+        public void WithRefParameters()
         {
             // Act
             var result = Container.Resolve<TypeWithRefParameter>();
@@ -39,7 +39,7 @@ namespace Unity.Specification.Method.Attribute
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public void MethodWithOutParameters()
+        public void WithOutParameters()
         {
             // Act
             var result = Container.Resolve<TypeWithOutParameter>();

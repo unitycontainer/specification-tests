@@ -77,15 +77,15 @@ namespace Unity.Specification.Container.Hierarchy
             rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
 
             var childContainer1 = rootContainer.CreateChildContainer();
-            var childContainer11 = childContainer1.CreateChildContainer();
+            var childContainer2 = childContainer1.CreateChildContainer();
 
             var rootContainerId = rootContainer.GetHashCode();
-            var childContainer11id = childContainer11.GetHashCode();
+            var childContainer11id = childContainer2.GetHashCode();
 
-            var consumerInstanceFromChildContainter11 = childContainer11.Resolve<ISingletonConsumer>();
+            var consumerInstanceFromChildContainter2 = childContainer2.Resolve<ISingletonConsumer>();
 
-            Assert.AreEqual(childContainer11id, consumerInstanceFromChildContainter11.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer11");
-            Assert.AreEqual(rootContainerId, consumerInstanceFromChildContainter11.SingletonService.ContainerId, "singletonService dependency of consumerInstanceFromRootContainter should be created in root container");
+            Assert.AreEqual(childContainer11id, consumerInstanceFromChildContainter2.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer11");
+            Assert.AreEqual(rootContainerId, consumerInstanceFromChildContainter2.SingletonService.ContainerId, "singletonService dependency of consumerInstanceFromRootContainter should be created in root container");
         }
 
         [TestMethod]
