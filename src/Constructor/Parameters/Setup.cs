@@ -20,17 +20,27 @@ namespace Unity.Specification.Constructor.Parameters
             Parameters = 0;
         }
 
-        public Service(IUnityContainer container)
+        public Service(DependencyType dependency)
         {
             Parameters = 1;
         }
 
-        public Service(Unresolvable unresolvable, IUnityContainer container)
+        public Service(Unresolvable unresolvable, DependencyType dependency)
         {
             Parameters = 2;
         }
 
         public int Parameters { get; }
+    }
+
+    public class DependencyType
+    {
+        protected DependencyType()
+        {
+
+        }
+        
+        public static DependencyType Create() => new DependencyType();
     }
 
     public struct TestStruct
