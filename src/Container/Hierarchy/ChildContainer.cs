@@ -7,17 +7,18 @@ namespace Unity.Specification.Container.Hierarchy
 {
     public abstract partial class SpecificationTests
     {
-        //[TestMethod]
-        //public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
-        //{
-        //    var container = GetContainer();
-        //    var child = container.CreateChildContainer();
-        //    var wr = new WeakReference(child);
-        //    child.Dispose();
-        //    child = null;
-        //    GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
-        //    Assert.IsFalse(wr.IsAlive);
-        //}
+        [TestMethod]
+        [Ignore]
+        public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
+        {
+            var container = GetContainer();
+            var child = container.CreateChildContainer();
+            var wr = new WeakReference(child);
+            child.Dispose();
+            child = null;
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+            Assert.IsFalse(wr.IsAlive);
+        }
 
         [TestMethod]
         public void CanResolveItselfInScopes()
