@@ -13,6 +13,26 @@ namespace Unity.Specification.Constructor.Parameters
 
     #region Test Data
 
+    public class Service
+    {
+        public Service()
+        {
+            Parameters = 0;
+        }
+
+        public Service(IUnityContainer container)
+        {
+            Parameters = 1;
+        }
+
+        public Service(Unresolvable unresolvable, IUnityContainer container)
+        {
+            Parameters = 2;
+        }
+
+        public int Parameters { get; }
+    }
+
     public struct TestStruct
     {
     }
