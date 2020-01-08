@@ -49,18 +49,6 @@ namespace Unity.Specification.Issues.GitHub
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void Unity_201()
-        {
-            var container = GetContainer();
-
-            container.RegisterType<IService, OtherService>(
-#pragma warning disable CS0618 // TODO: InjectionFactory
-                                new InjectionFactory((c, t, n) => new OtherService()));
-#pragma warning restore CS0618 
-        }
-
-        [TestMethod]
         public void Unity_177()
         {
             var container = GetContainer();
