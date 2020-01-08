@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity;
 using Unity.Lifetime;
 
-namespace Unity.Specification.Registration.Instance
+namespace Unity.Specification.Instance
 {
     public abstract partial class SpecificationTests
     {
