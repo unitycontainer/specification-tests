@@ -4,105 +4,99 @@ namespace Unity.Specification.Constructor.Selection
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
+        protected IUnityContainer iUnity0;
+        protected IUnityContainer iUnity1;
+        protected IUnityContainer iUnity2;
+        protected IUnityContainer iUnity3;
+        protected IUnityContainer iUnity4;
+        protected IUnityContainer iUnity5;
+
         [TestInitialize]
         public override void Setup()
         {
             base.Setup();
+
+            iUnity0 = Container;
+            iUnity1 = iUnity0.CreateChildContainer().RegisterInstance(new Level1());
+            iUnity2 = iUnity1.CreateChildContainer().RegisterInstance(new Level2());
+            iUnity3 = iUnity2.CreateChildContainer().RegisterInstance(new Level3());
+            iUnity4 = iUnity3.CreateChildContainer().RegisterInstance(new Level4());
+            iUnity5 = iUnity4.CreateChildContainer().RegisterInstance(new Level5());
         }
     }
 
     #region Test Data
 
-    public class Service
+    public interface ILevel1 { }
+    public interface ILevel2 { }
+    public interface ILevel3 { }
+    public interface ILevel4 { }
+    public interface ILevel5 { }
+
+    public class Level1 : ILevel1 { }
+    public class Level2 : ILevel2 { }
+    public class Level3 : ILevel3 { }
+    public class Level4 : ILevel4 { }
+    public class Level5 : ILevel5 { }
+
+    public class Other1 : ILevel1 { }
+    public class Other2 : ILevel2 { }
+    public class Other3 : ILevel3 { }
+    public class Other4 : ILevel4 { }
+    public class Other5 : ILevel5 { }
+
+    public class MultiLevelType
     {
-        public Service()
-        {
-            Parameters = 0;
+        public MultiLevelType() 
+        { Level = 0; }
+
+        public MultiLevelType(ILevel1 one) 
+        { 
+            Level = 1;
+            Param1 = one;
         }
 
-        public Service(DependencyType dependency)
-        {
-            Parameters = 1;
+        public MultiLevelType(ILevel1 one, ILevel2 two) 
+        { 
+            Level = 2;
+            Param1 = one;
+            Param2 = two;
         }
 
-        public Service(Unresolvable unresolvable, DependencyType dependency)
-        {
-            Parameters = 2;
+        public MultiLevelType(ILevel1 one, ILevel2 two, ILevel3 three) 
+        { 
+            Level = 3;
+            Param1 = one;
+            Param2 = two;
+            Param3 = three;
         }
 
-        public int Parameters { get; }
-    }
-
-    public class DependencyType
-    {
-        protected DependencyType()
+        public MultiLevelType(ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four) 
         {
-
-        }
-        
-        public static DependencyType Create() => new DependencyType();
-    }
-
-    public struct TestStruct
-    {
-    }
-
-    public class TypeWithStructParameter
-    {
-        public TypeWithStructParameter(TestStruct data)
-        {
-            Data = data;
+            Level = 4;
+            Param1 = one;
+            Param2 = two;
+            Param3 = three;
+            Param4 = four;
         }
 
-        public TestStruct Data { get; set; }
-    }
-
-    public class TypeWithDynamicParameter
-    {
-        public TypeWithDynamicParameter(dynamic data)
-        {
-            Data = data;
+        public MultiLevelType(ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four, ILevel5 five) 
+        { 
+            Level = 5;
+            Param1 = one;
+            Param2 = two;
+            Param3 = three;
+            Param4 = four;
+            Param5 = five;
         }
 
-        public dynamic Data { get; set; }
+        public int Level { get; }
+        public ILevel1 Param1 { get; }
+        public ILevel2 Param2 { get; }
+        public ILevel3 Param3 { get; }
+        public ILevel4 Param4 { get; }
+        public ILevel5 Param5 { get; }
     }
 
-    public class TypeWithRefParameter
-    {
-        public TypeWithRefParameter(ref string ignored)
-        {
-        }
-
-        public int Property { get; set; }
-    }
-
-    public class TypeWithOutParameter
-    {
-        public TypeWithOutParameter(out string ignored)
-        {
-            ignored = null;
-        }
-
-        public int Property { get; set; }
-    }
-
-    public class TypeWithUnresolvableParameter
-    {
-        public TypeWithUnresolvableParameter(Unresolvable data)
-        {
-            Data = data;
-        }
-        public dynamic Data { get; set; }
-    }
-
-    #endregion
-
-    #region type_dependency
-    public class Unresolvable
-    {
-        private Unresolvable() { }
-
-        public static Unresolvable Create() => new Unresolvable();
-    }
     #endregion
 }
