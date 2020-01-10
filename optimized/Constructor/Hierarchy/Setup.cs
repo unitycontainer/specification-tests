@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Constructor.Selection
+namespace Unity.Specification.Constructor.Hierarchy
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
@@ -17,11 +17,11 @@ namespace Unity.Specification.Constructor.Selection
             base.Setup();
 
             iUnity0 = Container;
-            iUnity1 = iUnity0.CreateChildContainer().RegisterInstance(new Level1());
-            iUnity2 = iUnity1.CreateChildContainer().RegisterInstance(new Level2());
-            iUnity3 = iUnity2.CreateChildContainer().RegisterInstance(new Level3());
-            iUnity4 = iUnity3.CreateChildContainer().RegisterInstance(new Level4());
-            iUnity5 = iUnity4.CreateChildContainer().RegisterInstance(new Level5());
+            iUnity1 = iUnity0.CreateChildContainer().RegisterInstance(typeof(ILevel1), new Level1());
+            iUnity2 = iUnity1.CreateChildContainer().RegisterInstance(typeof(ILevel2), new Level2());
+            iUnity3 = iUnity2.CreateChildContainer().RegisterInstance(typeof(ILevel3), new Level3());
+            iUnity4 = iUnity3.CreateChildContainer().RegisterInstance(typeof(ILevel4), new Level4());
+            iUnity5 = iUnity4.CreateChildContainer().RegisterInstance(typeof(ILevel5), new Level5());
         }
     }
 
@@ -47,29 +47,29 @@ namespace Unity.Specification.Constructor.Selection
 
     public class MultiLevelType
     {
-        public MultiLevelType(IUnityContainer container) 
-        { 
+        public MultiLevelType(IUnityContainer container)
+        {
             Level = 0;
             Container = container;
         }
 
-        public MultiLevelType(IUnityContainer container, ILevel1 one) 
-        { 
+        public MultiLevelType(IUnityContainer container, ILevel1 one)
+        {
             Level = 1;
             Container = container;
             Param1 = one;
         }
 
-        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two) 
-        { 
+        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two)
+        {
             Level = 2;
             Container = container;
             Param1 = one;
             Param2 = two;
         }
 
-        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three) 
-        { 
+        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three)
+        {
             Level = 3;
             Container = container;
             Param1 = one;
@@ -77,7 +77,7 @@ namespace Unity.Specification.Constructor.Selection
             Param3 = three;
         }
 
-        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four) 
+        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four)
         {
             Level = 4;
             Container = container;
@@ -87,8 +87,8 @@ namespace Unity.Specification.Constructor.Selection
             Param4 = four;
         }
 
-        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four, ILevel5 five) 
-        { 
+        public MultiLevelType(IUnityContainer container, ILevel1 one, ILevel2 two, ILevel3 three, ILevel4 four, ILevel5 five)
+        {
             Level = 5;
             Container = container;
             Param1 = one;
@@ -107,5 +107,14 @@ namespace Unity.Specification.Constructor.Selection
         public ILevel5 Param5 { get; }
     }
 
+    #endregion
+
+    #region type_dependency
+    public class Unresolvable
+    {
+        private Unresolvable() { }
+
+        public static Unresolvable Create() => new Unresolvable();
+    }
     #endregion
 }

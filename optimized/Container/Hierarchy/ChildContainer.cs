@@ -8,14 +8,52 @@ namespace Unity.Specification.Container.Hierarchy
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [Ignore]
+        public void WhenResolvingAnIUnityContainerItResolvesItself()
+        {
+            IUnityContainer resolvedContainer = Container.Resolve<IUnityContainer>();
+
+            Assert.AreSame(Container, resolvedContainer);
+        }
+
+        [TestMethod]
+        public void WhenResolveingAnIUnityContainerForAChildContainerItResolvesTheChildContainer()
+        {
+            IUnityContainer childContainer = Container.CreateChildContainer();
+
+            IUnityContainer resolvedContainer = childContainer.Resolve<IUnityContainer>();
+
+            Assert.AreSame(childContainer, resolvedContainer);
+        }
+
+        [TestMethod]
+        public void AClassThatHasADependencyOnTheContainerGetsItInjected()
+        {
+            IUnityContainerInjectionClass obj;
+            
+            obj = Container.Resolve<IUnityContainerInjectionClass>();
+
+            Assert.AreSame(Container, obj.Container);
+        }
+
+        [TestMethod]
+        public void AClassThatHasADependencyOnTheChildContainerGetsItInjected()
+        {
+            IUnityContainerInjectionClass obj;
+            IUnityContainer childContainer = Container.CreateChildContainer();
+
+            obj = childContainer.Resolve<IUnityContainerInjectionClass>();
+
+            Assert.AreSame(childContainer, obj.Container);
+        }
+
+        [TestMethod]
         public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
         {
-            var container = GetContainer();
-            var child = container.CreateChildContainer();
+            var child = Container.CreateChildContainer();
             var wr = new WeakReference(child);
             child.Dispose();
             child = null;
+
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
             Assert.IsFalse(wr.IsAlive);
         }
@@ -349,43 +387,6 @@ namespace Unity.Specification.Container.Hierarchy
 
             Assert.IsTrue(childStrSet.SetEquals(new[] { "string1", "string20", "string30" }));
             Assert.IsTrue(parentStrSet.SetEquals(new[] { "string1", "string2" }));
-        }
-
-        private object HashSet<T>(IEnumerable<T> enumerable)
-        {
-            throw new NotImplementedException();
-        }
-
-        public interface ITemporary
-        {
-        }
-
-        public class Temp : ITemporary
-        {
-        }
-
-        public class Temporary : ITemporary
-        {
-        }
-
-        public class SpecialTemp : ITemporary //Second level
-        {
-        }
-
-        public class MyDisposableObject : IDisposable
-        {
-            private bool wasDisposed = false;
-
-            public bool WasDisposed
-            {
-                get { return wasDisposed; }
-                set { wasDisposed = value; }
-            }
-
-            public void Dispose()
-            {
-                wasDisposed = true;
-            }
         }
     }
 }
