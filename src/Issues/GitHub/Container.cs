@@ -68,13 +68,12 @@ namespace Unity.Specification.Issues.GitHub
         {
             // Setup
             Container.RegisterType<IAnimal, Cat>();
-            Container.RegisterType<IZoo, Zoo>();
 
-            var child = Container.CreateChildContainer();
-            child.RegisterType<IAnimal, Dog>(); //this should overwrite previous registration
+            var child = Container.CreateChildContainer()
+                                 .RegisterType<IAnimal, Dog>(); //this should overwrite previous registration
 
             // Act
-            var zoo = child.Resolve<IZoo>();
+            var zoo = child.Resolve<Zoo>();
             var animal = zoo.GetAnimal();
 
             // Verify
@@ -88,35 +87,12 @@ namespace Unity.Specification.Issues.GitHub
         public void Container_136_Ctor()
         {
             // Setup
-            Container.RegisterType<IAnimal, Cat>(new InjectionConstructor());
-            Container.RegisterType<IZoo, Zoo>();
+            Container.RegisterType<IAnimal, Cat>();
 
-            var child = Container.CreateChildContainer();
-            child.RegisterType<IAnimal, Dog>(); //this should overwrite previous registration
-
+            var child = Container.CreateChildContainer()
+                                 .RegisterType<IAnimal, Dog>(); //this should overwrite previous registration
             // Act
-            var zoo = child.Resolve<IZoo>();
-            var animal = zoo.GetAnimal();
-
-            // Verify
-            Assert.IsNotNull(zoo);
-            Assert.IsNotNull(animal);
-            Assert.IsInstanceOfType(animal, typeof(Dog));
-        }
-
-        [TestMethod]
-        // https://github.com/unitycontainer/container/issues/136
-        public void Container_136_BothCtors()
-        {
-            // Setup
-            Container.RegisterType<IAnimal, Cat>(new InjectionConstructor());
-            Container.RegisterType<IZoo, Zoo>();
-
-            var child = Container.CreateChildContainer();
-            child.RegisterType<IAnimal, Dog>(new InjectionConstructor()); //this should overwrite previous registration
-
-            // Act
-            var zoo = child.Resolve<IZoo>();
+            var zoo = child.Resolve<Zoo>();
             var animal = zoo.GetAnimal();
 
             // Verify
