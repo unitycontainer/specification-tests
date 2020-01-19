@@ -11,7 +11,7 @@
     <Authors>Unity Open Source Project</Authors>
     <Company>Unity Open Source Project</Company>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\package.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>package.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DelaySign>false</DelaySign>
     <DebugType>Full</DebugType>
@@ -27,7 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\optimized\Container.Specification.csproj" />
   </ItemGroup>
