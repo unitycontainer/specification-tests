@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Base\Unity.Specification.Tests.csproj" />
+    <ProjectReference Include="..\..\..\Abstractions\src\Unity.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
