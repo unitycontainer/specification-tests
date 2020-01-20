@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Interception.Specification;
 
-namespace Unity.Interception.Specifications
+namespace Standalone
 {
-    public partial class Standalone
+    [TestClass]
+    public class Instance_Interception : TestFixtureBase
     {
         [TestMethod]
         public void CanInterceptTargetWithInstanceInterceptor()
