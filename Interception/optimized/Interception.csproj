@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Interception\src\Unity.Interception.csproj" />
-    <ProjectReference Include="..\..\Base\Unity.Specification.csproj" />
   </ItemGroup>
 
   
