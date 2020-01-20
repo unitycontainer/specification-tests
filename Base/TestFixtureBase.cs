@@ -1,5 +1,4 @@
-﻿
-namespace Unity.Specification
+﻿namespace Unity.Specification
 {
     public abstract class TestFixtureBase
     {
