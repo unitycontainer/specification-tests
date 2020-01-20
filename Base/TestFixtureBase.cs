@@ -1,18 +1,35 @@
-﻿namespace Unity.Specification
+﻿
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Unity.Specification
 {
     public abstract class TestFixtureBase
     {
-        protected IUnityContainer Container;
+        #region Constants
+
         public const string Name = "name";
         public const string Legacy = "legacy";
 
+        #endregion
 
-        public abstract IUnityContainer GetContainer();
+
+        #region Container
+
+        protected IUnityContainer Container;
+
+        public virtual IUnityContainer GetContainer() => new UnityContainer();
+
+        #endregion
 
 
+        #region Setup
+
+        [TestInitialize]
         public virtual void Setup()
         {
             Container = GetContainer();
         }
+
+        #endregion
     }
 }
