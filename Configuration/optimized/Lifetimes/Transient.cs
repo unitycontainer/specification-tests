@@ -3,7 +3,8 @@ using Unity.Specification;
 
 namespace Lifetimes
 {
-    public partial class Tests
+    [TestClass]
+    public partial class Tests : ConfigFixtureBase
     {
         [TestMethod]
         public void IsTrue()
