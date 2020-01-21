@@ -1,16 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification;
 
-namespace Lifetimes
+namespace Sections
 {
     [TestClass]
     public partial class Tests : ConfigFixtureBase
     {
-        protected override string Path => "Lifetimes.config";
-
+        [TestMethod]
+        public void IsTrue()
+        {
+            Assert.IsNotNull(Container);
+        }
     }
-
-    #region Test Data
-
-    #endregion
 }
