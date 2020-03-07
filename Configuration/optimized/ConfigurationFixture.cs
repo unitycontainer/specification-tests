@@ -9,28 +9,13 @@ using System.Xml.Linq;
 
 namespace Unity.Specification.Configuration
 {
-    public class ConfigurationFixture : TestFixtureBase
+    public class ConfigurationFixture
     {
         #region Fields
 
         public const string SectionName = "unity";
         public const string SectionType = "UnityConfigurationSection";
         public const string SectionAssembly = "Unity.Configuration";
-
-        #endregion
-
-
-        #region Baseline Tests
-
-        [DataTestMethod, DynamicData(nameof(Variants), typeof(ConfigurationFixture), DynamicDataSourceType.Method)]
-        public void LoadEmptySection(object[] variants)
-        {
-            // Act
-            var section = LoadSection(null, variants);
-
-            // Validate
-            Assert.IsNotNull(section);
-        }
 
         #endregion
 
