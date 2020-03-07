@@ -19,21 +19,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="**\*.config" />
+    <EmbeddedResource Include="**\*.config" Exclude="bin\**\*.config" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="**\*.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Configuration\src\Unity.Configuration.csproj" />
     <ProjectReference Include="..\..\Base\Unity.Specification.csproj" />
   </ItemGroup>
-
   
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0">
