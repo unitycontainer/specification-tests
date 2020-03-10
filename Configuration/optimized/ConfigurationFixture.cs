@@ -22,12 +22,9 @@ namespace Unity.Specification.Configuration
 
         #region Implementation
 
-        public static ConfigurationSection LoadSection(string name, params object[] variants)
+        public static ConfigurationSection LoadSection(string name, TestVariant variant)
         {
-            string type = (string)variants[0];
-            XNamespace @namespace = (string)variants[1];
-
-            var file = $"{name?.GetHashCode().ToString() ?? "null"}-{type.GetHashCode().ToString()}-{@namespace?.GetHashCode().ToString() ?? "null"}.config";
+            var file = $"{name?.GetHashCode().ToString() ?? "null"}-{variant.Type.GetHashCode().ToString()}-{variant.Namespace?.GetHashCode().ToString() ?? "null"}.config";
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
 
             if (!File.Exists(path))
@@ -58,10 +55,10 @@ namespace Unity.Specification.Configuration
                         new XElement("configSections",
                             new XElement("section",
                                 new XAttribute("name", SectionName),
-                                new XAttribute("type", $"{type}.{SectionType}, {SectionAssembly}"))),
-                        null == @namespace
+                                new XAttribute("type", $"{variant.Type}.{SectionType}, {SectionAssembly}"))),
+                        null == variant.Namespace
                               ? new XElement(SectionName, content)
-                              : new XElement(@namespace + SectionName, content)))
+                              : new XElement(variant.Namespace + SectionName, content)))
                 {
                     Declaration = new XDeclaration("1.0", "utf-8", "true")
                 };
@@ -79,14 +76,37 @@ namespace Unity.Specification.Configuration
         }
 
 
-        public static IEnumerable<object[]> Variants()
+        public static IEnumerable<object[]> TestVariants()
         {
-            //yield return new object[] { new object[] { "Unity.Configuration",                     null } };
-            yield return new object[] { new object[] { "Microsoft.Practices.Unity.Configuration", null } };
-            //yield return new object[] { new object[] { "Unity.Configuration",                     "http://schemas.microsoft.com/practices/2010/unity" } };
-            yield return new object[] { new object[] { "Microsoft.Practices.Unity.Configuration", "http://schemas.microsoft.com/practices/2010/unity" } };
+            yield return new object[] { new TestVariant( "Unity.Configuration",                     null ) };
+            yield return new object[] { new TestVariant( "Microsoft.Practices.Unity.Configuration", null ) };
+            yield return new object[] { new TestVariant( "Unity.Configuration",                     "http://schemas.microsoft.com/practices/2010/unity" ) };
+            yield return new object[] { new TestVariant( "Microsoft.Practices.Unity.Configuration", "http://schemas.microsoft.com/practices/2010/unity" ) };
+            yield return new object[] { new TestVariant( "Unity.Configuration",                     "http://unitycontainer.org/schemas/2020/unity" ) };
+            yield return new object[] { new TestVariant( "Microsoft.Practices.Unity.Configuration", "http://unitycontainer.org/schemas/2020/unity") };
         }
 
         #endregion
+
+
+    }
+
+    public class TestVariant
+    {
+        public TestVariant(string type, string @namespace)
+        {
+            Type = type;
+            Namespace = @namespace;
+        }
+
+        public string Type { get; }
+
+        public XNamespace Namespace { get; }
+
+        public override string ToString()
+        {
+            var @namespace = null == Namespace ? string.Empty : $"({Namespace})";
+            return $"{Type}{@namespace}";
+        }
     }
 }
