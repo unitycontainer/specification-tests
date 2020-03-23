@@ -11,11 +11,6 @@ namespace Unity.Specification.Container.Hierarchy
         {
             Container = GetContainer();
         }
-
-        private object HashSet<T>(IEnumerable<T> enumerable)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     #region Test Data
