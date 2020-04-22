@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Unity.Specification.Issues.GitHub
@@ -138,6 +140,21 @@ namespace Unity.Specification.Issues.GitHub
 
     public interface IOtherService
     {
+    }
+
+    public class Consumer
+    {
+        private readonly IEnumerable<IService> _interfaces;
+
+        public Consumer(IEnumerable<IService> interfaces)
+        {
+            _interfaces = interfaces;
+        }
+
+        public void Consume()
+        {
+            _interfaces.ToArray();
+        }
     }
 
     public class OtherService : IService, IOtherService, IDisposable

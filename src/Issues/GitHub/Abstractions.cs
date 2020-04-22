@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using Unity.Injection;
 
 namespace Unity.Specification.Issues.GitHub
@@ -8,7 +7,7 @@ namespace Unity.Specification.Issues.GitHub
     {
         [TestMethod]
         // https://github.com/unitycontainer/abstractions/issues/96
-        public void Abstractions_96()
+        public virtual void Abstractions_96()
         {
             // Act
             var ctor = new InjectionConstructor();

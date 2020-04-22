@@ -23,7 +23,6 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
         }
 
 
-
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/149

@@ -11,6 +11,17 @@ namespace Unity.Specification.Issues.GitHub
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
+        public void Unity_306()
+        {
+            // Arrange
+            Container.RegisterType<IService, Service>("strategy1");
+            Container.RegisterType<IService, OtherService>("strategy2");
+            
+            // Act / Validate
+            Container.Resolve<Consumer>().Consume();
+        }
+
+        [TestMethod]
         public void Unity_211()
         {
             var container = GetContainer();
@@ -194,21 +205,6 @@ namespace Unity.Specification.Issues.GitHub
             container.RegisterType<Service>(new TransientLifetimeManager());
 
             Assert.AreSame(container.Resolve<IService>(), logger);
-        }
-
-        // Test types 
-        public interface ITestClass
-        { }
-
-        public class TestClass : ITestClass
-        {
-            public TestClass()
-            { }
-
-            [InjectionConstructor]
-            public TestClass(TestClass _) //1
-            {
-            }
         }
     }
 }
