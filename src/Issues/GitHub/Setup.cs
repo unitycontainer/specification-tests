@@ -138,6 +138,14 @@ namespace Unity.Specification.Issues.GitHub
         }
     }
 
+    public class InvalidService : IService
+    {
+        public InvalidService()
+        {
+            throw new Exception("As Expected");
+        }
+    }
+
     public interface IOtherService
     {
     }

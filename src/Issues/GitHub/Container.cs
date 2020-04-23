@@ -9,6 +9,33 @@ namespace Unity.Specification.Issues.GitHub
     public abstract partial class SpecificationTests 
     {
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        // https://github.com/unitycontainer/container/issues/212
+        public virtual void Issue_Container_212()
+        {
+            // Arrange
+            Container.RegisterType<IService, InvalidService>();
+
+            // Act
+            var error = Container.Resolve<IService>();
+        }
+
+        [TestMethod]
+        // https://github.com/unitycontainer/container/issues/177
+        public virtual void Issue_Container_177()
+        {
+            // Arrange
+            IUnityContainer child1 = Container.CreateChildContainer();
+            IUnityContainer child2 = child1.CreateChildContainer();
+            
+            // Act
+            child1.RegisterType<IService, Service>();
+
+            // Validate
+            Assert.IsNotNull(child2.Resolve<IService>());
+        }
+
+        [TestMethod]
         // https://github.com/unitycontainer/container/issues/160
         public void Issue_Container_160()
         {

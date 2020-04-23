@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Specification.Container.IsRegistered;
 
 namespace Unity.Specification.Issues.GitHub
 {
@@ -11,6 +12,34 @@ namespace Unity.Specification.Issues.GitHub
     public abstract partial class SpecificationTests : TestFixtureBase
     {
         [TestMethod]
+        // https://github.com/unitycontainer/container/issues/210
+        public void Unity_308()
+        {
+            // Arrange
+            Container.RegisterSingleton(typeof(IFoo<>), typeof(Foo<>));
+
+            IFoo<object> foo1 = null;
+            IFoo<object> foo2 = null;
+
+            // Act 
+            using (var scope = Container.CreateChildContainer())
+            {
+                foo1 = scope.Resolve<IFoo<object>>();
+            }
+
+            using (var scope = Container.CreateChildContainer())
+            {
+                foo2 = scope.Resolve<IFoo<object>>();
+            }
+
+            // Validate
+            Assert.IsNotNull(foo1);
+            Assert.IsNotNull(foo2);
+            Assert.AreSame(foo1, foo2);
+        }
+
+        [TestMethod]
+        // https://github.com/unitycontainer/container/issues/206
         public void Unity_306()
         {
             // Arrange
