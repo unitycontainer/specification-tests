@@ -1,18 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net461</TargetFramework>
-    <PackageId>Unity.Specification</PackageId>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">netcoreapp3.1</TargetFramework>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © .NET Foundation and Contributors. All Rights Reserved</Copyright>
-    <PackageProjectUrl>https://github.com/unitycontainer/specification-tests</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/unitycontainer/specification-tests/abstractions</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/unitycontainer/specification-tests/abstractions/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://avatars1.githubusercontent.com/u/12849707</PackageIconUrl>
-    <PackageTags>Unity Container unitycontainer Microsoft.Practices.Unity IoC</PackageTags>
-    <RepositoryType>git</RepositoryType>
-    <Authors>Unity Open Source Project</Authors>
-    <Company>Unity Open Source Project</Company>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>package.snk</AssemblyOriginatorKeyFile>
@@ -20,17 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Container\src\Unity.Container.csproj" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0">
-        <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework" Version="2.0.0">
-        <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <ProjectReference Include="..\..\Container\src\Unity.Container.csproj" />
   </ItemGroup>
-
 
 </Project>

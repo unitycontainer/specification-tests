@@ -148,6 +148,7 @@ namespace Unity.Specification.Lifetime
             };
             Container.RegisterFactory<IService>(factory, FactoryLifetime.PerContainer);
 
+            bool failed = true;
             object result1 = null;
             object result2 = null;
             bool thread2Finished = false;
@@ -159,8 +160,11 @@ namespace Unity.Specification.Lifetime
                     {
                         result1 = Container.Resolve<IService>();
                     }
-                    catch (ResolutionFailedException)
+                    catch (ResolutionFailedException) { /* ignore */ }
+                    catch (Exception)
                     {
+                        // Make sure user exception is passed through
+                        failed = false;
                     }
                 });
 
@@ -181,6 +185,7 @@ namespace Unity.Specification.Lifetime
             thread2.Join(500);
             //thread2.Join();
 
+            Assert.IsFalse(failed);
             Assert.IsTrue(thread2Finished);
             Assert.IsNull(result1);
             Assert.IsNotNull(result2);
