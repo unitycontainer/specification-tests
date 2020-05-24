@@ -30,7 +30,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\Container\src\Unity.Container.csproj" />
-    <ProjectReference Include="..\src\Unity.Specification.csproj" />
+    <ProjectReference Include="..\optimized\Unity.Specification.csproj" />
   </ItemGroup>
 
 </Project>
