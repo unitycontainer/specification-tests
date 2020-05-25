@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition=" '$(TargetFramework)' == '' ">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net48</TargetFramework>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © .NET Foundation and Contributors. All Rights Reserved</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
