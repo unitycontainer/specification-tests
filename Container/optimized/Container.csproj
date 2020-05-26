@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © Unity Container Project 2018</Copyright>
@@ -12,28 +12,25 @@
     <Company>Unity Open Source Project</Company>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\package.snk</AssemblyOriginatorKeyFile>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DelaySign>false</DelaySign>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DebugType>Full</DebugType>
     <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\Unity.Specification.csproj" />
+  </ItemGroup>
+
   
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.0.0">
-      <PrivateAssets>all</PrivateAssets>
+        <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0">
-      <PrivateAssets>all</PrivateAssets>
+        <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  
-  <ItemGroup>
-<<<<<<< HEAD:Configuration/diagnostic/Configuration.Diagnostic.csproj
-    <ProjectReference Include="..\optimized\Interception.csproj" />
-=======
-    <ProjectReference Include="..\optimized\Container.csproj" />
->>>>>>> 1adaea43a8deca30fdf27d5997bd01363c0b0f08:Container/diagnostic/Container.Diagnostic.csproj
   </ItemGroup>
 
 </Project>
