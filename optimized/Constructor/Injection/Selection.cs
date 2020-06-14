@@ -69,7 +69,7 @@ namespace Unity.Specification.Constructor.Injection
                         typeof(string),
                         typeof(IUnityContainer)},
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
                 };
 
 
