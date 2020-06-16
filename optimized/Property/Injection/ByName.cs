@@ -19,8 +19,7 @@ namespace Unity.Specification.Property.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void None()
+        public virtual void None()
         {
             // Act
             Container.RegisterType<ObjectWithThreeProperties>(

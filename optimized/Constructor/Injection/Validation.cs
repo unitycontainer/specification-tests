@@ -6,33 +6,27 @@ namespace Unity.Specification.Constructor.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoDefaultConstructor()
+        public virtual void NoDefaultConstructor()
         {
             // Act
             Container.RegisterType<ClassWithTreeConstructors>(Invoke.Constructor());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoBogusConstructor()
+        public virtual void NoBogusConstructor()
         {
             // Act
             Container.RegisterType<ClassWithTreeConstructors>(
                 Invoke.Constructor(typeof(int), typeof(string)));
         }
 
-
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoBogusValuesConstructor()
+        public virtual void NoBogusValuesConstructor()
         {
             // Act
             Container.RegisterType<ClassWithTreeConstructors>(
                 Invoke.Constructor( 1, "test"));
         }
-
-
 
         [TestMethod]
         public void SelectByValueTypes()

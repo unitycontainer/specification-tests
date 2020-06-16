@@ -94,8 +94,7 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
+        public virtual void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
         {
             Container.RegisterType(typeof(GenericTypeWithArrayProperty<>),
                     new InjectionConstructor(new GenericResolvedArrayParameter("T")));

@@ -5,13 +5,6 @@ namespace Unity.Specification.Method.Injection
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {
-        [TestInitialize]
-        public override void Setup()
-        {
-            Container = GetContainer();
-        }
-
-
         #region Test Data
 
         public class GuineaPig
@@ -81,6 +74,5 @@ namespace Unity.Specification.Method.Injection
         }
 
         #endregion
-
     }
 }

@@ -25,7 +25,7 @@ namespace Unity.Specification.Field.Injection
         }
 
         [TestMethod]
-        public void ValueNull()
+        public virtual void ValueNull()
         {
             // Setup
             Container.RegisterType<ObjectWithThreeFields>(

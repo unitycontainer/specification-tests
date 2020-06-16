@@ -2,14 +2,8 @@
 
 namespace Unity.Specification.Diagnostic.Property.Validation
 {
-    public abstract partial class SpecificationTests : TestFixtureBase
-    {
-        [TestInitialize]
-        public override void Setup()
-        {
-            base.Setup();
-        }
-    }
+    public abstract partial class SpecificationTests : TestFixtureBase { }
+
 
     #region Test Data
 

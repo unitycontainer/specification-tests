@@ -20,16 +20,14 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MethodWithOutParameter()
+        public virtual void MethodWithOutParameter()
         {
             // Act
             Container.RegisterType<OutParams>(Invoke.Method(nameof(OutParams.InjectMe), 12));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void MethodWithRefParameter()
+        public virtual void MethodWithRefParameter()
         {
             // Act
             Container.RegisterType<RefParams>(
@@ -122,8 +120,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void InjectingStaticMethod()
+        public virtual void InjectingStaticMethod()
         {
             // Verify
             Container.RegisterType<GuineaPig>(

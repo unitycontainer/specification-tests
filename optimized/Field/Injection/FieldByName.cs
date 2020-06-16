@@ -6,8 +6,7 @@ namespace Unity.Specification.Field.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void None()
+        public virtual void None()
         {
             // Act
             Container.RegisterType<ObjectWithThreeFields>(

@@ -6,8 +6,7 @@ namespace Unity.Specification.Parameter.Resolved
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ProvidingConcreteTypeForGenericFails()
+        public virtual void ProvidingConcreteTypeForGenericFails()
         {
             // Act
             Container.RegisterType(typeof(GenericService<,,>), 
