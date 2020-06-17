@@ -52,7 +52,7 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         [TestMethod]
-        public void ByCountNamedGeneric()
+        public virtual void AmbiguousCtorInGraph()
         {
             // Arrange
             #region inject_count_named_generic

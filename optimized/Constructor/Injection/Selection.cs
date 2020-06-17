@@ -57,22 +57,6 @@ namespace Unity.Specification.Constructor.Injection
                 };
 
 
-                // ResolveNamedTypeArgument
-                yield return new object[]
-                {
-                    "ResolveNamedTypeArgument",                 //  string name, 
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
-                    new object[] {
-                        typeof(string),                         //  object[] parameters, 
-                        typeof(string),
-                        typeof(IUnityContainer)},
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
-                };
-
-
                 // SelectByValues
                 yield return new object[]
                 {
@@ -112,6 +96,29 @@ namespace Unity.Specification.Constructor.Injection
         }
 
 
+        public static IEnumerable<object[]> ConstructorSelectionTestInvalidData
+        {
+
+            // Format: Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator
+            get
+            {
+                // ResolveNamedTypeArgument
+                yield return new object[]
+                {
+                    "Ambiguous Selection",                     //  string name, 
+                    null,                                      //  Type typeFrom, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
+                    new object[] {
+                        typeof(string),                        //  object[] parameters, 
+                        typeof(string),
+                        typeof(IUnityContainer)},
+                    new Func<object, bool>(r =>                //  Func<object, bool> validator
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
+                };
+            }
+        }
+
         public static IEnumerable<object[]> ConstructorRegistrationFailedTestData
         {
 
@@ -132,7 +139,8 @@ namespace Unity.Specification.Constructor.Injection
 
         [DataTestMethod]
         [DynamicData(nameof(ConstructorSelectionTestData))]
-        public void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
+        [DynamicData(nameof(ConstructorSelectionTestInvalidData))]
+        public virtual void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
         {
             // Setup
             Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));

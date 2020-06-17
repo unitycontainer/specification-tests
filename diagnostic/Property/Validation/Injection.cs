@@ -5,6 +5,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NoReuse()
@@ -18,6 +19,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
         }
 
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectReadOnlyProperty()
@@ -27,6 +29,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
                 Inject.Property(nameof(DependencyInjectedType.ReadonlyProperty), "test"));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectPrivateProperty()
@@ -36,6 +39,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
                 Inject.Property("PrivateProperty", "test"));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectProtectedProperty()
@@ -45,6 +49,7 @@ namespace Unity.Specification.Diagnostic.Property.Validation
                 Inject.Property("ProtectedProperty", "test"));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectStaticProperty()

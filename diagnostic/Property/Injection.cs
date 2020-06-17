@@ -5,8 +5,5 @@ namespace Unity.Specification.Diagnostic.Property.Injection
 {
     public abstract partial class SpecificationTests : Specification.Property.Injection.SpecificationTests
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public override void None() => base.None();
     }
 }

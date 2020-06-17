@@ -1,31 +1,42 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void NoDefaultConstructor()
         {
-            // Act
+            // Arrange
             Container.RegisterType<ClassWithTreeConstructors>(Invoke.Constructor());
+
+            // Act
+            var instance = Container.Resolve<ClassWithTreeConstructors>();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void NoBogusConstructor()
         {
-            // Act
+            // Arrange
             Container.RegisterType<ClassWithTreeConstructors>(
                 Invoke.Constructor(typeof(int), typeof(string)));
+
+            // Act
+            var instance = Container.Resolve<ClassWithTreeConstructors>();
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void NoBogusValuesConstructor()
         {
-            // Act
+            // Arrange
             Container.RegisterType<ClassWithTreeConstructors>(
                 Invoke.Constructor( 1, "test"));
+
+            // Act
+            var instance = Container.Resolve<ClassWithTreeConstructors>();
         }
 
         [TestMethod]

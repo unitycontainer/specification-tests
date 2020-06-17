@@ -5,7 +5,7 @@ namespace Unity.Specification.Diagnostic.Field.Validation
 {
     public abstract partial class SpecificationTests
     {
-
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InvalidValue()
@@ -15,6 +15,7 @@ namespace Unity.Specification.Diagnostic.Field.Validation
                 Inject.Field(nameof(Specification.Field.Injection.ObjectWithThreeFields.Container), Name));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ReadOnlyProperty()

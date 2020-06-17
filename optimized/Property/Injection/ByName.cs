@@ -19,11 +19,23 @@ namespace Unity.Specification.Property.Injection
         }
 
         [TestMethod]
-        public virtual void None()
+        public virtual void BogusNameRegister()
         {
             // Act
             Container.RegisterType<ObjectWithThreeProperties>(
                 Resolve.Property("Bogus Name"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void BogusName()
+        {
+            // Act
+            Container.RegisterType<ObjectWithThreeProperties>(
+                Resolve.Property("BogusName"));
+
+            // Act
+            _ = Container.Resolve<ObjectWithThreeProperties>();
         }
 
         [TestMethod]

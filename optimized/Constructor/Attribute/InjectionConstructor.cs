@@ -21,7 +21,7 @@ namespace Unity.Specification.Constructor.Attribute
         }
 
         [TestMethod]
-        public void MultipleConstructorsAnnotated()
+        public virtual void MultipleConstructorsAnnotated()
         {
             // Act
             var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();

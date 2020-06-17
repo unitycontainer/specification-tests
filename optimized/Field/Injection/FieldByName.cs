@@ -6,11 +6,23 @@ namespace Unity.Specification.Field.Injection
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public virtual void None()
+        public virtual void BogusNameRegister()
         {
             // Act
             Container.RegisterType<ObjectWithThreeFields>(
                 Resolve.Field("Bogus Name"));
+        }
+        
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void BogusName()
+        {
+            // Act
+            Container.RegisterType<ObjectWithThreeFields>(
+                Resolve.Field("BogusName"));
+            
+            // Act
+            _ = Container.Resolve<ObjectWithThreeFields>();
         }
 
         [TestMethod]

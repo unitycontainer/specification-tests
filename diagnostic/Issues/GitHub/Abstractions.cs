@@ -7,6 +7,7 @@ namespace Unity.Specification.Diagnostic.Issues.GitHub
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         // https://github.com/unitycontainer/abstractions/issues/96
