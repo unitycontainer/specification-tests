@@ -110,7 +110,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void StaticMethod()
+        public virtual void StaticMethod()
         {
             // Act
             Container.Resolve<GuineaPig>();

@@ -5,7 +5,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
 {
     public abstract partial class SpecificationTests
     {
-
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void AnonymousTypeForGenericFails()

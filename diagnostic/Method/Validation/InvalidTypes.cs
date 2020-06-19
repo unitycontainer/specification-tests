@@ -5,6 +5,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void GenericInjectionMethod()
@@ -14,6 +15,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method(nameof(OpenGenericInjectionMethod.InjectMe)));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MethodWithRefParameter()
@@ -23,6 +25,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method(nameof(TypeWithMethodWithInvalidParameter.MethodWithRefParameter)));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void MethodWithOutParameter()

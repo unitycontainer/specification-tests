@@ -5,8 +5,8 @@ namespace Unity.Specification.Diagnostic.Method.Validation
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore]
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void NoReuse()
         {
             // Arrange
@@ -17,6 +17,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                      .RegisterType<InjectedType>("2", method);
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectPrivateMethod()
@@ -26,6 +27,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method("PrivateMethod"));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectProtectedMethod()
@@ -35,6 +37,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method("ProtectedMethod"));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectStaticMethod()
@@ -44,6 +47,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method(nameof(InjectedType.StaticMethod)));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectOpenGenericMethod()
@@ -53,6 +57,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method(nameof(InjectedType.OpenGenericMethod)));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectOutParamMethod()
@@ -62,6 +67,7 @@ namespace Unity.Specification.Diagnostic.Method.Validation
                 Invoke.Method(nameof(InjectedType.OutParamMethod)));
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectRefParamMethod()
