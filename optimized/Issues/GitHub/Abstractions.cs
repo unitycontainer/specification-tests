@@ -6,16 +6,6 @@ namespace Unity.Specification.Issues.GitHub
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        // https://github.com/unitycontainer/abstractions/issues/96
-        public virtual void Abstractions_96()
-        {
-            // Act
-            var ctor = new InjectionConstructor();
-            Container.RegisterType<IService, Service>(ctor);
-            Container.RegisterType<IService, Service>("name", ctor);
-        }
-
-        [TestMethod]
         // https://github.com/unitycontainer/abstractions/issues/83
         public void Abstractions_83()
         {
