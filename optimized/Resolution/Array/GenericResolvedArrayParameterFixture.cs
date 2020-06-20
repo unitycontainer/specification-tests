@@ -94,13 +94,6 @@ namespace Unity.Specification.Resolution.Array
         }
 
         [TestMethod]
-        public virtual void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
-        {
-            Container.RegisterType(typeof(GenericTypeWithArrayProperty<>),
-                    new InjectionConstructor(new GenericResolvedArrayParameter("T")));
-        }
-
-        [TestMethod]
         public void ResolvesMixedOpenClosedGenericsAsArray()
         {
             // Arrange

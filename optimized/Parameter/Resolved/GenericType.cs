@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Unity.Specification.Parameter.Resolved
 {
@@ -8,15 +7,22 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public virtual void ProvidingConcreteTypeForGenericFails()
         {
-            // Act
             Container.RegisterType(typeof(GenericService<,,>), 
                Invoke.Method("Method", Resolve.Parameter(typeof(string))));
+
+            // Act
+            var result = Container.Resolve<GenericService<object, string, int>>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.AreEqual(result.Called, 2);
+            Assert.IsInstanceOfType(result.Value, typeof(string));
         }
 
         [TestMethod]
         public void GenericParameterT1()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T1")));
 
@@ -32,7 +38,7 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public void GenericParameterT2()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T2")));
 
@@ -49,7 +55,7 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public void GenericParameterT3()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T3")));
 
@@ -65,7 +71,7 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public void GenericParameterT1WithName()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T1", "1")));
 
@@ -81,7 +87,7 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public void GenericParameterT2WithName()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T2", "1")));
 
@@ -98,7 +104,7 @@ namespace Unity.Specification.Parameter.Resolved
         [TestMethod]
         public void GenericParameterT3WithName()
         {
-            // Setup
+            // Arrange
             Container.RegisterType(typeof(GenericService<,,>),
                Invoke.Method("Method", Resolve.Generic("T3", "1")));
 

@@ -20,18 +20,21 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public virtual void MethodWithOutParameter()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void MethodWithOutParameter()
         {
             // Act
             Container.RegisterType<OutParams>(Invoke.Method(nameof(OutParams.InjectMe), 12));
+            _ = Container.Resolve<OutParams>();
         }
 
         [TestMethod]
-        public virtual void MethodWithRefParameter()
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public void MethodWithRefParameter()
         {
             // Act
-            Container.RegisterType<RefParams>(
-                    Invoke.Method(nameof(RefParams.InjectMe), 15));
+            Container.RegisterType<RefParams>(Invoke.Method(nameof(RefParams.InjectMe), 15));
+            _ = Container.Resolve<RefParams>();
         }
 
         [TestMethod]
@@ -48,9 +51,8 @@ namespace Unity.Specification.Method.Injection
             Assert.IsTrue(result.WasInjected);
         }
 
-
         [TestMethod]
-        public void MethodPassingVoid()
+        public virtual void MethodPassingVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -64,7 +66,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void ReturningVoid()
+        public virtual void ReturningVoid()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -78,7 +80,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void ReturningInt()
+        public virtual void ReturningInt()
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
@@ -93,7 +95,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public void MultipleMethods()
+        public virtual void InjectTypeWithAnnotatdStatic()
         {
             // Setup
             Container.RegisterType<GuineaPig>(
@@ -110,7 +112,7 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
-        public virtual void StaticMethod()
+        public virtual void StaticIsIgnoredInOptimized()
         {
             // Act
             Container.Resolve<GuineaPig>();
@@ -120,11 +122,15 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void InjectingStaticMethod()
         {
             // Verify
             Container.RegisterType<GuineaPig>(
                 Invoke.Method(nameof(GuineaPig.ShouldntBeCalled)));
+
+            // Act
+            Container.Resolve<GuineaPig>();
         }
     }
 }

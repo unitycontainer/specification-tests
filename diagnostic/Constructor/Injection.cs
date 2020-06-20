@@ -30,12 +30,6 @@ namespace Unity.Specification.Diagnostic.Constructor.Injection
         public override void Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator) => 
             base.Selection(name, typeFrom, typeTo, typeToResolve, parameters, validator);
 
-        [DataTestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        [DynamicData(nameof(ConstructorSelectionTestInvalidData), typeof(Specification.Constructor.Injection.SpecificationTests))]
-        public void SelectionDiagnosticFail(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator) => 
-            base.Selection(name, typeFrom, typeTo, typeToResolve, parameters, validator);
-
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public override void AmbiguousCtorInGraph() => base.AmbiguousCtorInGraph();

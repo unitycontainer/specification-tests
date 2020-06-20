@@ -6,7 +6,7 @@ namespace Unity.Specification.Diagnostic.Method.Parameters
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(ResolutionFailedException))]
         public void ChainedExecuteMethodBaseline()
         {
             // Setup

@@ -5,24 +5,24 @@ namespace Unity.Specification.Diagnostic.Method.Injection
 {
     public abstract partial class SpecificationTests : Specification.Method.Injection.SpecificationTests
     {
-        [Ignore]
-        [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public override void InjectingStaticMethod() => base.InjectingStaticMethod();
 
-        [Ignore]
-        [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public override void MethodWithOutParameter() => base.MethodWithOutParameter();
+        public override void MethodPassingVoid() => base.MethodPassingVoid();
 
-        [Ignore]
-        [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public override void MethodWithRefParameter() => base.MethodWithRefParameter();
+        public override void ReturningInt() => base.ReturningInt();
 
-        [Ignore]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public override void ReturningVoid() => base.ReturningVoid();
+
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public override void StaticMethod() => base.StaticMethod();
+        public override void StaticIsIgnoredInOptimized() => base.StaticIsIgnoredInOptimized();
+
+        [TestMethod]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public override void InjectTypeWithAnnotatdStatic() => base.InjectTypeWithAnnotatdStatic();
     }
 }

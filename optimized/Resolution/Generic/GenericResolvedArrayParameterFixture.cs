@@ -76,12 +76,5 @@ namespace Unity.Specification.Resolution.Generic
             Assert.AreSame(a0, result.InjectedValue[0]);
             Assert.AreSame(a1, result.InjectedValue[1]);
         }
-
-        [TestMethod]
-        public virtual void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
-        {
-            Container.RegisterType(typeof(ClassWithOneGenericParameter<>),
-                    new InjectionConstructor(new GenericResolvedArrayParameter("T")));
-        }
     }
 }
