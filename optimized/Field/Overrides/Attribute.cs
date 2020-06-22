@@ -35,5 +35,39 @@ namespace Unity.Specification.Field.Overrides
             Assert.IsNotNull(result.Optional);
             Assert.AreEqual(result.Optional, other);
         }
+
+        [TestMethod]
+        public void ValueOverAttribute()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithAttributes>(
+                Inject.Field(nameof(ObjectWithAttributes.Dependency), Name2));
+
+            // Act
+            var result = Container.Resolve<ObjectWithAttributes>(Override.Field(nameof(ObjectWithAttributes.Dependency), Name));
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Dependency);
+            Assert.AreEqual(result.Dependency, Name);
+            Assert.IsNull(result.Optional);
+        }
+
+        [TestMethod]
+        public void NullOverAttribute()
+        {
+            // Setup
+            Container.RegisterType<ObjectWithAttributes>(
+                Inject.Field(nameof(ObjectWithAttributes.Dependency), Name2));
+
+            // Act
+            var result = Container.Resolve<ObjectWithAttributes>(Override.Field(nameof(ObjectWithAttributes.Dependency), null));
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Dependency);
+            Assert.IsNull(result.Optional);
+        }
+
     }
 }

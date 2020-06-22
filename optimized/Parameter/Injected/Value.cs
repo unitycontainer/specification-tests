@@ -8,7 +8,7 @@ namespace Unity.Specification.Parameter.Injection
         public void InjectedAttributedBaseline()
         {
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNull(result.ValueOne);
@@ -20,11 +20,11 @@ namespace Unity.Specification.Parameter.Injection
         public void InjectedAttributedMethod()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method)));
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.Method)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -37,12 +37,12 @@ namespace Unity.Specification.Parameter.Injection
             var data = "value";
 
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.Method),
                     Inject.Parameter(data)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -53,12 +53,12 @@ namespace Unity.Specification.Parameter.Injection
         public void WithInjectedInt()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.MethodOne), 
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.MethodOne), 
                     Inject.Parameter(1)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -71,12 +71,12 @@ namespace Unity.Specification.Parameter.Injection
         public void WithInjectedString()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.MethodOne),
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.MethodOne),
                     Inject.Parameter("test")));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -89,13 +89,13 @@ namespace Unity.Specification.Parameter.Injection
         public void WithInjectedIntString()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.MethodTwo),
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.MethodTwo),
                     Inject.Parameter(1),
                     Inject.Parameter("test")));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -110,13 +110,13 @@ namespace Unity.Specification.Parameter.Injection
         public void WithInjectedStringInt()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.MethodTwo),
+            Container.RegisterType<OtherService>(
+                Invoke.Method(nameof(OtherService.MethodTwo),
                     Inject.Parameter("test"),
                     Inject.Parameter(1)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<OtherService>();
 
             // Assert
             Assert.IsNotNull(result.Value);

@@ -2,13 +2,41 @@
 using System;
 using System.Linq;
 using Unity.Lifetime;
+using Unity.Specification.Constructor.Parameters;
 
 namespace Unity.Specification.Registration.Instance
 {
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        public void IsNotNull()
+        {
+            // Arrange
+            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.Singleton);
+            
+            // Validate
+            Assert.IsNotNull(Container.Resolve<IService>());
+        }
+
+        [TestMethod]
+        public void IsNull()
+        {
+            // Arrange
+            Container.RegisterInstance(typeof(IService), null, null, InstanceLifetime.Singleton);
+
+            // Validate
+            Assert.IsNull(Container.Resolve<IService>());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ThrowsOnNullNull()
+        {
+            Container.RegisterInstance(null, null, null, InstanceLifetime.Singleton);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void Null_Null_Null()
         {
             // Act

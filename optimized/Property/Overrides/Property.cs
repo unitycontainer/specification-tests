@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using  Unity;
 
 namespace Unity.Specification.Property.Overrides
 {
     public abstract partial class SpecificationTests
     {
-
         [TestMethod]
         public void CanOverrideValue()
         {
@@ -57,7 +55,6 @@ namespace Unity.Specification.Property.Overrides
             Assert.AreEqual((object) other, result.Property);
         }
 
-
         [TestMethod]
         public void ValueOverrideForTypeDifferentThanResolvedTypeIsIgnored()
         {
@@ -71,6 +68,5 @@ namespace Unity.Specification.Property.Overrides
             Assert.IsNotNull(result.MyProperty);
             Assert.IsInstanceOfType(result.MyProperty, typeof(Something1));
         }
-
     }
 }

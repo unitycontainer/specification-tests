@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity;
 using Unity.Lifetime;
 
 namespace Unity.Specification.Registration.Instance

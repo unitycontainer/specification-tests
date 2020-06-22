@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Resolution;
+using Unity.Specification.Utility;
 
-namespace Unity.Specification.Resolution.Overrides
+namespace Unity.Specification.Parameter.Overrides
 {
     public abstract partial class SpecificationTests
     {

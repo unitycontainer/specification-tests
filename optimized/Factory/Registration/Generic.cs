@@ -18,19 +18,5 @@ namespace Unity.Specification.Factory.Registration
             // Verify
             Assert.IsNotNull(result);
         }
-
-        [Obsolete]
-        [TestMethod]
-        public void FactoryOpenGenericLegacy()
-        {
-            // Arrange
-            Container.RegisterType(typeof(IFoo<>), new InjectionFactory((c, t, n) => new Foo<object>()));
-
-            // Act
-            var result = Container.Resolve(typeof(IFoo<object>));
-
-            // Verify
-            Assert.IsNotNull(result);
-        }
     }
 }

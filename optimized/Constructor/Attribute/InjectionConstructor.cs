@@ -29,6 +29,5 @@ namespace Unity.Specification.Constructor.Attribute
             // Assert
             Assert.AreEqual(Container, instance.Container);
         }
-
     }
 }

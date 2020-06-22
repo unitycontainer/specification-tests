@@ -8,7 +8,7 @@ namespace Unity.Specification.Container.Hierarchy
     public abstract partial class SpecificationTests
     {
         [TestMethod]
-        public void Test_ResolveSignletonType_Directly_InRootContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
+        public void ResolveSignletonType_Directly_InRootContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
@@ -30,7 +30,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_ResolveSingletonType_Directly_InChildContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
+        public void ResolveSingletonType_Directly_InChildContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
@@ -56,40 +56,60 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_ResolveSingletonType_AsDependency_InRootContainer_THEN_ConsumerInstance_AND_SignletonInstance_CreatedInRootContainer()
+        public void ResolveSingletonType_AsDependency_InRootContainer_THEN_ConsumerInstance_AND_SignletonInstance_CreatedInRootContainer()
         {
-            var rootContainer = GetContainer();
-            rootContainer.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
 
-            var rootContainerId = rootContainer.GetHashCode();
-            var consumerInstanceFromRootContainter = rootContainer.Resolve<ISingletonConsumer>();
+            var rootContainerId = Container.GetHashCode();
+            var consumerInstanceFromRootContainter = Container.Resolve<ISingletonConsumer>();
 
             Assert.AreEqual(rootContainerId, consumerInstanceFromRootContainter.ContainerId, "consumerInstanceFromRootContainter should be created in root container");
             Assert.AreEqual(rootContainerId, consumerInstanceFromRootContainter.SingletonService.ContainerId, "SingletonService dependency of consumerInstanceFromRootContainter should be created in root container");
         }
 
         [TestMethod]
-        public void Test_ResolveSingletonType_AsDependency_InChildContainer_THEN_ConsumerInstance_CreatedInChildContiner_AND_SignletonInstance_CreatedInRootContainer()
+        public void ResolveSingletonType_AsDependency_InChildContainer_THEN_ConsumerInstance_CreatedInChildContiner_AND_SignletonInstance_CreatedInRootContainer()
         {
-            var rootContainer = GetContainer();
-            rootContainer.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
 
-            var childContainer1 = rootContainer.CreateChildContainer();
-            var childContainer11 = childContainer1.CreateChildContainer();
+            var childContainer1 = Container.CreateChildContainer()
+                                           .RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
 
-            var rootContainerId = rootContainer.GetHashCode();
-            var childContainer11id = childContainer11.GetHashCode();
+            var childContainer2 = childContainer1.CreateChildContainer();
 
-            var consumerInstanceFromChildContainter11 = childContainer11.Resolve<ISingletonConsumer>();
+            var rootContainerId = Container.GetHashCode();
+            var childContainer1id = childContainer1.GetHashCode();
 
-            Assert.AreEqual(childContainer11id, consumerInstanceFromChildContainter11.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer11");
-            Assert.AreEqual(rootContainerId, consumerInstanceFromChildContainter11.SingletonService.ContainerId, "singletonService dependency of consumerInstanceFromRootContainter should be created in root container");
+            var consumerInstanceFromChildContainter2 = childContainer2.Resolve<ISingletonConsumer>();
+
+            Assert.AreEqual(childContainer1id, consumerInstanceFromChildContainter2.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer1");
+            Assert.AreEqual(rootContainerId, consumerInstanceFromChildContainter2.SingletonService.ContainerId, "singletonService dependency of consumerInstanceFromRootContainter should be created in root container");
+        }
+
+
+        [TestMethod]
+        public void ResolveSingletonType_AsDependency_InChildContainer_THEN_ConsumerInstance_CreatedInChildContiner_AND_SignletonInstance_CreatedInRootContainer_Unregistered()
+        {
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+
+            var childContainer1 = Container.CreateChildContainer();
+            var childContainer2 = childContainer1.CreateChildContainer();
+
+            var rootContainerId = Container.GetHashCode();
+            var childContainer1id = childContainer2.GetHashCode();
+            var childContainer2id = childContainer2.GetHashCode();
+
+            var consumerInstanceFromChildContainter1 = childContainer2.Resolve<SingletonConsumer>();
+            var consumerInstanceFromChildContainter2 = childContainer2.Resolve<SingletonConsumer>();
+
+            Assert.AreEqual(rootContainerId,   consumerInstanceFromChildContainter2.SingletonService.ContainerId, "singletonService dependency of consumerInstanceFromRootContainter should be created in root container");
+            Assert.AreEqual(childContainer1id, consumerInstanceFromChildContainter1.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer1");
+            Assert.AreEqual(childContainer2id, consumerInstanceFromChildContainter2.ContainerId, "consumerInstanceFromChildContainter11 should be created in childContainer2");
         }
 
         [TestMethod]
-        public void Test_ResolveSignletonType_WithDependency_InRootContainer_THEN_DependencyResolvedInRootContainer()
+        public void ResolveSignletonType_WithDependency_InRootContainer_THEN_DependencyResolvedInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
@@ -103,7 +123,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_ResolveSignletonType_WithDependency_InChildContainer_THEN_DependencyResolvedInRootContainer()
+        public void ResolveSignletonType_WithDependency_InChildContainer_THEN_DependencyResolvedInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
@@ -118,7 +138,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_ResolveSignletonType_WithFactoryDependency_InRootContainer_THEN_FactoryCreatesItemsInRootContainer()
+        public void ResolveSignletonType_WithFactoryDependency_InRootContainer_THEN_FactoryCreatesItemsInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
@@ -135,7 +155,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_ResolveSignletonType_WithFactoryDependency_InChildContainer_THEN_FactoryCreatesItemsInRootContainer()
+        public void ResolveSignletonType_WithFactoryDependency_InChildContainer_THEN_FactoryCreatesItemsInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
@@ -155,7 +175,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_DisposeRootContainer_WithSingleton_THEN_SingletonDisposed()
+        public void DisposeRootContainer_WithSingleton_THEN_SingletonDisposed()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
@@ -168,7 +188,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_DisposeChildContainer_WithSingleton_THEN_Singleton_NotDisposed()
+        public void DisposeChildContainer_WithSingleton_THEN_Singleton_NotDisposed()
         {
             var rootContainer = GetContainer();
 
@@ -182,7 +202,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_DisposeChildContainer_WithTransientConsumer_THEN_SingletonConsumer_IsDisposed_AND_Singleton_NotDisposed()
+        public void DisposeChildContainer_WithTransientConsumer_THEN_SingletonConsumer_IsDisposed_AND_Singleton_NotDisposed()
         {
             var rootContainer = GetContainer();
 
@@ -201,7 +221,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_DisposeChildContainer_WithSingleton_WithDependency_THEN_Singleton_NotDisposed_AND_DependencyNotDisposed_StaysInRootContainer()
+        public void DisposeChildContainer_WithSingleton_WithDependency_THEN_Singleton_NotDisposed_AND_DependencyNotDisposed_StaysInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement), TypeLifetime.PerContainerTransient);
@@ -219,7 +239,7 @@ namespace Unity.Specification.Container.Hierarchy
         }
 
         [TestMethod]
-        public void Test_DisposeChildContainer_WithSingleton_WithFactoryDependency_THEN_Singleton_NotDisposed_AND_FactoryCreatesItemsInRootContainer()
+        public void DisposeChildContainer_WithSingleton_WithFactoryDependency_THEN_Singleton_NotDisposed_AND_FactoryCreatesItemsInRootContainer()
         {
             var rootContainer = GetContainer();
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));

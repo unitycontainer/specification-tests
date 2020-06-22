@@ -11,8 +11,8 @@ namespace Unity.Specification.Diagnostic.Property.Validation
         public void InvalidValue()
         {
             // Act
-            Container.RegisterType<Specification.Property.Injection.ObjectWithThreeProperties>(
-                Inject.Property(nameof(Specification.Property.Injection.ObjectWithThreeProperties.Container), Name));
+            Container.RegisterType<ObjectWithThreeProperties>(
+                Inject.Property(nameof(ObjectWithThreeProperties.Container), Name));
         }
 
         [Ignore]

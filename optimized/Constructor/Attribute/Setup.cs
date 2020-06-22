@@ -10,6 +10,21 @@ namespace Unity.Specification.Constructor.Attribute
         public override void Setup() => base.Setup();
     }
 
+    #region Test Data
+
+    public class WithDefaultCtor
+    {
+        public WithDefaultCtor()
+        {
+            Data = this;
+        }
+
+        public object Data { get; }
+    }
+
+    #endregion
+
+
     #region class_ctor_with_dependency
     public class CtorWithDependency
     {

@@ -39,7 +39,7 @@ namespace Unity.Specification.Property.Attribute
         }
 
         [TestMethod]
-        public void DependencyAttributePrivate()
+        public virtual void DependencyAttributeOnPrivate()
         {
             // Act
             var result = Container.Resolve<DependencyAttributePrivateType>();
@@ -50,7 +50,7 @@ namespace Unity.Specification.Property.Attribute
         }
 
         [TestMethod]
-        public void DependencyAttributeProtected()
+        public virtual void DependencyAttributeOnProtected()
         {
             // Act
             var result = Container.Resolve<DependencyAttributeProtectedType>();

@@ -1,10 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using Unity.Specification.Method.Parameters;
 
 namespace Unity.Specification.Diagnostic.Method.Parameters
 {
-    public abstract partial class SpecificationTests
+    public abstract partial class SpecificationTests : Unity.Specification.Method.Parameters.SpecificationTests
     {
+        [TestInitialize]
+        public override void Setup() => base.Setup();
+
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void ChainedExecuteMethodBaseline()
@@ -16,6 +19,9 @@ namespace Unity.Specification.Diagnostic.Method.Parameters
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();
+            
+            // Verify
+            Assert.Fail();
         }
     }
 }
