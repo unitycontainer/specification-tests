@@ -52,6 +52,24 @@ namespace Unity.Specification.Method.Injection
         }
 
         [TestMethod]
+        public void MultipleWithSameName()
+        {
+            // Setup
+            Container.RegisterType(typeof(LegalInjectionMethod),
+                Invoke.Method(nameof(LegalInjectionMethod.TestMethod), 0),
+                Invoke.Method(nameof(LegalInjectionMethod.TestMethod), string.Empty),
+                Invoke.Method(nameof(LegalInjectionMethod.TestMethod)));
+
+            // Act
+            var instance = Container.Resolve<LegalInjectionMethod>();
+
+            // Verify
+            Assert.IsTrue(instance.Test0);
+            Assert.IsTrue(instance.Test1);
+            Assert.IsTrue(instance.Test2);
+        }
+
+        [TestMethod]
         public virtual void MethodPassingVoid()
         {
             // Setup

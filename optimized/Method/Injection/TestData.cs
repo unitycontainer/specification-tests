@@ -39,10 +39,28 @@ namespace Unity.Specification.Method.Injection
         public class LegalInjectionMethod
         {
             public bool WasInjected;
+            public bool Test0;
+            public bool Test1;
+            public bool Test2;
 
             public void InjectMe()
             {
                 WasInjected = true;
+            }
+
+            public void TestMethod()
+            {
+                Test0 = true;
+            }
+
+            public void TestMethod(string data)
+            {
+                Test1 = true;
+            }
+
+            public void TestMethod(long data)
+            {
+                Test2 = true;
             }
         }
 
