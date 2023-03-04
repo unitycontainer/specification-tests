@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Constructor.Overrides.Validation
+namespace Unity.Specification.Diagnostic.Constructor.Overrides
 {
     public abstract partial class SpecificationTests : Unity.Specification.Constructor.Overrides.SpecificationTests
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Constructor.Parameters.Validation
+namespace Unity.Specification.Diagnostic.Constructor.Parameters
 {
     public abstract partial class SpecificationTests : Unity.Specification.Constructor.Parameters.SpecificationTests
     {

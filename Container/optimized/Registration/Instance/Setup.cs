@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Instance
+namespace Unity.Specification.Registration.Instance
 {
     public abstract partial class SpecificationTests : TestFixtureBase
     {

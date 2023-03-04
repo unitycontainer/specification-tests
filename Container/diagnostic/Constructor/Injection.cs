@@ -2,7 +2,7 @@
 using System;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Constructor.Injection.Validation
+namespace Unity.Specification.Diagnostic.Constructor.Injection
 {
     public abstract partial class SpecificationTests : Unity.Specification.Constructor.Injection.SpecificationTests
     {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net48</TargetFramework>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net6.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\package.snk</AssemblyOriginatorKeyFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\optimized\Unity.Specification.Container.csproj" />
+    <ProjectReference Include="..\optimized\Container.Specification.Optimized.csproj" />
   </ItemGroup>
 
 </Project>

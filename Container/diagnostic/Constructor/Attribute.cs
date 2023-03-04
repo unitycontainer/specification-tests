@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Specification.TestData;
 
-namespace Unity.Specification.Constructor.Attribute.Validation
+namespace Unity.Specification.Diagnostic.Constructor.Attribute
 {
     public abstract partial class SpecificationTests : Unity.Specification.Constructor.Attribute.SpecificationTests
     {
