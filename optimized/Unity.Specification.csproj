@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net48</TargetFramework>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net6.0</TargetFramework>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © .NET Foundation and Contributors. All Rights Reserved</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -9,9 +9,11 @@
     <AssemblyOriginatorKeyFile>package.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>

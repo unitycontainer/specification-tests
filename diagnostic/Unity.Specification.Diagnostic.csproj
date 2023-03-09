@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net48</TargetFramework>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net6.0</TargetFramework>
     <Description>Unity Container Specification Tests</Description>
     <Copyright>Copyright © .NET Foundation and Contributors. All Rights Reserved</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -11,7 +11,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\Container\src\Unity.Container.csproj" />
     <ProjectReference Include="..\optimized\Unity.Specification.csproj" />
   </ItemGroup>
 
