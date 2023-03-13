@@ -98,7 +98,7 @@ namespace Unity.Specification.Issues.GitHub
             container.RegisterType<IOtherService, OtherService>();
 
 
-            Assert.AreSame(container.Resolve<IService>(), container.Resolve<IOtherService>());
+            Assert.AreSame<object>(container.Resolve<IService>(), container.Resolve<IOtherService>());
         }
 
         [TestMethod]
@@ -158,7 +158,7 @@ namespace Unity.Specification.Issues.GitHub
             container.RegisterType<IService, OtherService>();
             container.RegisterType<IOtherService, OtherService>(new InjectionConstructor(container));
 
-            Assert.AreNotSame(container.Resolve<IService>(),
+            Assert.AreNotSame<object>(container.Resolve<IService>(),
                               container.Resolve<IOtherService>());
 
             Assert.AreSame(container.Resolve<IService>(),
@@ -174,7 +174,7 @@ namespace Unity.Specification.Issues.GitHub
             container.RegisterType<IService, OtherService>();
             container.RegisterType<IOtherService, OtherService>();
 
-            Assert.AreSame(container.Resolve<IService>(),
+            Assert.AreSame<object>(container.Resolve<IService>(),
                            container.Resolve<IOtherService>());
         }
 

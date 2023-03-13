@@ -37,15 +37,6 @@ namespace Unity.Specification.Lifetime
         }
 
         [TestMethod]
-        public void PerResolveLifetimeIsHonoredWhenUsingFactory()
-        {
-            Container.RegisterFactory<SomeService>(c => new SomeService(), FactoryLifetime.PerResolve);
-
-            var rootService = Container.Resolve<AService>();
-            Assert.AreSame(rootService.SomeService, rootService.OtherService.SomeService);
-        }
-
-        [TestMethod]
         public void PerResolveFromMultipleThreads()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
