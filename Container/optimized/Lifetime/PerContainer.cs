@@ -22,7 +22,7 @@ namespace Unity.Specification.Lifetime
         public void PerContainer_Factory_Null()
         {
             // Arrange
-            Container.RegisterFactory<IService>(c => null, FactoryLifetime.Singleton);
+            Container.RegisterFactory<IService>(c => null, FactoryLifetime.PerContainer);
 
             // Act
             var instance = Container.Resolve<IService>();
