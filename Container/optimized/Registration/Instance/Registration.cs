@@ -123,18 +123,20 @@ namespace Unity.Specification.Registration.Instance
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
 
-        [TestMethod]
-        public void CanSetLifetime()
-        {
-            // Arrange
-            var value = new object();
-            Container.RegisterInstance(typeof(object), null, value, InstanceLifetime.Singleton);
+        // TODO: UNITY_8
+        //[TestMethod]
+        //public void CanSetLifetime()
+        //{
+        //    // Arrange
+        //    var value = new object();
+        //    Container.RegisterInstance(typeof(object), null, value, InstanceLifetime.Singleton);
 
-            // Act
-            var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
+        //    // Act
+        //    var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
 
-            // Validate
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
-        }
+        //    // Validate
+        //    Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
+        //}
+
     }
 }

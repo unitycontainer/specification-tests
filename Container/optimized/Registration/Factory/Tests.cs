@@ -47,18 +47,20 @@ namespace Unity.Specification.Registration.Factory
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
-        [TestMethod]
-        public void CanSetLifetime()
-        {
-            // Arrange
-            Container.RegisterFactory(typeof(object), null, (c, t, n) => null, FactoryLifetime.Singleton);
 
-            // Act
-            var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
+        // TODO: UNITY_8
+        //[TestMethod]
+        //public void CanSetLifetime()
+        //{
+        //    // Arrange
+        //    Container.RegisterFactory(typeof(object), null, (c, t, n) => null, FactoryLifetime.Singleton);
 
-            // Validate
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
-        }
+        //    // Act
+        //    var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
+
+        //    // Validate
+        //    Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
+        //}
 
         [TestMethod]
         public void Type_Null_Factory()

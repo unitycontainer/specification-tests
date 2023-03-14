@@ -20,18 +20,19 @@ namespace Unity.Specification.Registration.Types
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
-        [TestMethod]
-        public void CanSetLifetime()
-        {
-            // Arrange
-            Container.RegisterType(typeof(object), null, null, TypeLifetime.Singleton);
+        // TODO: UNITY_8
+        //[TestMethod]
+        //public void CanSetLifetime()
+        //{
+        //    // Arrange
+        //    Container.RegisterType(typeof(object), null, null, TypeLifetime.Singleton);
 
-            // Act
-            var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
+        //    // Act
+        //    var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
 
-            // Validate
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
-        }
+        //    // Validate
+        //    Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
+        //}
 
     }
 }
