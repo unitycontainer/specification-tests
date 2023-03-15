@@ -74,7 +74,7 @@ namespace Unity.Specification.Constructor.Injection
 
             // Validate
             Assert.AreEqual(2, instance.Ctor);
-            Assert.IsTrue(typeof(Service) == instance.Service.GetType());
+            Assert.IsTrue(typeof(ServiceOne) == instance.Service.GetType());
         }
 
         [TestMethod]
@@ -84,19 +84,12 @@ namespace Unity.Specification.Constructor.Injection
             Container.RegisterType<IService, ServiceOne>("one")
                      .RegisterType<IService, ServiceTwo>("two");
 
-            #region inject_count_name_override_generic
-
             Container.RegisterType(typeof(SampleType<>),
                 Invoke.Constructor(
                     Resolve.Parameter("two"),
                     Resolve.Parameter()));
 
             var instance = Container.Resolve<SampleType<object>>();
-
-            // 2 == instance.Ctor
-            // typeof(ServiceTwo) == instance.Service.GetType()
-
-            #endregion
 
             // Validate
             Assert.AreEqual(2, instance.Ctor);
