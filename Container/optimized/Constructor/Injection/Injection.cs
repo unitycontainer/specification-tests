@@ -6,14 +6,6 @@ namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoConstructor()
-        {
-            // Act
-            Container.RegisterType<TypeWithAmbiguousCtors>(
-                Invoke.Constructor(Resolve.Parameter()));
-        }
 
         [TestMethod]
         public virtual void MultipleConstructor()
@@ -31,5 +23,14 @@ namespace Unity.Specification.Constructor.Injection
             Assert.AreEqual(TypeWithAmbiguousCtors.One, instance.Signature);
         }
 
+
+        [TestMethod]
+        public void SelectByValueTypes()
+        {
+            Container.RegisterType<TypeWithMultipleCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
+                Inject.Parameter(typeof(string)),
+                Inject.Parameter(typeof(int))));
+            Assert.AreEqual(TypeWithMultipleCtors.Three, Container.Resolve<TypeWithMultipleCtors>().Signature);
+        }
     }
 }

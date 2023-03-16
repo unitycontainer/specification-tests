@@ -1,10 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity.Specification.Registration.Extended;
 
 namespace Unity.Specification.Constructor.Injection
 {
     public abstract partial class SpecificationTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void NoConstructor()
+        {
+            // Act
+            Container.RegisterType<TypeWithAmbiguousCtors>(
+                Invoke.Constructor(Resolve.Parameter()));
+        }
+
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void NoDefaultConstructor()
@@ -32,16 +42,6 @@ namespace Unity.Specification.Constructor.Injection
                 Invoke.Constructor( 1, "test"));
         }
 
-
-
-        [TestMethod]
-        public void SelectByValueTypes()
-        {
-            Container.RegisterType<TypeWithMultipleCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
-                Inject.Parameter(typeof(string)),
-                Inject.Parameter(typeof(int))));
-            Assert.AreEqual(TypeWithMultipleCtors.Three, Container.Resolve<TypeWithMultipleCtors>().Signature);
-        }
 
         #region Test Data
 
@@ -71,6 +71,5 @@ namespace Unity.Specification.Constructor.Injection
         }
 
         #endregion
-
     }
 }
