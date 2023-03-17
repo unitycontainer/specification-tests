@@ -77,16 +77,16 @@ namespace Unity.Specification.Issues.GitHub
 
             Container.RegisterType<Foo>(Invoke.Constructor(noOverride));
             // Act
-            var defaultValue = Container.Resolve<Foo>().ToString();
+            var defValue = Container.Resolve<Foo>().ToString();
             var depValue = Container.Resolve<Foo>(Override.Dependency<string>(depOverride))
                                        .ToString();
             var parValue = Container.Resolve<Foo>(Override.Parameter<string>(parOverride))
                                        .ToString();
 
             // Verify
-            Assert.AreSame(noOverride, defaultValue);
+            Assert.AreSame(noOverride,  defValue);
             Assert.AreSame(parOverride, parValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
         }
 
         [TestMethod]
