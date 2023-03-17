@@ -11,10 +11,24 @@ namespace Unity.Specification.Constructor.Overrides
             Container.RegisterType<Service>(Invoke.Constructor(_data));
 
             // Act
-            var value = Container.Resolve<Service>(Override.Dependency<string>(_override));
+            var value = Container.Resolve<Service>();
 
             // Verify
             Assert.AreSame(_data, value.Data);
         }
+
+        [TestMethod]
+        public void CtorParameterWithOverride()
+        {
+            // Arrange
+            Container.RegisterType<Service>(Invoke.Constructor(_data));
+
+            // Act
+            var value = Container.Resolve<Service>(Override.Dependency<string>(_override));
+
+            // Verify
+            Assert.AreSame(_override, value.Data);
+        }
+
     }
 }

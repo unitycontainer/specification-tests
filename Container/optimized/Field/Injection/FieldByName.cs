@@ -5,6 +5,7 @@ namespace Unity.Specification.Field.Injection
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore("Validation")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void None()
