@@ -3,6 +3,7 @@ using Unity.Resolution;
 
 namespace Unity.Specification.Utility
 {
+    // Move to regression
     public class ValidatingResolver : IResolve
     {
         private object _value;

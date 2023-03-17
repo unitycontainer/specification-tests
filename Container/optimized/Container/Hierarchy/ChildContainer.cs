@@ -49,13 +49,19 @@ namespace Unity.Specification.Container.Hierarchy
         [TestMethod]
         public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
         {
-            var child = Container.CreateChildContainer();
-            var wr = new WeakReference(child);
-            child.Dispose();
-            child = null;
+            var wr = GetChildContainer();
 
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
             Assert.IsFalse(wr.IsAlive);
+
+            WeakReference GetChildContainer()
+            {
+                var child = Container.CreateChildContainer();
+                var wr = new WeakReference(child);
+                child.Dispose();
+
+                return wr;
+            }
         }
 
         [TestMethod]
