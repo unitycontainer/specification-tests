@@ -61,7 +61,8 @@ namespace Unity.Specification.Issues.GitHub
 
                 // This check fails on random iteration, usually i < 300.
                 // It passes for v.5.8.13 but fails for v.5.9.0 and later both for .NET Core and for Framework.
-                var registration = registrations.FirstOrDefault(r => r.LifetimeManager is TransientLifetimeManager);
+                var registration = registrations.Select(r => r.LifetimeManager)
+                                                .FirstOrDefault(r => r is TransientLifetimeManager);
                 Assert.IsNull(registration, "Transient registration found on iteration #" + i);
             }
         }

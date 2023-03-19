@@ -67,9 +67,6 @@ namespace Unity.Specification.Constructor.Injection
 
             var instance = Container.Resolve<SampleType<object>>();
 
-            // 2 == instance.Ctor
-            // typeof(Service) == instance.Service.GetType()
-
             #endregion
 
             // Validate
