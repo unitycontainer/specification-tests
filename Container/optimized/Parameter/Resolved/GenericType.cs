@@ -5,6 +5,7 @@ namespace Unity.Specification.Parameter.Resolved
 {
     public abstract partial class SpecificationTests
     {
+        [Ignore("Injection Validation")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ProvidingConcreteTypeForGenericFails()

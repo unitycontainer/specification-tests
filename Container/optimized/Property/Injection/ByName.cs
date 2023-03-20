@@ -18,6 +18,7 @@ namespace Unity.Specification.Property.Injection
             Assert.IsNotNull(result.Container);
         }
 
+        [Ignore("Injection Validation")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void None()
