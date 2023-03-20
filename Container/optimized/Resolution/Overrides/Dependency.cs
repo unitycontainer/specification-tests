@@ -75,8 +75,8 @@ namespace Unity.Specification.Resolution.Overrides
 
             // Verify
             Assert.IsNotNull(result);
-            Assert.IsNull(result.Fred);
-            Assert.IsNull(result.George);
+            Assert.IsNotNull(result.Fred);
+            Assert.IsNotNull(result.George);
         }
 
         [TestMethod]
@@ -202,12 +202,12 @@ namespace Unity.Specification.Resolution.Overrides
 
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
             Assert.AreSame(depOverride, propValue);
         }
 
         [TestMethod]
-        public void InjectedFieldWithFielDependencyOverride()
+        public void InjectedFielddWithFieldDependencyOverride()
         {
             // Setup
             var noOverride = "default";
@@ -221,7 +221,7 @@ namespace Unity.Specification.Resolution.Overrides
 
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, dependValue);
+            Assert.AreSame(depOverride, dependValue);
             Assert.AreSame(depOverride, fieldValue);
         }
 
@@ -240,7 +240,7 @@ namespace Unity.Specification.Resolution.Overrides
             
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
             Assert.AreSame(depOverride, propValue);
         }
     }

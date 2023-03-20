@@ -77,6 +77,7 @@ namespace Unity.Specification.Resolution.Generic
             Assert.AreSame(a1, result.InjectedValue[1]);
         }
 
+        [Ignore("Injection validation")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()

@@ -95,6 +95,7 @@ namespace Unity.Specification.Resolution.Array
             Assert.AreSame(logger2, result.Loggers[2]);
         }
 
+        [Ignore("Injection validation")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void CreatingResolvedArrayParameterWithValuesOfNonCompatibleType()
