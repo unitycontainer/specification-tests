@@ -24,7 +24,7 @@ namespace Unity.Specification.Constructor.Attribute
         public virtual void MultipleConstructorsAnnotated()
         {
             // Act
-            var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();
+            var instance = Container.Resolve<TypeWithAmbiguousAnnotations>();
 
             // Assert
             Assert.AreEqual(Container, instance.Container);

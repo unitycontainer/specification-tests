@@ -23,7 +23,7 @@ namespace Unity.Specification.BuildUp
         public void AmbuguousAnnotations()
         {
             // Arrange
-            var instance = new TypeWithAmbuguousAnnotations();
+            var instance = new TypeWithAmbiguousAnnotations();
 
             // Act
             Container.BuildUp(instance);
