@@ -20,7 +20,7 @@ namespace Unity.Specification.BuildUp
         }
 
         [TestMethod]
-        public void AmbuguousAnnotations()
+        public void AmbiguousAnnotations()
         {
             // Arrange
             var instance = new TypeWithAmbiguousAnnotations();
