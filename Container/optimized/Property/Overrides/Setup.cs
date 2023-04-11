@@ -82,6 +82,22 @@ namespace Unity.Specification.Property.Overrides
             }
         }
 
+        public class ObjectWithField
+        {
+            public ISomething MyField;
+
+            public ObjectWithField()
+            {
+            }
+
+            public ObjectWithField(ISomething field)
+            {
+                MyField = field;
+            }
+        }
+        
+
+
         public class Outer
         {
             public Outer(Inner inner, int logLevel)
