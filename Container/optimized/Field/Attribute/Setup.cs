@@ -41,6 +41,13 @@ namespace Unity.Specification.Field.Attribute
             public int Called = 4;
         }
 
+        public class OptionalDependencyWithDefault
+        {
+            [OptionalDependency]
+            public int Value = 100;
+            public int Called = 100;
+        }
+
         public class OptionalNamedDependencyAttributeType
         {
             [OptionalDependency(Name)]

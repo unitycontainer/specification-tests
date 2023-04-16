@@ -40,6 +40,12 @@ namespace Unity.Specification.Property.Attribute
             public object Value { get; set; }
             public int Called = 4;
         }
+        public class OptionalDependencyWithDefaultType
+        {
+            [OptionalDependency]
+            public int Value { get; set; } = 100;
+            public int Called = 100;
+        }
 
         public class OptionalNamedDependencyAttributeType
         {
