@@ -111,12 +111,14 @@ namespace Unity.Specification.Registration.Types
                 .RegisterType<ILogger, MockLogger>(local);
 
             var childRegistration = child.Registrations
-                                         .First(r => r.RegisteredType == typeof(ILogger) &&
-                                                     r.Name == local);
+                                         .Where(r => r.RegisteredType == typeof(ILogger) && r.Name == local)
+                                         .Select(r => r.RegisteredType)
+                                         .FirstOrDefault();
 
             var parentRegistration = Container.Registrations
-                                               .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) &&
-                                                                    r.Name == local);
+                                               .Where(r => r.RegisteredType == typeof(ILogger) &&  r.Name == local)
+                                               .Select(r => r.RegisteredType)
+                                               .FirstOrDefault();
             Assert.IsNull(parentRegistration);
             Assert.IsNotNull(childRegistration);
         }

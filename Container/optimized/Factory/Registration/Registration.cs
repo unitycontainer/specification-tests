@@ -11,6 +11,9 @@ namespace Unity.Specification.Factory.Registration
         {
             Container.RegisterFactory<IService>((c, t, n) => new Service());
             Assert.IsNotNull(Container.Resolve<IService>());
+
+            var instance = Container.Resolve<IService>();
+            Assert.IsNotNull(instance);
         }
 
         [TestMethod]

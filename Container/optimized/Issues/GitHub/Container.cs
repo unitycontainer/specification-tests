@@ -1,17 +1,29 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Unity.Injection;
 using Unity.Lifetime;
 
 namespace Unity.Specification.Issues.GitHub
 {
     public abstract partial class SpecificationTests 
     {
+        [Ignore("No longer valid in v8")]
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/212
         public virtual void Issue_Container_212()
+        {
+            // Arrange
+            Container.RegisterType<IService, InvalidService>();
+
+            // Act
+            var error = Container.Resolve<IService>();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        // https://github.com/unitycontainer/container/issues/212
+        public virtual void Issue_Container_212_v8()
         {
             // Arrange
             Container.RegisterType<IService, InvalidService>();
@@ -61,7 +73,8 @@ namespace Unity.Specification.Issues.GitHub
 
                 // This check fails on random iteration, usually i < 300.
                 // It passes for v.5.8.13 but fails for v.5.9.0 and later both for .NET Core and for Framework.
-                var registration = registrations.FirstOrDefault(r => r.LifetimeManager is TransientLifetimeManager);
+                var registration = registrations.Select(r => r.LifetimeManager)
+                                                .FirstOrDefault(r => r is TransientLifetimeManager);
                 Assert.IsNull(registration, "Transient registration found on iteration #" + i);
             }
         }

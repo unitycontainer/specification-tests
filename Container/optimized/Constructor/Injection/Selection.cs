@@ -44,15 +44,15 @@ namespace Unity.Specification.Constructor.Injection
                 // SelectAndResolveByValue
                 yield return new object[]
                 {
-                    "SelectAndResolveByValue",                  //  string name, 
+                    "Constructor with 3 strings",               //  Name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
-                    new object[] {
-                        Resolve.Parameter(typeof(string)),      //  object[] parameters, 
-                        string.Empty,
-                        string.Empty },
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
+                    new object[] {                              //  object[] parameters
+                        Resolve.Parameter(typeof(string)),      // By Type of parameter 
+                        string.Empty,                           // By value's type
+                        string.Empty },                         // By value's type
+                    new Func<object, bool>(r =>                 //  Validator
                         TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
                 };
 
@@ -60,35 +60,48 @@ namespace Unity.Specification.Constructor.Injection
                 // ResolveNamedTypeArgument
                 yield return new object[]
                 {
-                    "ResolveNamedTypeArgument",                 //  string name, 
+                    "Constructor with 3 Type parameters",       //  Name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
-                    new object[] {
-                        typeof(string),                         //  object[] parameters, 
-                        typeof(string),
-                        typeof(IUnityContainer)},
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
+                    new object[] {                              //  object[] parameters
+                        typeof(string),                         // By Type of parameter
+                        typeof(string),                         // By Type of parameter
+                        typeof(IUnityContainer)},               // By Type of parameter
+                    new Func<object, bool>(r =>                 //  Validator
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
                 };
 
+                // ResolveNamedTypeArgument
+                yield return new object[]
+                {
+                    "Constructor with 2 By requested Type",     //  Name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
+                    new object[] {                              //  object[] parameters
+                        typeof(string),                         // By requested Type of parameter
+                        typeof(IUnityContainer)},               // By requested Type of parameter
+                    new Func<object, bool>(r =>                 //  Validator
+                        TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
+                };
 
                 // SelectByValues
                 yield return new object[]
                 {
-                    "SelectByValues",                           //  string name, 
+                    "Constructor with int, string, and float",  //  Name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
                     new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
-                    new Func<object, bool>(r => TypeWithMultipleCtors.Two == ((TypeWithMultipleCtors)r).Signature)           //  Func<object, bool> validator
+                    new Func<object, bool>(r => TypeWithMultipleCtors.Two == ((TypeWithMultipleCtors)r).Signature) 
                 };
 
 
                 // DefaultConstructorGeneric
                 yield return new object[]
                 {
-                    "DefaultConstructorGeneric",                //  string name, 
+                    "Constructor with no parameters",           //  Name, 
                     null,                                       //  Type typeFrom, 
                     typeof(InjectionTestCollection<>),          //  Type typeTo, 
                     typeof(InjectionTestCollection<object>),    //  Type typeToResolve, 

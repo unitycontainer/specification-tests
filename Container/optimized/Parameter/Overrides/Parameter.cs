@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Resolution;
-using Unity.Specification.Utility;
 
 namespace Unity.Specification.Parameter.Overrides
 {

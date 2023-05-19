@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unity.Specification.Property.Attribute
+namespace Unity.Specification.Field.Attribute
 {
-    public abstract partial class SpecificationTests 
+    public abstract partial class SpecificationTests
     {
         [TestMethod]
         public void OptionalDependencyAttribute()
@@ -13,6 +13,17 @@ namespace Unity.Specification.Property.Attribute
             // Assert
             Assert.AreEqual(result.Called, 4);
             Assert.IsInstanceOfType(result.Value, typeof(object));
+        }
+
+        [TestMethod]
+        public void OptionalDependencyAttributeWithDefault()
+        {
+            // Act
+            var result = Container.Resolve<OptionalDependencyWithDefault>();
+
+            // Assert
+            Assert.AreEqual(result.Called, result.Value);
+            Assert.IsInstanceOfType(result.Value, typeof(int));
         }
 
         [TestMethod]

@@ -86,6 +86,11 @@ namespace Unity.Specification.Constructor.Injection
                 Signature = Three;
             }
 
+            public TypeWithMultipleCtors(string first, IUnityContainer second)
+            {
+                Signature = Four;
+            }
+
             public TypeWithMultipleCtors(string first, string second, string third)
             {
                 Signature = first;

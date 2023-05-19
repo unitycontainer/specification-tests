@@ -1,9 +1,29 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Unity.Specification.Property.Overrides.SpecificationTests;
 
 namespace Unity.Specification.Field.Overrides
 {
     public abstract partial class SpecificationTests
     {
+        [TestMethod]
+        public void CanOverrideValue()
+        {
+            Container.RegisterType<ObjectWithField>(Invoke.Constructor(),
+                                                    Resolve.Field(nameof(ObjectWithField.MyField)))
+                     .RegisterType<ISomething, Something1>()
+                     .RegisterType<ISomething, Something2>(Name);
+
+            // Act
+            var result = Container.Resolve<ObjectWithField>(
+                Override.Field(nameof(ObjectWithField.MyField), Resolve.Dependency<ISomething>(Name))
+                        .OnType<ObjectWithField>());
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.MyField);
+            Assert.IsInstanceOfType(result.MyField, typeof(Something2));
+        }
+
         [TestMethod]
         public void FieldOverrideAttribute()
         {

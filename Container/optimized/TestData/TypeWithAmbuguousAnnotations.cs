@@ -1,16 +1,16 @@
 ﻿namespace Unity.Specification.TestData
 {
-    public class TypeWithAmbuguousAnnotations
+    public class TypeWithAmbiguousAnnotations
     {
-        public TypeWithAmbuguousAnnotations() => Ctor = 1;
+        public TypeWithAmbiguousAnnotations() => Ctor = 1;
 
         [InjectionConstructor]
-        public TypeWithAmbuguousAnnotations(object arg) => Ctor = 2;
+        public TypeWithAmbiguousAnnotations(object arg) => Ctor = 2;
 
-        public TypeWithAmbuguousAnnotations(IUnityContainer container) => Ctor = 3;
+        public TypeWithAmbiguousAnnotations(IUnityContainer container) => Ctor = 3;
 
         [InjectionConstructor]
-        public TypeWithAmbuguousAnnotations(object[] data) => Ctor = 4;
+        public TypeWithAmbiguousAnnotations(object[] data) => Ctor = 4;
 
         public int Ctor { get; }    // Constructor called 
 
