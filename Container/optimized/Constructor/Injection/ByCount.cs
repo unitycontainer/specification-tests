@@ -74,7 +74,28 @@ namespace Unity.Specification.Constructor.Injection
 
             // Validate
             Assert.AreEqual(2, instance.Ctor);
-            Assert.IsTrue(typeof(ServiceOne) == instance.Service.GetType());
+            Assert.IsTrue(typeof(Service) == instance.Service.GetType());
+        }
+
+        [TestMethod]
+        public virtual void ByCountNamedGenericString()
+        {
+            // Arrange
+            Container.RegisterType<IService, Service>()
+                     .RegisterType<IService, ServiceOne>("one")
+                     .RegisterType<IService, ServiceTwo>("two");
+
+            Container.RegisterType(typeof(SampleType<>),
+                Invoke.Constructor(
+                    Resolve.Parameter(),
+                    Resolve.Parameter()));
+
+            var instance = Container.Resolve<SampleType<string>>();
+
+
+            // Validate
+            Assert.AreEqual(2, instance.Ctor);
+            Assert.IsTrue(typeof(Service) == instance.Service.GetType());
         }
 
         [TestMethod]
