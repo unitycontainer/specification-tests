@@ -92,7 +92,7 @@ namespace Unity.Specification.Constructor.Injection
 
             // Validate
             Assert.AreEqual(2, instance.Ctor);
-            Assert.IsTrue(typeof(Service) == instance.Service.GetType());
+            Assert.IsTrue(typeof(ServiceOne) == instance.Service.GetType());
         }
 
         [TestMethod]
