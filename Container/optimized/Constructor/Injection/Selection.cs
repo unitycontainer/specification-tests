@@ -41,7 +41,7 @@ namespace Unity.Specification.Constructor.Injection
             // Format: Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator
             get
             {
-                // SelectAndResolveByValue
+                // 1
                 yield return new object[]
                 {
                     "Constructor with 3 strings",               //  Name, 
@@ -57,7 +57,7 @@ namespace Unity.Specification.Constructor.Injection
                 };
 
 
-                // ResolveNamedTypeArgument
+                // 2
                 yield return new object[]
                 {
                     "Constructor with 3 Type parameters",       //  Name, 
@@ -73,7 +73,7 @@ namespace Unity.Specification.Constructor.Injection
                 };
 
 
-                // TypeArgument
+                // 3
                 yield return new object[]
                 {
                     "Constructor with 3 parameters by type",       //  Name, 
@@ -88,7 +88,7 @@ namespace Unity.Specification.Constructor.Injection
                         TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
                 };
 
-                // ResolveNamedTypeArgument
+                // 4
                 yield return new object[]
                 {
                     "Constructor with 2 By requested Type",     //  Name, 
@@ -102,7 +102,7 @@ namespace Unity.Specification.Constructor.Injection
                         TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
                 };
 
-                // SelectByValues
+                // 5
                 yield return new object[]
                 {
                     "Constructor with int, string, and float",  //  Name, 
@@ -114,7 +114,7 @@ namespace Unity.Specification.Constructor.Injection
                 };
 
 
-                // DefaultConstructorGeneric
+                // 6
                 yield return new object[]
                 {
                     "Constructor with no parameters",           //  Name, 
@@ -127,7 +127,7 @@ namespace Unity.Specification.Constructor.Injection
                 };
 
 
-                //
+                // 7
                 yield return new object[]
                 {
                     "",                                         //  string name, 
