@@ -28,7 +28,7 @@ namespace Unity.Specification.Diagnostic.Constructor.Annotation
             #region attribute_ctor
 
             // Act
-            var instance = Container.Resolve<TypeWithAmbuguousAnnotations>();
+            var instance = Container.Resolve<TypeWithAmbiguousAnnotations>();
 
             // 2 == instance.Ctor
 
