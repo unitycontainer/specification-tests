@@ -67,6 +67,22 @@ namespace Unity.Specification.Constructor.Injection
                     new object[] {                              //  object[] parameters
                         typeof(string),                         // By Type of parameter
                         typeof(string),                         // By Type of parameter
+                        typeof(bool)},                          // By Type of parameter
+                    new Func<object, bool>(r =>                 //  Validator
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
+                };
+
+
+                // TypeArgument
+                yield return new object[]
+                {
+                    "Constructor with 3 parameters by type",       //  Name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
+                    new object[] {                              //  object[] parameters
+                        typeof(string),                         // By Type of parameter
+                        typeof(string),                         // By Type of parameter
                         typeof(IUnityContainer)},               // By Type of parameter
                     new Func<object, bool>(r =>                 //  Validator
                         TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
